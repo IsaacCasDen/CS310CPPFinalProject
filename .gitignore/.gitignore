@@ -40,3 +40,4 @@ emptyExample.png
 *.plist
 Makefile
 *.xcconfig
+*.DS_Store
