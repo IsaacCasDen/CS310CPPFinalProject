@@ -37,6 +37,11 @@
 *.vcxproj.*
 *.rc
 *.make
+.vs
+obj
+*.exp
+*.ilk
+*.pdb
 
 #XCode
 emptyExample.png
