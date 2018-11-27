@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+*.make
+emptyExample.png
+*.pbxproj
+*.xcworkspacedata
+*.xcuserstate
+*.xcscheme
+*.plist
+Makefile
+*.xcconfig
