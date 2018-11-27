@@ -36,3 +36,15 @@
 *.vcxproj
 *.vcxproj.*
 *.rc
+*.make
+
+#XCode
+emptyExample.png
+*.pbxproj
+*.xcworkspacedata
+*.xcuserstate
+*.xcscheme
+*.plist
+Makefile
+*.xcconfig
+*.DS_Store
