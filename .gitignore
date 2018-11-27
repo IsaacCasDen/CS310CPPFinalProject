@@ -57,3 +57,4 @@ Makefile
 #Linux
 *.qbs.user
 *.qbs
+.vscode/c_cpp_properties.json
