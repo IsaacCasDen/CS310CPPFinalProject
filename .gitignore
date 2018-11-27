@@ -53,3 +53,7 @@ emptyExample.png
 Makefile
 *.xcconfig
 *.DS_Store
+
+#Linux
+*.qbs.user
+*.qbs
