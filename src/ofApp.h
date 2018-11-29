@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "../Game.h"
 
+#include "GalagaShip.h"
+#include <vector>
 class ofApp : public ofBaseApp{
 
 	public:
@@ -29,4 +31,7 @@ class ofApp : public ofBaseApp{
 	private:
 		Game game;
 
+		vector<GalagaShip*> galaga_ship;
+		ofSerial serial;
+		bool port;
 };
