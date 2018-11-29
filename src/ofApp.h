@@ -1,7 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
-
+#include "GalagaShip.h"
+#include <vector>
 class ofApp : public ofBaseApp{
 
 	public:
@@ -20,5 +21,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+    vector<GalagaShip*> galaga_ship;
+    ofSerial serial;
+    bool port;
 };

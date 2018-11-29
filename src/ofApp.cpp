@@ -2,17 +2,45 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    ofBackground(0, 0, 0);
+    port = serial.setup("/dev/tty.usbmodem143101", 9600);
+    if(port)
+    {
+        cout << "Port OK!" << endl;
+    }
+    else {
+        cout << "Port NOT OK!" << endl;
+    }
+    for(int i=0; i<1; i++)
+    {
+        galaga_ship.push_back(new GalagaShip());
+    }
+    for(int j=0; j<galaga_ship.size(); j++)
+    {
+        galaga_ship[j]->setup();
+    }
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    for (int i=0; i<galaga_ship.size(); i++) {
+        char c;
+        if(serial.available())
+        {
+            c = serial.readByte();
+            galaga_ship[i]->update(c);
+            cout << c << endl;
+        }
+        
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    for (int i=0; i<galaga_ship.size(); i++) {
+        galaga_ship[i]->draw();
+    }
 }
 
 //--------------------------------------------------------------
