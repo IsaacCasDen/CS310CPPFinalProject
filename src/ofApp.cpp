@@ -1,24 +1,33 @@
 #include "ofApp.h"
 
+ofApp::ofApp()
+{
+	game = Game(ofVec2f(ofGetWindowWidth(), ofGetWindowHeight()));
+}
+
+ofApp::~ofApp()
+{
+}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-    game=Game(getWindowSize);
+    game=Game(ofGetWindowSize());
     game.startGame();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    game.updateGame();
+    game.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    game.drawGame();
+    game.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::exit() {
-    game.dispose();
+    game.exitGame();
 }
 
 //--------------------------------------------------------------
