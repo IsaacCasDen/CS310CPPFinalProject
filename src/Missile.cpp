@@ -12,8 +12,8 @@
 Missile::Missile(){}//Default Constructor
 void Missile::setup()
 {
-    xPos = ofGetWidth()/2;
-    yPos = ofGetHeight()/2;
+    xPos = ofGetWidth()/(1.425);
+    yPos = ofGetHeight()-50;
     radius = 10;
 }//missile setup
 void Missile::update()

@@ -18,7 +18,7 @@ public:
     void update();
     void draw(char c);
 private:
-    int xPos, yPos, radius;
+    float xPos, yPos, radius;
 };
 
 #endif /* Missile_h */
