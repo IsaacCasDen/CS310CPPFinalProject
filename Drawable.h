@@ -15,12 +15,12 @@ public:
 	virtual void draw()=0;
 
 	ofRectangle getBounds();
-	void setPosition(ofVec2f position);
+	virtual void setPosition(ofVec2f position);
 
 protected:
 	
 	void setSize(ofVec2f size);
-	void setBounds(ofRectangle bounds);
+	virtual void setBounds(ofRectangle bounds);
 
 private:
 	ofRectangle bounds;
