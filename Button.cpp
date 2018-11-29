@@ -35,7 +35,9 @@ void Button::draw()
 	ofNoFill();
 	ofDrawRectangle(b);
 	
-	ofSetColor(backgroundColor);
+	(isClicking())?
+		ofSetColor(clickColor):
+		(isHover()) ? ofSetColor(hoverColor) : ofSetColor(backgroundColor);
 	ofFill();
 	ofDrawRectangle(b.getLeft() + borderWidth, b.getTop() + borderWidth, b.getWidth() + borderWidth - padding, b.getHeight() + borderWidth - padding);
 
@@ -107,10 +109,50 @@ void Button::setWidth(double value)
 	initFontBounds();
 }
 
+void Button::mouseMoved(int x, int y)
+{
+	if (isIntersecting(x, y)) {
+		_isHover = true;
+	}
+	else {
+		_isHover = false;
+		_isClicking = false;
+	}
+}
+
+void Button::mousePressed(int x, int y, int button)
+{
+	if (isIntersecting(x, y) && button == 0) {
+		_isClicking = true;
+	}
+	else {
+		_isClicking = false;
+	}
+}
+
+void Button::mouseReleased(int x, int y, int button)
+{
+	if (isIntersecting(x, y) && isClicking()  && button == 0) {
+		ofNotifyEvent(clicked);
+	}
+	
+	_isClicking = false;
+}
+
 void Button::setPosition(ofVec2f position)
 {
 	Drawable::setPosition(position);
 	initFontBounds();
+}
+
+bool Button::isHover()
+{
+	return _isHover;
+}
+
+bool Button::isClicking()
+{
+	return _isClicking;
 }
 
 void Button::initFont()
