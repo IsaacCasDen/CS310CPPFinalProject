@@ -4,6 +4,8 @@
 #include "GalagaShip.h"
 #include "Missile.h"
 #include <vector>
+#include "Game.h"
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -26,4 +28,9 @@ class ofApp : public ofBaseApp{
     vector<Missile*> missiles;
     ofSerial serial;
     bool port;
+
+	private:
+		Game game;
+
+
 };

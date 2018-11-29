@@ -26,6 +26,10 @@ void ofApp::setup(){
         missiles[i]->setup();
     }//setup missiles
     
+
+    game=Game(getWindowSize);
+    game.startGame();
+ 
 }
 
 //--------------------------------------------------------------
@@ -62,6 +66,17 @@ void ofApp::draw(){
         char c;
         missiles[i]->draw(c);
     }
+    game.updateGame();
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+    game.drawGame();
+}
+
+//--------------------------------------------------------------
+void ofApp::exit() {
+    game.dispose();
 }
 
 //--------------------------------------------------------------

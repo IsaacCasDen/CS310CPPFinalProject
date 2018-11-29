@@ -37,6 +37,11 @@
 *.vcxproj.*
 *.rc
 *.make
+.vs
+obj
+*.exp
+*.ilk
+*.pdb
 
 #XCode
 emptyExample.png
@@ -48,3 +53,10 @@ emptyExample.png
 Makefile
 *.xcconfig
 *.DS_Store
+
+#Linux
+*.qbs.user
+*.qbs
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/tasks.json
