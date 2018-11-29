@@ -12,6 +12,7 @@
 Missile::Missile(){}//Default Constructor
 void Missile::setup()
 {
+    visible = false;
     dx = 0;
     dy = 0;
     xPos = ofGetWidth()/(1.425);
@@ -32,9 +33,12 @@ void Missile::update(char c)
         dx = -1.35;
         dy = 0;
     }
+    
+    
 }//missile update
 void Missile::draw(char c)
 {
-    ofSetColor(255, 255, 255);
+    //ofSetColor(0, 0, 0);
     ofDrawCircle(xPos, yPos, radius);
+
 }//draw missile

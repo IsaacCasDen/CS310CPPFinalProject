@@ -20,6 +20,7 @@ public:
 private:
     float xPos, yPos, radius;
     float dx, dy;
+    bool visible;
 };
 
 #endif /* Missile_h */
