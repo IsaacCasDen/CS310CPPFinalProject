@@ -18,9 +18,6 @@ public:
 	Screen(Game *game, ofVec2f size);
 	~Screen();
 
-	//virtual void update() = 0;
-	//virtual void draw() = 0;
-
 protected:
 	Game * getGame();
 	
