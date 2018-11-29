@@ -9,6 +9,16 @@ Drawable::~Drawable()
 {
 }
 
+bool Drawable::isIntersecting(int x, int y)
+{
+	return isIntersecting(ofVec2f(x,y));
+}
+
+bool Drawable::isIntersecting(ofVec2f point)
+{
+	return getBounds().inside(point);
+}
+
 ofRectangle Drawable::getBounds()
 {
 	return this->bounds;
