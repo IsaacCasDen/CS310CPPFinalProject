@@ -30,28 +30,36 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    for (int i=0; i<galaga_ship.size(); i++) {
+    for (int i=0; i<galaga_ship.size(); i++)
+    {
         char c;
         if(serial.available())
         {
             c = serial.readByte();
             galaga_ship[i]->update(c);
-            cout << c << endl;
+            
         }//if serial is available
     }//for loop cycling through galaga ship vector
     for(int i=0; i<missiles.size(); i++)
     {
-        missiles[i]->update();
+        char c;
+        if(serial.available())
+        {
+            c = serial.readByte();
+            missiles[i]->update(c);
+            cout << c << endl;
+        }
     }
 }//update()
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    char c;
     for (int i=0; i<galaga_ship.size(); i++) {
+        char c;
         galaga_ship[i]->draw();
     }
     for (int i=0; i<missiles.size(); i++) {
+        char c;
         missiles[i]->draw(c);
     }
 }

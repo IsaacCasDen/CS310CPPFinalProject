@@ -15,10 +15,11 @@ class Missile : public ofBaseApp
 public:
     Missile();
     void setup();
-    void update();
+    void update(char c);
     void draw(char c);
 private:
     float xPos, yPos, radius;
+    float dx, dy;
 };
 
 #endif /* Missile_h */

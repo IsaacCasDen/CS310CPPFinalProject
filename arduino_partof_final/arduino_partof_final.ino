@@ -56,7 +56,14 @@ void loop() {
 //  Serial.print("y dir: ");
 //  Serial.println(analogRead(y_dir));
 
-
+  if(analogRead(x_dir) >= 1000)
+  {
+    Serial.println("C");
+  }
+  if(analogRead(x_dir) <= 10)
+  {
+    Serial.println("D");
+  }
   //top left is between 800 and 1000 y-dir .   "G"
   //bottom left is between 50 and 150 y-dir   "F"
   //top right is between 650 and 850 x-dir . "E"
