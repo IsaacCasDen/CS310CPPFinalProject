@@ -5,12 +5,14 @@
 
 #include "Screen.h"
 
+class Game;
+
 class ScreenMenu :
 	public Screen
 {
 public:
 	ScreenMenu();
-	ScreenMenu(Game game, ofVec2f size);
+	ScreenMenu(Game *game, ofVec2f size);
 	~ScreenMenu();
 
 	void update();

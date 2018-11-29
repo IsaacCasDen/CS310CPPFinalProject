@@ -26,7 +26,7 @@ void Game::draw() {
 }
 void Game::loadScreenMenu()
 {
-	//activeScreen = new ScreenMenu(*this,ofVec2f(bounds.getWidth(),bounds.getHeight()));
+	activeScreen = new ScreenMenu(this,ofVec2f(bounds.getWidth(),bounds.getHeight()));
 	hasScreen(true);
 }
 

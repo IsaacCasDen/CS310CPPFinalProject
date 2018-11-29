@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "../Game.h"
 
-#include "GalagaShip.h"
+#include "../GalagaShip.h"
 #include <vector>
 class ofApp : public ofBaseApp{
 

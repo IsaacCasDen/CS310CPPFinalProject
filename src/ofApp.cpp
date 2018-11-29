@@ -13,6 +13,7 @@ ofApp::~ofApp()
 void ofApp::setup(){
     game=Game(ofGetWindowSize());
     game.startGame();
+	/*
     ofBackground(0, 0, 0);
     port = serial.setup("/dev/tty.usbmodem143101", 9600);
     if(port)
@@ -30,12 +31,13 @@ void ofApp::setup(){
     {
         galaga_ship[j]->setup();
     }
-    
+    */
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     //game.update();
+	/*
     for (int i=0; i<galaga_ship.size(); i++) {
         char c;
         if(serial.available())
@@ -46,14 +48,17 @@ void ofApp::update(){
         }
         
     }
+	*/
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    //game.draw();
+    game.draw();
+	/*
     for (int i=0; i<galaga_ship.size(); i++) {
         galaga_ship[i]->draw();
     }
+	*/
 }
 
 //--------------------------------------------------------------
