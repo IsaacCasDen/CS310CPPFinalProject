@@ -30,6 +30,27 @@ void Game::loadScreenMenu()
 	hasScreen(true);
 }
 
+void Game::mouseMoved(int x, int y)
+{
+	if (hasScreen()) {
+		activeScreen->mouseMoved(x, y);
+	}
+}
+
+void Game::mousePressed(int x, int y, int button)
+{
+	if (hasScreen()) {
+		activeScreen->mousePressed(x, y, button);
+	}
+}
+
+void Game::mouseReleased(int x, int y, int button)
+{
+	if (hasScreen()) {
+		activeScreen->mouseReleased(x, y, button);
+	}
+}
+
 void Game::exitGame() {
     dispose();
 }
