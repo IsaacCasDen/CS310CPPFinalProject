@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Screen.h"
+#include <vector>
 
 class Game;
 
@@ -15,12 +16,21 @@ public:
 	ScreenMenu(Game *game, ofVec2f size);
 	~ScreenMenu();
 
+	virtual void mouseMoved(int x, int y);
+	virtual void mousePressed(int x, int y, int button);
+	virtual void mouseReleased(int x, int y, int button);
+
 	void update();
 	void draw();
+
+protected:
+	void onButtonNewGameClicked();
+	void onButtonQuitClicked();
 
 private:
 	Button buttonNewGame;
 	Button buttonQuit;
+	std::vector<Drawable *> buttons;
 };
 
 //#endif
