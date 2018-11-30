@@ -1,14 +1,18 @@
 #pragma once
 
 #include "ofMain.h"
-#include "GalagaShip.h"
-#include "Missile.h"
+#include "../Game.h"
+#include "../GalagaShip.h"
+#include "../Missile.h"
 #include <vector>
-#include "Game.h"
+
 
 class ofApp : public ofBaseApp{
 
 	public:
+		ofApp();
+		~ofApp();
+
 		void setup();
 		void update();
 		void draw();
@@ -24,13 +28,14 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-    vector<GalagaShip*> galaga_ship;
-    vector<Missile*> missiles;
-    ofSerial serial;
-    bool port;
+		void exit();
+    
+		vector<GalagaShip*> galaga_ship;
+		vector<Missile*> missiles;
+		ofSerial serial;
+		bool port;
 
 	private:
 		Game game;
-
 
 };

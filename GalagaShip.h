@@ -7,8 +7,9 @@
 
 #ifndef GalagaShip_h
 #define GalagaShip_h
-#include "ofApp.h"
+#include "src/ofApp.h"
 #include "ofMain.h"
+
 class GalagaShip : public ofBaseApp {
 public:
     GalagaShip();
