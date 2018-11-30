@@ -29,6 +29,17 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		void exit();
+
+		static ofColor ofApp::getOfColor()
+		{
+			return currentColor;
+		}
+
+		static void ofApp::setOfColor(ofColor value)
+		{
+			currentColor = value;
+			ofSetColor(value);
+		}
     
 		vector<GalagaShip*> galaga_ship;
 		vector<Missile*> missiles;
@@ -37,5 +48,6 @@ class ofApp : public ofBaseApp{
 
 	private:
 		Game game;
+		static ofColor currentColor;
 
 };
