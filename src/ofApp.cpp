@@ -37,15 +37,12 @@ void ofApp::setup(){
     for (int i=0; i<missiles.size(); i++) {
         missiles[i]->setup();
     }//setup missiles
-    
-
-    game=Game(getWindowSize);
-    game.startGame();
- 
+    */ 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	/*
     for (int i=0; i<galaga_ship.size(); i++)
     {
         char c;
@@ -67,6 +64,7 @@ void ofApp::update(){
         }
     }
 	*/
+	game.update();
 }//update()
 
 //--------------------------------------------------------------
