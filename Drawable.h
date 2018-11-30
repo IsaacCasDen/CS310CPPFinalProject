@@ -4,6 +4,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "src/ofApp.h"
 
 class Drawable
 {
