@@ -52,6 +52,7 @@ class Game {
         void draw();
 
 		void loadScreenMenu();
+		void loadScreenGame();
 
 		virtual void mouseMoved(int x, int y);
 		virtual void mousePressed(int x, int y, int button);
@@ -79,6 +80,9 @@ class Game {
 		static ofTrueTypeFont fontLarge;
 		static ofTrueTypeFont fontMedium;
 		static ofTrueTypeFont fontSmall;
+
+		ofSerial serial;
+		bool port;
 
 };
 
