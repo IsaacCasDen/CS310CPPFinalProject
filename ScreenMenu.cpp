@@ -63,10 +63,10 @@ void ScreenMenu::draw()
 
 void ScreenMenu::onButtonNewGameClicked()
 {
-
+	getGame()->loadScreenGame();
 }
 
 void ScreenMenu::onButtonQuitClicked()
 {
-
+	getGame()->exitGame();
 }
