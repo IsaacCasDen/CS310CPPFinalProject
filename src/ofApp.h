@@ -40,11 +40,7 @@ class ofApp : public ofBaseApp{
 			currentColor = value;
 			ofSetColor(value);
 		}
-    
-		vector<GalagaShip*> galaga_ship;
-		vector<Missile*> missiles;
-		ofSerial serial;
-		bool port;
+
 
 	private:
 		Game game;
