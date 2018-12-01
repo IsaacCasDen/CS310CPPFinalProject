@@ -9,6 +9,20 @@ Game::Game() {
 }
 Game::Game(ofVec2f size) {
     bounds = ofRectangle(0,0,size.x,size.y);
+
+	/*
+	ofBackground(0, 0, 0);
+	port = serial.setup("/dev/tty.usbmodem143101", 9600);
+	if(port)
+	{
+		cout << "Port OK!" << endl;
+	}
+	else {
+		cout << "Port NOT OK!" << endl;
+	}
+	
+	*/
+
 	loadScreenMenu();
 };
 
@@ -27,6 +41,12 @@ void Game::draw() {
 void Game::loadScreenMenu()
 {
 	activeScreen = new ScreenMenu(this,ofVec2f(bounds.getWidth(),bounds.getHeight()));
+	hasScreen(true);
+}
+
+void Game::loadScreenGame()
+{
+	//activeScreen = new loadScreenGame(this, ofVec2f(bounds.getWidth(), bounds.getHeight()));
 	hasScreen(true);
 }
 
