@@ -7,6 +7,8 @@
 #include "Button.h"
 #include "ofTrueTypeFont.h"
 #include <string>
+#include "ofVec2f.h"
+#include "ofVec3f.h"
 
 class Game;
 
