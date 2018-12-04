@@ -13,7 +13,7 @@ ofApp::~ofApp()
 void ofApp::setup(){
     game=Game(ofGetWindowSize());
     game.startGame();
-	/*
+	
     ofBackground(0, 0, 0);
     port = serial.setup("/dev/tty.usbmodem143101", 9600);
     if(port)
@@ -39,9 +39,9 @@ void ofApp::setup(){
     }//setup missiles
     
 
-    game=Game(getWindowSize);
-    game.startGame();
- 
+    //game=Game(getWindowSize);
+    //game.startGame();
+    
 }
 
 //--------------------------------------------------------------
@@ -66,12 +66,12 @@ void ofApp::update(){
             cout << c << endl;
         }
     }
-	*/
+	
 }//update()
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    /*
+    
     for (int i=0; i<galaga_ship.size(); i++) {
         char c;
         galaga_ship[i]->draw();
@@ -80,7 +80,7 @@ void ofApp::draw(){
         char c;
         missiles[i]->draw(c);
     }
-    */
+    
     game.draw();
 }
 

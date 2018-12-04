@@ -9,6 +9,7 @@
 #define GalagaShip_h
 #include "src/ofApp.h"
 #include "ofMain.h"
+#include "ofVec2f.h"
 
 class GalagaShip : public ofBaseApp {
 public:
@@ -17,8 +18,10 @@ public:
     void update(char c);
     void draw();
     ofImage ship;
+    ofVec2f getPosition();
 private:
-    int xPos, yPos;
+    ofVec2f pos;
+    
     float dx, dy;
     
 };

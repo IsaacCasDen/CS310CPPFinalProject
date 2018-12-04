@@ -9,7 +9,9 @@
 #include "ofApp.h"
 #include "Missile.h"
 
-Missile::Missile(){}//Default Constructor
+Missile::Missile(){
+    
+}//Default Constructor
 void Missile::setup()
 {
     visible = false;
@@ -17,23 +19,11 @@ void Missile::setup()
     dy = 0;
     xPos = ofGetWidth()/(1.425);
     yPos = ofGetHeight()-50;
+    missilePosition = ofVec2f(xPos, yPos);
     radius = 10;
 }//missile setup
 void Missile::update(char c)
 {
-    xPos += dx;
-    yPos += dy;
-    if(c == 'C')
-    {
-        dx = 1.35;
-        dy = 0;
-    }
-    if(c == 'D')
-    {
-        dx = -1.35;
-        dy = 0;
-    }
-    
     
 }//missile update
 void Missile::draw(char c)

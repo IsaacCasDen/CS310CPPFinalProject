@@ -9,6 +9,7 @@
 #define Missile_h
 #include "ofApp.h"
 #include "ofMain.h"
+#include "ofVec2f.h"
 
 class Missile : public ofBaseApp
 {
@@ -19,6 +20,7 @@ public:
     void draw(char c);
 private:
     float xPos, yPos, radius;
+    ofVec2f missilePosition;
     float dx, dy;
     bool visible;
 };

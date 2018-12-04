@@ -11,16 +11,17 @@
 GalagaShip::GalagaShip(){}
 void GalagaShip::setup()
 {
-    xPos = ofGetWidth()/(1.85);
-    yPos = ofGetHeight()-150;
+    int xPos = ofGetWidth()/(1.85);
+    int yPos = ofGetHeight()-150;
+    pos = ofVec2f(xPos, yPos);
     dx = 0;
     dy = 0;
     ship.load("galaga_ship.png");
 }
 void GalagaShip::update(char c)
 {
-    xPos += dx;
-    yPos += dy;
+    pos.x += dx;
+    pos.y += dy;
     if (c == 'L') {
         dx = -1;
         dy = 0;
@@ -32,6 +33,10 @@ void GalagaShip::update(char c)
 }
 void GalagaShip::draw()
 {
-    ship.draw(xPos, yPos);
+    ship.draw(pos.x, pos.y);
+    
+}
+ofVec2f GalagaShip::getPosition(){
+    return pos;
 }
 
