@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Screen.h"
+#include "Drawable.h"
 #include <vector>
 
 class Game;

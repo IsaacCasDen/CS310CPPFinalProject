@@ -11,7 +11,7 @@ class ScreenGame :
 {
 public:
 	ScreenGame();
-	//ScreenMenu(Game *game, ofVec2f size);
+	ScreenGame(Game *game, ofVec2f size);
 	~ScreenGame();
 
 	void update();

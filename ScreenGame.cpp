@@ -6,32 +6,26 @@ ScreenGame::ScreenGame()
 {
 	
 }
-/*
-ScreenMenu::ScreenMenu(Game *game, ofVec2f size) : Screen(game, size)
+ScreenGame::ScreenGame(Game * game, ofVec2f size)
 {
 	/*
-	for(int i=0; i<1; i++)
-	{
-		galaga_ship.push_back(new GalagaShip());
-	}//create new ship and push it into the vector
-	for (int i=0; i<1; i++) {
-		missiles.push_back(new Missile());
-	}//create new missiles and push them into the vector
-	for(int j=0; j<galaga_ship.size(); j++)
-	{
-		galaga_ship[j]->setup();
-	}//setup ship
-	for (int i=0; i<missiles.size(); i++) {
-		missiles[i]->setup();
-	}//setup missiles
-	
+		for(int i=0; i<1; i++)
+		{
+			galaga_ship.push_back(new GalagaShip());
+		}//create new ship and push it into the vector
+		for (int i=0; i<1; i++) {
+			missiles.push_back(new Missile());
+		}//create new missiles and push them into the vector
+		for(int j=0; j<galaga_ship.size(); j++)
+		{
+			galaga_ship[j]->setup();
+		}//setup ship
+		for (int i=0; i<missiles.size(); i++) {
+			missiles[i]->setup();
+		}//setup missiles
+		*/
 }
-*/
 
-
-ScreenGame::~ScreenGame()
-{
-}
 
 void ScreenGame::update()
 {
@@ -55,8 +49,12 @@ void ScreenGame::draw()
 }
 
 void ScreenGame::drawHeader() {
+	string text = "Level 1";
 	ofRectangle bounds = getBounds();
 	ofVec3f v = bounds.getCenter();
+	Game *game = getGame();
+	ofTrueTypeFont font = game->getFontSmall();
+	font.drawString(text, v.x - font.stringWidth(text) / 2, font.stringHeight(text) + 3);
 	//getGame()->getFontSmall().drawString("Level 1", bounds.getCenter().x - getGame()->getFontSmall().stringWidth("Level 1") / 2, getGame()->getFontSmall().stringHeight("Level 1") + 3);
 }
 
@@ -82,6 +80,10 @@ void ScreenGame::updatePlayers()
 	for (int i = 0; i < players.size(); i++) {
 		players[i]->update();
 	}
+}
+
+ScreenGame::~ScreenGame()
+{
 }
 
 void ScreenGame::drawPlayers()

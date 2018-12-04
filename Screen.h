@@ -20,6 +20,10 @@ public:
 	Screen(Game *game, ofVec2f size);
 	~Screen();
 
+	virtual void mouseMoved(int x, int y);
+	virtual void mousePressed(int x, int y, int button);
+	virtual void mouseReleased(int x, int y, int button);
+
 protected:
 	Game * getGame();
 	

@@ -8,6 +8,7 @@
 #include "Drawable.h"
 #include "Screen.h"
 #include "ScreenMenu.h"
+#include "ScreenGame.h"
 
 class Game {
     public:

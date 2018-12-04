@@ -29,25 +29,25 @@ Game::Game(ofVec2f size) {
 void Game::startGame() {};
 
 void Game::update() {
-	if (hasScreen()) {
-		activeScreen->update();
-	}
+	//if (hasScreen()) {
+	//	activeScreen->update();
+	//}
 };
 void Game::draw() {
-	if (hasScreen()) {
-		activeScreen->draw();
-	}
+	//if (hasScreen()) {
+	//	activeScreen->draw();
+	//}
 }
 void Game::loadScreenMenu()
 {
-	activeScreen = new ScreenMenu(this,ofVec2f(bounds.getWidth(),bounds.getHeight()));
-	hasScreen(true);
+	//activeScreen = new ScreenMenu(this,ofVec2f(bounds.getWidth(),bounds.getHeight()));
+	//hasScreen(true);
 }
 
 void Game::loadScreenGame()
 {
-	//activeScreen = new loadScreenGame(this, ofVec2f(bounds.getWidth(), bounds.getHeight()));
-	hasScreen(true);
+	//activeScreen = new ScreenGame(this, ofVec2f(bounds.getWidth(), bounds.getHeight()));
+	//hasScreen(true);
 }
 
 void Game::mouseMoved(int x, int y)
