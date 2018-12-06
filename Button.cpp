@@ -1,6 +1,6 @@
 #include "Button.h"
 #include <math.h>
-
+#include "Game.h"
 
 Button::Button()
 {
@@ -29,7 +29,7 @@ void Button::update()
 
 void Button::draw()
 {
-	// ofColor currentColor = ofApp::getOfColor();
+	ofColor currentColor = Game::getOfColor();
 	ofRectangle b = getBounds();
 
 	ofSetColor(borderColor);
@@ -45,7 +45,7 @@ void Button::draw()
 	ofSetColor(foregroundColor);
 	font.drawString(getText(),fontPos.x,fontPos.y);
 
-	// ofApp::setOfColor(currentColor);
+	Game::setOfColor(currentColor);
 }
 
 std::string Button::getText()
