@@ -3,16 +3,28 @@
 
 #pragma once
 
+
 #include "ofRectangle.h"
 #include "ofVec2f.h"
+#include "ofTrueTypeFont.h"
+#include "ofSerial.h"
 #include "Drawable.h"
 #include "Screen.h"
 #include "ScreenMenu.h"
+#include "ScreenGame.h"
 
 class Game {
     public:
 
-		static ofTrueTypeFont getFontLarge() {
+		/*void loadFontLarge();
+		void loadFontMedium();
+		void loadFontSmall();*/
+
+		/*ofTrueTypeFont getFontLarge();
+		ofTrueTypeFont getFontMedium();
+		ofTrueTypeFont getFontSmall();*/
+
+		static ofTrueTypeFont Game::getFontLarge() {
 			if (!hasFontLarge) {
 				fontLarge.load("arial.ttf", 60, true, true);
 				fontLarge.setLineHeight(34.0);
@@ -21,7 +33,7 @@ class Game {
 			}
 			return fontLarge;
 		}
-		static ofTrueTypeFont getFontMedium() {
+		static ofTrueTypeFont Game::getFontMedium() {
 			if (!hasFontMedium) {
 				fontMedium.load("arial.ttf", 30, true, true);
 				fontMedium.setLineHeight(18.0f);
@@ -30,7 +42,7 @@ class Game {
 			}
 			return fontMedium;
 		}
-		static ofTrueTypeFont getFontSmall() {
+		static ofTrueTypeFont Game::getFontSmall() {
 			if (!hasFontSmall) {
 				fontSmall.load("arial.ttf", 20, true, true);
 				fontSmall.setLineHeight(12.0f);
@@ -40,7 +52,7 @@ class Game {
 			return fontSmall;
 		}
 
-        ofRectangle getBounds();
+		ofRectangle getBounds();
 
 		Game();
         Game(ofVec2f size);
@@ -52,10 +64,22 @@ class Game {
         void draw();
 
 		void loadScreenMenu();
+		void loadScreenGame();
 
 		virtual void mouseMoved(int x, int y);
 		virtual void mousePressed(int x, int y, int button);
 		virtual void mouseReleased(int x, int y, int button);
+
+		ofColor Game::getOfColor()
+		{
+			return currentColor;
+		}
+
+		void Game::setOfColor(ofColor value)
+		{
+			currentColor = value;
+			ofSetColor(value);
+		}
 
     protected:
         void dispose();
@@ -69,9 +93,12 @@ class Game {
         ofRectangle bounds;
 		bool _isGameRunning = false;
 
-		bool _hasScreen = false;
-		Screen *activeScreen;
-
+		bool _hasScreen = false; // Not keeping changes
+		int currentScreenIndex = 0;
+		int lastScreenIndex = 0;
+		Screen *activeScreen = nullptr;
+		Screen *newScreen = nullptr;
+		
 		static bool hasFontLarge;
 		static bool hasFontMedium;
 		static bool hasFontSmall;
@@ -80,6 +107,10 @@ class Game {
 		static ofTrueTypeFont fontMedium;
 		static ofTrueTypeFont fontSmall;
 
+		ofSerial serial;
+		bool port;
+
+		static ofColor currentColor;
 };
 
 //#endif

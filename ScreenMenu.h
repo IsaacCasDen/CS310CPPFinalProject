@@ -3,7 +3,9 @@
 
 #pragma once
 
+#include "Button.h"
 #include "Screen.h"
+#include "Drawable.h"
 #include <vector>
 
 class Game;

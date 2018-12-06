@@ -7,9 +7,10 @@
 
 #ifndef Missile_h
 #define Missile_h
-#include "ofApp.h"
+#include "src/ofApp.h"
 #include "ofMain.h"
 #include "ofVec2f.h"
+#include "GalagaShip.h"
 #include <vector>
 
 class Missile : public ofBaseApp

@@ -11,9 +11,12 @@ ofApp::~ofApp()
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    game=Game(ofGetWindowSize());
+	ofVec2f size;
+	while ((size=ofGetWindowSize()).distance(ofVec2f(0,0))==0);
+    game=Game(size);
     game.startGame();
 	
+<<<<<<< HEAD
     ofBackground(0, 0, 0);
     port = serial.setup("/dev/tty.usbmodem143101", 9600);
     if(port)
@@ -41,7 +44,8 @@ void ofApp::setup(){
 
     //game=Game(getWindowSize);
     //game.startGame();
-    
+
+
 }
 
 //--------------------------------------------------------------
@@ -67,11 +71,12 @@ void ofApp::update(){
         }
     }
 	
+
+	game.update();
 }//update()
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
     for (int i=0; i<galaga_ship.size(); i++) {
         char c;
         galaga_ship[i]->draw();
