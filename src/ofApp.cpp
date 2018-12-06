@@ -16,7 +16,7 @@ void ofApp::setup(){
     game=Game(size);
     game.startGame();
 	
-<<<<<<< HEAD
+
     ofBackground(0, 0, 0);
     port = serial.setup("/dev/tty.usbmodem143101", 9600);
     if(port)

@@ -63,8 +63,8 @@ Game::Game(ofVec2f size) {
 	
 	*/
 
-	loadScreenMenu();
-	//loadScreenGame();
+	//loadScreenMenu();
+	loadScreenGame();
 };
 
 void Game::startGame() {};
