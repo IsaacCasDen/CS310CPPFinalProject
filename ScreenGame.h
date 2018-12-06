@@ -11,14 +11,6 @@ class ScreenGame :
 	public Screen
 {
 public:
-
-	/*void loadFontLarge();
-
-	void loadFontMedium();
-
-	void loadFontSmall();*/
-
-
 	ScreenGame();
 	ScreenGame(Game *game, ofVec2f size);
 	~ScreenGame();
@@ -66,11 +58,11 @@ public:
 	void updateEnemyShots();
 	void drawEnemyShots();
 
+	int newScreenType=-1;
+
 	virtual void mouseMoved(int x, int y);
 	virtual void mousePressed(int x, int y, int button);
 	virtual void mouseReleased(int x, int y, int button);
-
-	
 
 private:
 	std::vector<SpriteObject *> enemies;
@@ -80,6 +72,5 @@ private:
 	std::vector<SpriteObject *> playerShot;
 
 	std::vector<SpriteObject *> items;
-
 };
 
