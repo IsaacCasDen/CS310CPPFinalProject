@@ -7,7 +7,6 @@ ScreenMenu::ScreenMenu()
 
 ScreenMenu::ScreenMenu(Game *game, ofVec2f size) : Screen(game,size)
 {
-	std::cout << this->getGame();
 	ofVec3f area = game->getBounds().getCenter();
 	buttonNewGame = Button("New Game", 20);
 	buttonNewGame.setWidth(200);
