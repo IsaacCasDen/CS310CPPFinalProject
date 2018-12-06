@@ -7,6 +7,7 @@ ScreenMenu::ScreenMenu()
 
 ScreenMenu::ScreenMenu(Game *game, ofVec2f size) : Screen(game,size)
 {
+	std::cout << this->getGame();
 	ofVec3f area = game->getBounds().getCenter();
 	buttonNewGame = Button("New Game", 20);
 	buttonNewGame.setWidth(200);
@@ -53,6 +54,14 @@ void ScreenMenu::mouseReleased(int x, int y, int button)
 
 void ScreenMenu::update()
 {
+	switch (newScreenType) {
+	case 1:
+		Screen * screen = new ScreenGame(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
+		screen->setGameRunning(true);
+		setPreLoadedScreen(screen);
+		newScreenType = -1;
+	}
+	
 }
 
 void ScreenMenu::draw()
@@ -63,10 +72,11 @@ void ScreenMenu::draw()
 
 void ScreenMenu::onButtonNewGameClicked()
 {
-	getGame()->loadScreenGame();
+	
+	newScreenType = 1;
 }
 
 void ScreenMenu::onButtonQuitClicked()
 {
-	getGame()->exitGame();
+	this->onClosed();
 }
