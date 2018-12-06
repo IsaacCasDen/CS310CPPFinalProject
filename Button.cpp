@@ -29,7 +29,7 @@ void Button::update()
 
 void Button::draw()
 {
-	ofColor currentColor = ofApp::getOfColor();
+	// ofColor currentColor = ofApp::getOfColor();
 	ofRectangle b = getBounds();
 
 	ofSetColor(borderColor);
@@ -45,7 +45,7 @@ void Button::draw()
 	ofSetColor(foregroundColor);
 	font.drawString(getText(),fontPos.x,fontPos.y);
 
-	ofApp::setOfColor(currentColor);
+	// ofApp::setOfColor(currentColor);
 }
 
 std::string Button::getText()

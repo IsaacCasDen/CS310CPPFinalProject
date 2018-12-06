@@ -1,9 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofColor.h"
 #include "../Game.h"
-#include "../GalagaShip.h"
-#include "../Missile.h"
+//#include "../GalagaShip.h"
+//#include "../Missile.h"
 #include <vector>
 
 
@@ -30,20 +31,9 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		void exit();
 
-		static ofColor ofApp::getOfColor()
-		{
-			return currentColor;
-		}
-
-		static void ofApp::setOfColor(ofColor value)
-		{
-			currentColor = value;
-			ofSetColor(value);
-		}
-
 
 	private:
 		Game game;
-		static ofColor currentColor;
+		
 
 };

@@ -1,10 +1,7 @@
-//#ifndef DRAWABLE_H
-//#define DRAWABLE_H
-
 #pragma once
 
-#include "ofMain.h"
-#include "src/ofApp.h"
+#include "ofRectangle.h"
+#include "ofVec2f.h"
 
 class Drawable
 {
@@ -33,4 +30,3 @@ private:
 	ofRectangle bounds;
 };
 
-//#endif 

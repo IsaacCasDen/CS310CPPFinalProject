@@ -1,5 +1,8 @@
 #pragma once
+
 #include "Drawable.h"
+#include "ofImage.h"
+
 class SpriteObject :
 	public Drawable
 {

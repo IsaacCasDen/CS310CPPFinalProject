@@ -2,9 +2,9 @@
 //#ifndef SCREEN_H
 //#define SCREEN_H
 
-#include "Screen.h"
 #include "Drawable.h"
-#include "Button.h"
+#include "ofColor.h"
+//#include "Button.h"
 #include "ofTrueTypeFont.h"
 #include <string>
 #include "ofVec2f.h"
@@ -20,9 +20,9 @@ public:
 	Screen(Game *game, ofVec2f size);
 	~Screen();
 
-	virtual void mouseMoved(int x, int y);
-	virtual void mousePressed(int x, int y, int button);
-	virtual void mouseReleased(int x, int y, int button);
+	virtual void mouseMoved(int x, int y) = 0;
+	virtual void mousePressed(int x, int y, int button) = 0;
+	virtual void mouseReleased(int x, int y, int button) = 0;
 
 protected:
 	Game * getGame();

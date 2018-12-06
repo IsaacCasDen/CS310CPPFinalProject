@@ -11,20 +11,20 @@ ofApp::~ofApp()
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    game=Game(ofGetWindowSize());
+	ofVec2f size;
+	while ((size=ofGetWindowSize()).distance(ofVec2f(0,0))==0);
+    game=Game(size);
     game.startGame();
 	
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	
 	game.update();
 }//update()
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
     game.draw();
 }
 

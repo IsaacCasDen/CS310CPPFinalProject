@@ -1,8 +1,9 @@
 #pragma once
 #include "Screen.h"
-#include <vector>
 #include "SpriteObject.h"
+#include "ofTrueTypeFont.h"
 #include "ofVec2f.h"
+#include <vector>
 
 class Game;
 
@@ -10,6 +11,14 @@ class ScreenGame :
 	public Screen
 {
 public:
+
+	/*void loadFontLarge();
+
+	void loadFontMedium();
+
+	void loadFontSmall();*/
+
+
 	ScreenGame();
 	ScreenGame(Game *game, ofVec2f size);
 	~ScreenGame();
@@ -57,6 +66,11 @@ public:
 	void updateEnemyShots();
 	void drawEnemyShots();
 
+	virtual void mouseMoved(int x, int y);
+	virtual void mousePressed(int x, int y, int button);
+	virtual void mouseReleased(int x, int y, int button);
+
+	
 
 private:
 	std::vector<SpriteObject *> enemies;

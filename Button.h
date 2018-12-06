@@ -3,7 +3,13 @@
 
 #pragma once
 
+#include "ofMain.h"
+#include "ofTrueTypeFont.h"
+#include <cmath>
+#include "ofRectangle.h"
 #include "Drawable.h"
+#include "ofColor.h"
+#include "ofEvent.h"
 #include <string>
 class Button :
 	public Drawable
