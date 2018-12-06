@@ -2,7 +2,6 @@
 
 ofApp::ofApp()
 {
-	game = Game(ofVec2f(ofGetWindowWidth(), ofGetWindowHeight()));
 }
 
 ofApp::~ofApp()
@@ -12,55 +11,86 @@ ofApp::~ofApp()
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofVec2f size;
-	while ((size=ofGetWindowSize()).distance(ofVec2f(0,0))==0);
+	if (true) {
+		while ((size = ofGetWindowSize()).distance(ofVec2f(0, 0)) == 0);
+	}
+	else {
+		while ((size = ofVec2f(ofGetScreenWidth(), ofGetScreenHeight())).distance(ofVec2f(0, 0)) == 0);
+	}
+	
     game=Game(size);
+	ofAddListener(game.closed, this, &ofApp::onGameExit);
+
     game.startGame();
 	
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	game.update();
+	if (!this->isClosing) {
+		game.update();
+	}
+	else {
+		try {
+			ofExit();
+		}
+		catch (const std::exception& e) {
+
+		}
+	}
 }//update()
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    game.draw();
+	if (!this->isClosing) {
+		game.draw();
+	}
 }
 
-//--------------------------------------------------------------
-void ofApp::exit() {
-    game.exitGame();
+void ofApp::onGameExit()
+{
+	this->isClosing = true;
+	game.exitGame();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if (!this->isClosing) {
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+	if (!this->isClosing) {
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-	game.mouseMoved(x, y);
+	if (!this->isClosing) {
+		game.mouseMoved(x, y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-	game.mouseMoved(x, y);
+	if (!this->isClosing) {
+		game.mouseMoved(x, y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	game.mousePressed(x, y, button);
+	if (!this->isClosing) {
+		game.mousePressed(x, y, button);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	game.mouseReleased(x, y, button);
+	if (!this->isClosing) {
+		game.mouseReleased(x, y, button);
+	}
 }
 
 //--------------------------------------------------------------
