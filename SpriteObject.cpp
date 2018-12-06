@@ -6,7 +6,6 @@ SpriteObject::SpriteObject()
 {
 }
 
-
 SpriteObject::~SpriteObject()
 {
 }
