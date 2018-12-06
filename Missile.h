@@ -10,6 +10,7 @@
 #include "ofApp.h"
 #include "ofMain.h"
 #include "ofVec2f.h"
+#include <vector>
 
 class Missile : public ofBaseApp
 {
@@ -21,6 +22,7 @@ public:
 private:
     float xPos, yPos, radius;
     ofVec2f missilePosition;
+    vector<GalagaShip*> galagaShip;
     float dx, dy;
     bool visible;
 };

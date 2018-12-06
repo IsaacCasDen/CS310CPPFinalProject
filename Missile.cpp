@@ -14,6 +14,7 @@ Missile::Missile(){
 }//Default Constructor
 void Missile::setup()
 {
+    
     visible = false;
     dx = 0;
     dy = 0;
