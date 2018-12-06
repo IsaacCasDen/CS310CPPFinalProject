@@ -33,7 +33,6 @@ private:
 	Button buttonNewGame;
 	Button buttonQuit;
 	std::vector<Drawable *> buttons;
-	int newScreenType = -1;
 };
 
 //#endif
