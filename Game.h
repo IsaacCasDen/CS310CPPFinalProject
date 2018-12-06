@@ -8,23 +8,17 @@
 #include "ofVec2f.h"
 #include "ofTrueTypeFont.h"
 #include "ofSerial.h"
-#include "Drawable.h"
 #include "Screen.h"
 #include "ScreenMenu.h"
 #include "ScreenGame.h"
+#include "ofEvent.h"
 
 class Game {
     public:
 
-		/*void loadFontLarge();
-		void loadFontMedium();
-		void loadFontSmall();*/
+		ofEvent<void> closed;
 
-		/*ofTrueTypeFont getFontLarge();
-		ofTrueTypeFont getFontMedium();
-		ofTrueTypeFont getFontSmall();*/
-
-		static ofTrueTypeFont Game::getFontLarge() {
+		static ofTrueTypeFont getFontLarge() {
 			if (!hasFontLarge) {
 				fontLarge.load("arial.ttf", 60, true, true);
 				fontLarge.setLineHeight(34.0);
@@ -33,7 +27,7 @@ class Game {
 			}
 			return fontLarge;
 		}
-		static ofTrueTypeFont Game::getFontMedium() {
+		static ofTrueTypeFont getFontMedium() {
 			if (!hasFontMedium) {
 				fontMedium.load("arial.ttf", 30, true, true);
 				fontMedium.setLineHeight(18.0f);
@@ -42,7 +36,7 @@ class Game {
 			}
 			return fontMedium;
 		}
-		static ofTrueTypeFont Game::getFontSmall() {
+		static ofTrueTypeFont getFontSmall() {
 			if (!hasFontSmall) {
 				fontSmall.load("arial.ttf", 20, true, true);
 				fontSmall.setLineHeight(12.0f);
@@ -58,7 +52,7 @@ class Game {
         Game(ofVec2f size);
 
         void startGame();
-        void exitGame();
+		void exitGame();
 
         void update();
         void draw();
@@ -70,30 +64,31 @@ class Game {
 		virtual void mousePressed(int x, int y, int button);
 		virtual void mouseReleased(int x, int y, int button);
 
-		ofColor Game::getOfColor()
+		static ofColor getOfColor()
 		{
 			return currentColor;
 		}
 
-		void Game::setOfColor(ofColor value)
+		static void setOfColor(ofColor value)
 		{
 			currentColor = value;
 			ofSetColor(value);
 		}
 
+		
+
     protected:
         void dispose();
 		bool isGameRunning();
 		void setGameRunning(bool isRunning);
+		void setActiveScreen(Screen * screen);
 
 		bool hasScreen();
-		void hasScreen(bool value);
 
     private:
         ofRectangle bounds;
-		bool _isGameRunning = false;
 
-		bool _hasScreen = false; // Not keeping changes
+		bool _hasScreen; // Not keeping changes
 		int currentScreenIndex = 0;
 		int lastScreenIndex = 0;
 		Screen *activeScreen = nullptr;
@@ -111,6 +106,8 @@ class Game {
 		bool port;
 
 		static ofColor currentColor;
+
+		void onGameClosed();
 };
 
 //#endif

@@ -8,6 +8,8 @@ ofTrueTypeFont Game::fontLarge;
 ofTrueTypeFont Game::fontMedium;
 ofTrueTypeFont Game::fontSmall;
 
+ofColor Game::currentColor;
+
 //
 //void Game::loadFontLarge() {
 //	fontLarge.load("arial.ttf", 60, true, true);
@@ -46,99 +48,87 @@ Game::Game() {
 }
 Game::Game(ofVec2f size) {
     bounds = ofRectangle(0,0,size.x,size.y);
-	/*loadFontLarge();
-	loadFontMedium();
-	loadFontSmall();*/
-
-	/*
-	ofBackground(0, 0, 0);
-	port = serial.setup("/dev/tty.usbmodem143101", 9600);
-	if(port)
-	{
-		cout << "Port OK!" << endl;
-	}
-	else {
-		cout << "Port NOT OK!" << endl;
-	}
-	
-	*/
-
-	loadScreenMenu();
-	//loadScreenGame();
+	setActiveScreen(new ScreenMenu(this, ofVec2f(bounds.getWidth(), bounds.getHeight())));
 };
 
 void Game::startGame() {};
+void Game::exitGame() {
+	dispose();
+}
 
 void Game::update() {
-	if (newScreen != nullptr || hasScreen()) {
-		activeScreen = newScreen;
-		newScreen = nullptr;
-		hasScreen(false);
-	}
-	if (activeScreen!=nullptr) {
-		activeScreen->update();
+	if (this->activeScreen!=nullptr) {
+		if (this->activeScreen->isClosed()) {
+			onGameClosed();
+		}
+		else {
+			if (this->activeScreen->hasPreLoadedScreen()) {
+				setActiveScreen(this->activeScreen->takePreLoadedScreen());
+			}
+			this->activeScreen->update();
+		}
 	}
 };
 void Game::draw() {
-	if (hasScreen()) {
-		activeScreen->draw();
+	if (this->activeScreen!=nullptr) {
+		this->activeScreen->draw();
 	}
-}
-void Game::loadScreenMenu()
-{
-	newScreen = new ScreenMenu(this,ofVec2f(bounds.getWidth(),bounds.getHeight()));
-	hasScreen(true);
-}
-
-void Game::loadScreenGame()
-{
-	newScreen = new ScreenGame(this, ofVec2f(bounds.getWidth(), bounds.getHeight()));
-	hasScreen(true);
 }
 
 void Game::mouseMoved(int x, int y)
 {
-	if (hasScreen()) {
+	if (activeScreen != nullptr) {
 		activeScreen->mouseMoved(x, y);
 	}
 }
 
 void Game::mousePressed(int x, int y, int button)
 {
-	if (hasScreen()) {
+	if (activeScreen != nullptr) {
 		activeScreen->mousePressed(x, y, button);
 	}
 }
 
 void Game::mouseReleased(int x, int y, int button)
 {
-	if (hasScreen()) {
+	if (activeScreen != nullptr) {
 		activeScreen->mouseReleased(x, y, button);
 	}
 }
 
-void Game::exitGame() {
-    dispose();
-}
 void Game::dispose() {}
 bool Game::isGameRunning()
 {
-	return _isGameRunning;
+	if (this->activeScreen != nullptr)
+		return this->activeScreen->isGameRunning();
+
+	return false;
 }
 void Game::setGameRunning(bool isRunning)
 {
-	_isGameRunning = isRunning;
-}
-bool Game::hasScreen()
-{
-	return currentScreenIndex > lastScreenIndex;
-}
-void Game::hasScreen(bool value)
-{
-	if (value) {
-		currentScreenIndex++;
+	if (isRunning) {
+		ofSetFrameRate(144);
 	}
 	else {
-		lastScreenIndex = currentScreenIndex;
+		ofSetFrameRate(30);
 	}
+}
+void Game::setActiveScreen(Screen * screen)
+{
+	if (activeScreen != nullptr) {
+		ofRemoveListener(activeScreen->closed, this, &Game::onGameClosed);
+		delete activeScreen;
+	}
+	ofAddListener(screen->closed, this, &Game::onGameClosed);
+	activeScreen = screen;
+}
+
+bool Game::hasScreen()
+{
+	return activeScreen != nullptr;
+}
+
+void Game::onGameClosed()
+{
+	ofNotifyEvent(closed);
 }
