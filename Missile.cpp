@@ -6,7 +6,7 @@
 //
 
 #include <stdio.h>
-#include "ofApp.h"
+#include "src/ofApp.h"
 #include "Missile.h"
 
 Missile::Missile(){}//Default Constructor

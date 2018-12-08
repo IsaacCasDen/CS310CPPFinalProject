@@ -2,7 +2,6 @@
 
 ofApp::ofApp()
 {
-	game = Game(ofVec2f(ofGetWindowWidth(), ofGetWindowHeight()));
 }
 
 ofApp::~ofApp()
@@ -11,110 +10,89 @@ ofApp::~ofApp()
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    game=Game(ofGetWindowSize());
+	ofVec2f size;
+	if (true) {
+		while ((size = ofGetWindowSize()).distance(ofVec2f(0, 0)) == 0);
+	}
+	else {
+		while ((size = ofVec2f(ofGetScreenWidth(), ofGetScreenHeight())).distance(ofVec2f(0, 0)) == 0);
+	}
+	
+    game=Game(size);
+	ofAddListener(game.closed, this, &ofApp::onGameExit);
+
     game.startGame();
-	/*
-    ofBackground(0, 0, 0);
-    port = serial.setup("/dev/tty.usbmodem143101", 9600);
-    if(port)
-    {
-        cout << "Port OK!" << endl;
-    }
-    else {
-        cout << "Port NOT OK!" << endl;
-    }
-    for(int i=0; i<1; i++)
-    {
-        galaga_ship.push_back(new GalagaShip());
-    }//create new ship and push it into the vector
-    for (int i=0; i<1; i++) {
-        missiles.push_back(new Missile());
-    }//create new missiles and push them into the vector
-    for(int j=0; j<galaga_ship.size(); j++)
-    {
-        galaga_ship[j]->setup();
-    }//setup ship
-    for (int i=0; i<missiles.size(); i++) {
-        missiles[i]->setup();
-    }//setup missiles
-    */ 
+	
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	/*
-    for (int i=0; i<galaga_ship.size(); i++)
-    {
-        char c;
-        if(serial.available())
-        {
-            c = serial.readByte();
-            galaga_ship[i]->update(c);
-            
-        }//if serial is available
-    }//for loop cycling through galaga ship vector
-    for(int i=0; i<missiles.size(); i++)
-    {
-        char c;
-        if(serial.available())
-        {
-            c = serial.readByte();
-            missiles[i]->update(c);
-            cout << c << endl;
-        }
-    }
-	*/
-	game.update();
+	if (!this->isClosing) {
+		game.update();
+	}
+	else {
+		try {
+			ofExit();
+		}
+		catch (const std::exception& e) {
+
+		}
+	}
 }//update()
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    /*
-    for (int i=0; i<galaga_ship.size(); i++) {
-        char c;
-        galaga_ship[i]->draw();
-    }
-    for (int i=0; i<missiles.size(); i++) {
-        char c;
-        missiles[i]->draw(c);
-    }
-    */
-    game.draw();
+	if (!this->isClosing) {
+		game.draw();
+	}
 }
 
-//--------------------------------------------------------------
-void ofApp::exit() {
-    game.exitGame();
+void ofApp::onGameExit()
+{
+	this->isClosing = true;
+	game.exitGame();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if (!this->isClosing) {
+		game.keyPressed(key);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+	if (!this->isClosing) {
+		game.keyReleased(key);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-	game.mouseMoved(x, y);
+	if (!this->isClosing) {
+		game.mouseMoved(x, y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-	game.mouseMoved(x, y);
+	if (!this->isClosing) {
+		game.mouseMoved(x, y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	game.mousePressed(x, y, button);
+	if (!this->isClosing) {
+		game.mousePressed(x, y, button);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	game.mouseReleased(x, y, button);
+	if (!this->isClosing) {
+		game.mouseReleased(x, y, button);
+	}
 }
 
 //--------------------------------------------------------------

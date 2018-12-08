@@ -3,14 +3,22 @@
 
 #pragma once
 
+
 #include "ofRectangle.h"
 #include "ofVec2f.h"
-#include "Drawable.h"
+#include "ofTrueTypeFont.h"
+#include "ofSerial.h"
 #include "Screen.h"
 #include "ScreenMenu.h"
+#include "ScreenGame.h"
+#include "ScreenGalaga.h"
+#include "ScreenSnake.h"
+#include "ofEvent.h"
 
 class Game {
     public:
+
+		ofEvent<void> closed;
 
 		static ofTrueTypeFont getFontLarge() {
 			if (!hasFontLarge) {
@@ -40,38 +48,53 @@ class Game {
 			return fontSmall;
 		}
 
-        ofRectangle getBounds();
+		ofRectangle getBounds();
 
 		Game();
         Game(ofVec2f size);
 
         void startGame();
-        void exitGame();
+		void exitGame();
 
         void update();
         void draw();
 
-		void loadScreenMenu();
-
+		virtual void keyPressed(int key);
+		virtual void keyReleased(int key);
 		virtual void mouseMoved(int x, int y);
 		virtual void mousePressed(int x, int y, int button);
 		virtual void mouseReleased(int x, int y, int button);
+
+		static ofColor getOfColor()
+		{
+			return currentColor;
+		}
+
+		static void setOfColor(ofColor value)
+		{
+			currentColor = value;
+			ofSetColor(value);
+		}
+
+		
 
     protected:
         void dispose();
 		bool isGameRunning();
 		void setGameRunning(bool isRunning);
+		void setActiveScreen(Screen * screen);
 
 		bool hasScreen();
-		void hasScreen(bool value);
 
     private:
         ofRectangle bounds;
-		bool _isGameRunning = false;
 
-		bool _hasScreen = false;
-		Screen *activeScreen;
-
+		bool _hasScreen; // Not keeping changes
+		int currentScreenIndex = 0;
+		int lastScreenIndex = 0;
+		Screen *activeScreen = nullptr;
+		Screen *newScreen = nullptr;
+		
 		static bool hasFontLarge;
 		static bool hasFontMedium;
 		static bool hasFontSmall;
@@ -80,6 +103,12 @@ class Game {
 		static ofTrueTypeFont fontMedium;
 		static ofTrueTypeFont fontSmall;
 
+		ofSerial serial;
+		bool port;
+
+		static ofColor currentColor;
+
+		void onGameClosed();
 };
 
 //#endif

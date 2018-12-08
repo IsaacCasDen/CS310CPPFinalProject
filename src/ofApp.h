@@ -1,53 +1,43 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofColor.h"
 #include "../Game.h"
-#include "../GalagaShip.h"
-#include "../Missile.h"
+//#include "../GalagaShip.h"
+//#include "../Missile.h"
 #include <vector>
 
 
 class ofApp : public ofBaseApp{
 
-	public:
-		ofApp();
-		~ofApp();
+public:
+		
+		
+	ofApp();
+	~ofApp();
 
-		void setup();
-		void update();
-		void draw();
+	void setup();
+	void update();
+	void draw();
 
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		void exit();
+	void keyPressed(int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y );
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void mouseEntered(int x, int y);
+	void mouseExited(int x, int y);
+	void windowResized(int w, int h);
+	void dragEvent(ofDragInfo dragInfo);
+	void gotMessage(ofMessage msg);
 
-		static ofColor ofApp::getOfColor()
-		{
-			return currentColor;
-		}
+protected:
+	void onGameExit();
 
-		static void ofApp::setOfColor(ofColor value)
-		{
-			currentColor = value;
-			ofSetColor(value);
-		}
-    
-		vector<GalagaShip*> galaga_ship;
-		vector<Missile*> missiles;
-		ofSerial serial;
-		bool port;
-
-	private:
-		Game game;
-		static ofColor currentColor;
+private:
+	Game game;
+	bool isClosing = false;
+		
 
 };

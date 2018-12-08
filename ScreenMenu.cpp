@@ -8,17 +8,24 @@ ScreenMenu::ScreenMenu()
 ScreenMenu::ScreenMenu(Game *game, ofVec2f size) : Screen(game,size)
 {
 	ofVec3f area = game->getBounds().getCenter();
-	buttonNewGame = Button("New Game", 20);
-	buttonNewGame.setWidth(200);
-	buttonNewGame.setHeight(50);
-	buttonNewGame.setPosition(ofVec2f(area.x-buttonNewGame.getBounds().width/2, 100));
-	ofAddListener(buttonNewGame.clicked, this, &ScreenMenu::onButtonNewGameClicked);
-	buttons.push_back(&buttonNewGame);
+	buttonPlayGalaga = Button("Play Galaga", 20);
+	buttonPlayGalaga.setWidth(200);
+	buttonPlayGalaga.setHeight(50);
+	buttonPlayGalaga.setPosition(ofVec2f(area.x-buttonPlayGalaga.getBounds().width/2, 100));
+	ofAddListener(buttonPlayGalaga.clicked, this, &ScreenMenu::onButtonPlayGalagaClicked);
+	buttons.push_back(&buttonPlayGalaga);
+
+	buttonPlaySnake = Button("Play Snake", 20);
+	buttonPlaySnake.setWidth(200);
+	buttonPlaySnake.setHeight(50);
+	buttonPlaySnake.setPosition(ofVec2f(area.x - buttonPlaySnake.getBounds().width / 2, buttonPlayGalaga.getBounds().getBottom() + 10));
+	ofAddListener(buttonPlaySnake.clicked, this, &ScreenMenu::onButtonPlayGalagaClicked);
+	buttons.push_back(&buttonPlaySnake);
 
 	buttonQuit = Button("Quit", 20);
 	buttonQuit.setWidth(200);
 	buttonQuit.setHeight(50);
-	buttonQuit.setPosition(ofVec2f(area.x - buttonQuit.getBounds().width / 2, buttonNewGame.getBounds().getBottom() + 10));
+	buttonQuit.setPosition(ofVec2f(area.x - buttonQuit.getBounds().width / 2, buttonPlaySnake.getBounds().getBottom() + 10));
 	ofAddListener(buttonQuit.clicked, this, &ScreenMenu::onButtonQuitClicked);
 	buttons.push_back(&buttonQuit);
 	
@@ -26,8 +33,16 @@ ScreenMenu::ScreenMenu(Game *game, ofVec2f size) : Screen(game,size)
 
 ScreenMenu::~ScreenMenu()
 {
-	ofRemoveListener(buttonNewGame.clicked, this, &ScreenMenu::onButtonNewGameClicked);
+	ofRemoveListener(buttonPlayGalaga.clicked, this, &ScreenMenu::onButtonPlayGalagaClicked);
 	ofRemoveListener(buttonQuit.clicked, this, &ScreenMenu::onButtonQuitClicked);
+}
+
+void ScreenMenu::keyPressed(int key)
+{
+}
+
+void ScreenMenu::keyReleased(int key)
+{
 }
 
 void ScreenMenu::mouseMoved(int x, int y)
@@ -53,20 +68,40 @@ void ScreenMenu::mouseReleased(int x, int y, int button)
 
 void ScreenMenu::update()
 {
+	Screen * screen;
+	switch (newScreenType) {
+	case 1:
+		screen = new ScreenGalaga(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
+		screen->setGameRunning(true);
+		setPreLoadedScreen(screen);
+		newScreenType = -1;
+	case 2:
+		screen = new ScreenSnake(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
+		screen->setGameRunning(true);
+		setPreLoadedScreen(screen);
+		newScreenType = -1;
+	}
+	
 }
 
 void ScreenMenu::draw()
 {
-	buttonNewGame.draw();
-	buttonQuit.draw();
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons[i]->draw();
+	}
 }
 
-void ScreenMenu::onButtonNewGameClicked()
+void ScreenMenu::onButtonPlayGalagaClicked()
 {
+	newScreenType = 1;
+}
 
+void ScreenMenu::onButtonPlaySnakeClicked()
+{
+	newScreenType = 2;
 }
 
 void ScreenMenu::onButtonQuitClicked()
 {
-
+	this->onClosed();
 }
