@@ -75,6 +75,20 @@ void Game::draw() {
 	}
 }
 
+void Game::keyPressed(int key)
+{
+	if (activeScreen != nullptr) {
+		activeScreen->keyPressed(key);
+	}
+}
+
+void Game::keyReleased(int key)
+{
+	if (activeScreen != nullptr) {
+		activeScreen->keyReleased(key);
+	}
+}
+
 void Game::mouseMoved(int x, int y)
 {
 	if (activeScreen != nullptr) {

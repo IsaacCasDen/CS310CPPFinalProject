@@ -18,6 +18,8 @@ public:
 	ScreenMenu(Game *game, ofVec2f size);
 	~ScreenMenu();
 
+	virtual void keyPressed(int key);
+	virtual void keyReleased(int key);
 	virtual void mouseMoved(int x, int y);
 	virtual void mousePressed(int x, int y, int button);
 	virtual void mouseReleased(int x, int y, int button);
@@ -26,13 +28,16 @@ public:
 	void draw();
 
 protected:
-	void onButtonNewGameClicked();
+	void onButtonPlayGalagaClicked();
+	void onButtonPlaySnakeClicked();
 	void onButtonQuitClicked();
 
 private:
-	Button buttonNewGame;
+	Button buttonPlayGalaga;
+	Button buttonPlaySnake;
 	Button buttonQuit;
 	std::vector<Drawable *> buttons;
+	int newScreenType = -1;
 };
 
 //#endif

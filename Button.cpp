@@ -112,6 +112,14 @@ void Button::setWidth(double value)
 	initFontBounds();
 }
 
+void Button::keyPressed(int key)
+{
+}
+
+void Button::keyReleased(int key)
+{
+}
+
 void Button::mouseMoved(int x, int y)
 {
 	if (isIntersecting(x, y)) {

@@ -1,117 +1,210 @@
 #include "ScreenGame.h"
 #include "Game.h"
 
+ofRectangle ScreenGame::getGameBounds()
+{
+	return areaGame;
+}
+
+ofRectangle ScreenGame::getHeaderBounds()
+{
+	return areaHeader;
+}
+
+ofRectangle ScreenGame::getFooterBounds()
+{
+	return areaFooter;
+}
+
 ScreenGame::ScreenGame()
 {
 	
 }
 ScreenGame::ScreenGame(Game * game, ofVec2f size) : Screen(game, size)
 {
-}
+	areaHeader = ofRectangle(0, 0, size.x, HEIGHT_HEADER);
+	areaFooter = ofRectangle(0, size.y - HEIGHT_FOOTER, size.x, HEIGHT_FOOTER);
+	areaGame = ofRectangle(0, areaHeader.getBottom(), size.x, size.y - (areaHeader.getHeight() + areaFooter.getHeight()));
 
-
-void ScreenGame::update()
-{
-	updatePlayers();
-	updateItems();
-	updatePlayerShots();
-	updateEnemies();
-	updateEnemyShots();
-}
-
-void ScreenGame::draw()
-{
-	drawHeader();
-	drawFooter();
-	drawPlayers();
-	drawItems();
-	drawPlayerShots();
-	drawEnemies();
-	drawEnemyShots();
-}
-
-void ScreenGame::drawHeader() {
-	ofSetColor(0, 0, 0);
-	std::string text = "Level 1";
-	Game::getFontSmall().drawString(text, getBounds().getCenter().x - Game::getFontSmall().stringWidth(text) / 2, getBounds().y + Game::getFontSmall().stringHeight(text) + 3);
-}
-
-void ScreenGame::drawFooter() {
-
-}
-
-void ScreenGame::updatePlayers()
-{
-	for (int i = 0; i < players.size(); i++) {
-		players[i]->update();
-	}
 }
 
 ScreenGame::~ScreenGame()
 {
 }
 
-void ScreenGame::drawPlayers()
+void ScreenGame::update()
 {
-	for (int i = 0; i < players.size(); i++) {
-		players[i]->draw();
-	}
+	
 }
 
-void ScreenGame::updatePlayerShots()
+void ScreenGame::draw()
 {
-	for (int i = 0; i < playerShot.size(); i++) {
-		playerShot[i]->update();
-	}
+	drawHeader();
+	drawGame();
+	drawFooter();
 }
 
-void ScreenGame::drawPlayerShots()
+void ScreenGame::getHeaderHeight()
 {
-	for (int i = 0; i < playerShot.size(); i++) {
-		playerShot[i]->draw();
-	}
+	
 }
 
-void ScreenGame::updateItems()
-{
-	for (int i = 0; i < items.size(); i++) {
-		items[i]->update();
-	}
+void ScreenGame::drawHeader() {
+	
+	drawScore(areaHeader);
+	drawLives(areaHeader);
+	drawGameLevel(areaHeader);
 }
 
-void ScreenGame::drawItems()
-{
-	for (int i = 0; i < items.size(); i++) {
-		items[i]->draw();
-	}
+void ScreenGame::drawGame() {
+	Game::setOfColor(ofColor(0, 0, 0));
+	ofNoFill();
+	ofDrawRectangle(getGameBounds());
 }
 
-void ScreenGame::updateEnemies()
+void ScreenGame::getFooterHeight()
 {
-	for (int i = 0; i < enemies.size(); i++) {
-		enemies[i]->update();
-	}
+
 }
 
-void ScreenGame::drawEnemies()
-{
-	for (int i = 0; i < enemies.size(); i++) {
-		enemies[i]->draw();
-	}
+void ScreenGame::drawFooter() {
+
 }
 
-void ScreenGame::updateEnemyShots()
-{
-	for (int i = 0; i < enemyShot.size(); i++) {
-		enemyShot[i]->update();
-	}
+ofTrueTypeFont getGameNameFont() {
+	return Game::getFontSmall();
+}
+ofRectangle ScreenGame::getGameNameDrawBounds(ofRectangle area) {
+	ofRectangle bounds;
+	bounds.width = getGameNameFont().stringWidth(getGameName());
+	bounds.height = getGameNameFont().stringHeight(getGameName());
+	bounds.x = area.getCenter().x - bounds.width / 2;
+	bounds.y = area.y + bounds.height + 3;
+
+	return bounds;
+}
+void ScreenGame::drawGameName(ofRectangle area) {
+	if (!showGameName) return;
+	ofSetColor(0, 0, 0);
+	std::string text = getGameName();
+	ofRectangle bounds = getGameNameDrawBounds(area);
+	getGameNameFont().drawString(text, bounds.x, bounds.y);
 }
 
-void ScreenGame::drawEnemyShots()
-{
-	for (int i = 0; i < enemyShot.size(); i++) {
-		enemyShot[i]->draw();
+ofTrueTypeFont getGameLevelFont() {
+	return Game::getFontSmall();
+}
+ofRectangle ScreenGame::getGameLevelDrawBounds(ofRectangle area) {
+	ofRectangle bounds;
+	bounds.width = getGameLevelFont().stringWidth(getGameLevel());
+	bounds.height = getGameLevelFont().stringHeight(getGameLevel());
+	bounds.x = area.getCenter().x - bounds.width / 2;
+	bounds.y = area.y + bounds.height + 3;
+
+	return bounds;
+}
+void ScreenGame::drawGameLevel(ofRectangle area) {
+	if (!hasGameLevel) return;
+	ofSetColor(0, 0, 0);
+	std::string text = getGameLevel();
+	ofRectangle bounds = getGameLevelDrawBounds(area);
+	getGameLevelFont().drawString(text, bounds.x, bounds.y);
+}
+
+ofTrueTypeFont getLivesFont() {
+	return Game::getFontSmall();
+}
+ofRectangle * ScreenGame::getLivesDrawBounds(ofRectangle area) {
+	ofRectangle * bounds = new ofRectangle[lives.size()];
+	int * vals = getLives();
+	for (int i = 0; i < lives.size(); i++) {
+		double
+			width = getLivesFont().stringWidth(to_string(vals[i])),
+			height = getLivesFont().stringHeight(to_string(vals[i])),
+			x = 3,
+			y = 3;
+		ofRectangle val = ofRectangle(x, y, width, height);
+		bounds[i] = val;
 	}
+
+	return bounds;
+}
+void ScreenGame::drawLives(ofRectangle area) {
+	if (!hasLives) return;
+
+}
+
+ofTrueTypeFont getScoreFont() {
+	return Game::getFontSmall();
+}
+ofRectangle * ScreenGame::getScoreDrawBounds(ofRectangle area) {
+	ofRectangle * bounds = new ofRectangle[scores.size()];
+	int * vals = getScores();
+	for (int i = 0; i < scores.size(); i++) {
+		double
+			width = getScoreFont().stringWidth(to_string(vals[i])),
+			height = getScoreFont().stringHeight(to_string(vals[i])),
+			x = 3,
+			y = 3;
+		ofRectangle val = ofRectangle(x, y, width, height);
+		bounds[i] = val;
+	}
+
+	return bounds;
+}
+void ScreenGame::drawScore(ofRectangle area) {
+	if (!hasScores) return;
+	ofFill();
+	Game::setOfColor(ofColor(0, 0, 0));
+	ofRectangle * s = getScoreDrawBounds(area);
+	double width = 0;
+	for (int i = scores.size() - 1; i >= 0; i--) 
+		width += s[i].getWidth() + 3;
+		
+	//getScoreFont().drawString(to_string(getScore()), area.getWidth() - offset + s[i].x, area.getTop() + s[i].height + s[i].y);
+}
+
+std::string ScreenGame::getGameName()
+{
+	return gameName;
+}
+
+int * ScreenGame::getScores()
+{
+	int * values = new int[scores.size()];
+	for (int i = 0; i < scores.size(); i++)
+		values[i] = scores[i];
+
+	return values;
+}
+
+int ScreenGame::getScore()
+{
+	return scores[0];
+}
+
+int ScreenGame::getScore(int index)
+{
+	return scores[index];
+}
+
+int * ScreenGame::getLives()
+{
+	int * values = new int[lives.size()];
+	for (int i = 0; i < scores.size(); i++)
+		values[i] = lives[i];
+
+	return values;
+}
+
+int ScreenGame::getLives(int index)
+{
+	return lives[index];
+}
+
+std::string ScreenGame::getGameLevel()
+{
+	return gameLevel;
 }
 
 void ScreenGame::mouseMoved(int x, int y)
@@ -127,4 +220,61 @@ void ScreenGame::mousePressed(int x, int y, int button)
 void ScreenGame::mouseReleased(int x, int y, int button)
 {
 
+}
+
+void ScreenGame::setGameName(std::string value)
+{
+	gameName = value;
+}
+
+void ScreenGame::addPlayer()
+{
+	scores.push_back(0);
+	lives.push_back(0);
+
+}
+
+void ScreenGame::setScore(int value)
+{
+	scores[0] = value;
+}
+
+void ScreenGame::setScore(int index, int value)
+{
+	scores[index] = value;
+}
+
+void ScreenGame::addScore(int value)
+{
+	scores[0] += value;
+}
+
+void ScreenGame::addScore(int index, int value)
+{
+	scores[index] += value;
+}
+
+void ScreenGame::setLives(int value)
+{
+	lives[0] = value;
+}
+
+void ScreenGame::setLives(int index, int value)
+{
+	lives[index] = value;
+}
+
+void ScreenGame::addLives(int value)
+{
+	lives[0] += value;
+}
+
+void ScreenGame::addLives(int index, int value)
+{
+	lives[index] += value;
+}
+
+void ScreenGame::setGameLevel(std::string value)
+{
+	gameLevel = value;
 }

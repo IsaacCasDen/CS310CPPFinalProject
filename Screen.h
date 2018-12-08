@@ -23,6 +23,8 @@ public:
 	Screen(Game *game, ofVec2f size);
 	~Screen();
 
+	virtual void keyPressed(int key) = 0;
+	virtual void keyReleased(int key) = 0;
 	virtual void mouseMoved(int x, int y) = 0;
 	virtual void mousePressed(int x, int y, int button) = 0;
 	virtual void mouseReleased(int x, int y, int button) = 0;
@@ -33,6 +35,15 @@ public:
 	bool isClosed();
 
 protected:
+
+	static const int KEY_LEFT = 57356;
+	static const int KEY_UP = 57357;
+	static const int KEY_RIGHT = 57358;
+	static const int KEY_DOWN = 57359;
+
+	const int KEY_SPACE = 32;
+	
+
 	Game * getGame();
 	void setPreLoadedScreen(Screen * screen);
 	void onClosed();

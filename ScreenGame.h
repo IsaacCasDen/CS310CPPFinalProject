@@ -1,8 +1,6 @@
 #pragma once
 #include "Screen.h"
 #include "SpriteObject.h"
-#include "ofTrueTypeFont.h"
-#include "ofVec2f.h"
 #include <vector>
 
 class Game;
@@ -11,6 +9,11 @@ class ScreenGame :
 	public Screen
 {
 public:
+
+	virtual ofRectangle getGameBounds();
+	virtual ofRectangle getHeaderBounds();
+	virtual ofRectangle getFooterBounds();
+
 	ScreenGame();
 	ScreenGame(Game *game, ofVec2f size);
 	~ScreenGame();
@@ -18,59 +21,79 @@ public:
 	void update();
 	void draw();
 
+	void getHeaderHeight();
 	void drawHeader();
 
+	void drawGame();
+
+	void getFooterHeight();
 	void drawFooter();
 
-	/*
+	ofRectangle getGameNameDrawBounds(ofRectangle area);
+
+	void drawGameName(ofRectangle area);
+
+	ofRectangle getGameLevelDrawBounds(ofRectangle area);
+
+	void drawGameLevel(ofRectangle area);
+
+	ofRectangle * getLivesDrawBounds(ofRectangle area);
+
+	void drawLives(ofRectangle area);
+
+	ofRectangle * getScoreDrawBounds(ofRectangle area);
+
+	void drawScore(ofRectangle area);
+
+	std::string getGameName();
+
+	int getScore();
+	int getScore(int index);
+	int * getScores();
+	int * getLives();
+	int getLives(int index);
+	std::string getGameLevel();
+
+	virtual void keyPressed(int key) = 0;
+	virtual void keyReleased(int key) = 0;
+	virtual void mouseMoved(int x, int y)=0;
+	virtual void mousePressed(int x, int y, int button)=0;
+	virtual void mouseReleased(int x, int y, int button)=0;
+
+protected:
+
+	const double HEIGHT_HEADER = 50;
+	const double HEIGHT_FOOTER = 50;
+
+	void setGameName(std::string value);
+
 	void addPlayer();
-	void removePlayer();
-	*/
-	void updatePlayers();
-	void drawPlayers();
-	
-	/*
-	void addPlayerShot();
-	void removePlayerShot();
-	*/
-	void updatePlayerShots();
-	void drawPlayerShots();
-	
 
-	/*
-	void addItem();
-	void removeItem();
-	*/
-	void updateItems();
-	void drawItems();
+	bool showGameName = false;
 
-	/*
-	void AddEnemy();
-	void removeEnemy();
-	*/
-	void updateEnemies();
-	void drawEnemies();
+	bool hasScores = false;
+	void setScore(int value);
+	void setScore(int index, int value);
+	void addScore(int value);
+	void addScore(int index, int value);
 
-	/*
-	void AddEnemyShot();
-	void removeEnemyShot();
-	*/
-	void updateEnemyShots();
-	void drawEnemyShots();
+	bool hasLives = false;
+	void setLives(int value);
+	void setLives(int index, int value);
+	void addLives(int value);
+	void addLives(int index, int value);
 
-	int newScreenType=-1;
-
-	virtual void mouseMoved(int x, int y);
-	virtual void mousePressed(int x, int y, int button);
-	virtual void mouseReleased(int x, int y, int button);
+	bool hasGameLevel = false;
+	void setGameLevel(std::string value);
 
 private:
-	std::vector<SpriteObject *> enemies;
-	std::vector<SpriteObject *> enemyShot;
+	
+	ofRectangle areaHeader;
+	ofRectangle areaGame;
+	ofRectangle areaFooter;
 
-	std::vector<SpriteObject *> players;
-	std::vector<SpriteObject *> playerShot;
-
-	std::vector<SpriteObject *> items;
+	std::string gameName;
+	std::vector<double> scores;
+	std::vector<double> lives;
+	std::string gameLevel;
 };
-

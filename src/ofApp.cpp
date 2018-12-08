@@ -56,12 +56,14 @@ void ofApp::onGameExit()
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	if (!this->isClosing) {
+		game.keyPressed(key);
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 	if (!this->isClosing) {
+		game.keyReleased(key);
 	}
 }
 

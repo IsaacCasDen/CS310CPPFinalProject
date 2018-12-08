@@ -12,6 +12,9 @@ public:
 
 	ofImage getSprite();
 
+	virtual void keyPressed(int key);
+	virtual void keyReleased(int key);
+
 private:
 	ofImage sprite;
 };
