@@ -61,3 +61,6 @@ Makefile
 .vscode/launch.json
 .vscode/tasks.json
 *.aps
+-home-isaaccd-Documents-WSCU-2018-3_Fall-CS_310-OpenFrameworks-apps-myApps-CS310CPPFinalProject-.txt
+bin/CS310CPPFinalProject
+*.lastcodeanalysissucceeded

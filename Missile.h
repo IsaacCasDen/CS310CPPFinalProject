@@ -7,7 +7,7 @@
 
 #ifndef Missile_h
 #define Missile_h
-#include "ofApp.h"
+#include "src/ofApp.h"
 #include "ofMain.h"
 
 class Missile : public ofBaseApp
