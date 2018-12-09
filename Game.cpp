@@ -121,7 +121,7 @@ bool Game::isGameRunning()
 void Game::setGameRunning(bool isRunning)
 {
 	if (isRunning) {
-		ofSetFrameRate(144);
+		ofSetFrameRate(60);
 	}
 	else {
 		ofSetFrameRate(30);
