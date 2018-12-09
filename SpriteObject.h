@@ -8,7 +8,7 @@ class SpriteObject :
 	public Drawable
 {
 public:
-	SpriteObject();
+	SpriteObject(ofRectangle gameBounds);
 	~SpriteObject();
 
 	ofImage getSprite();
@@ -21,6 +21,8 @@ protected:
 	void nextSprite();
 	int getTicksperSprite();
 	void setTicksPerSprite(int value);
+
+	ofRectangle gameBounds;
 
 	std::vector<ofImage> sprites;
 	int spriteIndex = 0;
