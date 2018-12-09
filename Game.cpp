@@ -121,7 +121,7 @@ bool Game::isGameRunning()
 void Game::setGameRunning(bool isRunning)
 {
 	if (isRunning) {
-		ofSetFrameRate(144);
+		ofSetFrameRate(60);
 	}
 	else {
 		ofSetFrameRate(30);
@@ -131,7 +131,7 @@ void Game::setActiveScreen(Screen * screen)
 {
 	if (activeScreen != nullptr) {
 		ofRemoveListener(activeScreen->closed, this, &Game::onGameClosed);
-		delete activeScreen;
+		//delete activeScreen;
 	}
 	ofAddListener(screen->closed, this, &Game::onGameClosed);
 	activeScreen = screen;
