@@ -1,3 +1,5 @@
+#pragma once
+
 //
 //  Missile.h
 //  emptyExample
@@ -5,22 +7,34 @@
 //  Created by Travis Olmstead on 11/28/18.
 //
 
-#ifndef Missile_h
-#define Missile_h
-#include "src/ofApp.h"
+#include "SpriteObject.h"
 #include "ofMain.h"
 
-class Missile : public ofBaseApp
+class Missile : public SpriteObject
 {
 public:
-    Missile();
-    void setup();
-    void update(char c);
-    void draw(char c);
+
+	ofEvent<Missile> isOffScreen;
+
+    Missile(ofRectangle gameBounds, int directionY, double x, double y);
+    void update();
+    void draw();
+
+	virtual void keyPressed(int key);
+	virtual void keyReleased(int key);
+	virtual void mouseMoved(int x, int y);
+	virtual void mousePressed(int x, int y, int button);
+	virtual void mouseReleased(int x, int y, int button);
+
+protected:
+	const double DEFAULT_RADIUS = 4;
+	const double DEFAULT_VELX = 0;
+	const double DEFAULT_VELY = 10;
+
 private:
-    float xPos, yPos, radius;
-    float dx, dy;
-    bool visible;
+	double radius = DEFAULT_RADIUS;
+	ofVec2f vel = ofVec2f(DEFAULT_VELX, DEFAULT_VELY);
+	int directionY=1;
+    
 };
 
-#endif /* Missile_h */
