@@ -6,7 +6,7 @@ const byte D5_DOWN = 5;
 const byte D6_LEFT = 6;
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(10);
   pinMode(D3_RIGHT, INPUT);
   digitalWrite(D3_RIGHT, HIGH);
   pinMode(D4_UP, INPUT);
@@ -19,22 +19,25 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+
   if(analogRead(x_dir) >= 1000)
   {
     Serial.println("R");
-  }
+  } else
   if(analogRead(x_dir) <= 10)
   {
     Serial.println("L");
   }
+  
   if(analogRead(y_dir) >= 1000)
   {
     Serial.println("U");
-  }
+  } else
   if(analogRead(y_dir) <= 10)
   {
     Serial.println("D");
   }
+  
   if(digitalRead(D3_RIGHT) == LOW)
   {
     Serial.println("A");
@@ -51,22 +54,5 @@ void loop() {
   {
     Serial.println("Y");
   }
-//  Serial.print("x dir: ");
-//  Serial.println(analogRead(x_dir));
-//  Serial.print("y dir: ");
-//  Serial.println(analogRead(y_dir));
-
-  if(analogRead(x_dir) >= 1000)
-  {
-    Serial.println("C");
-  }
-  if(analogRead(x_dir) <= 10)
-  {
-    Serial.println("D");
-  }
-  //top left is between 800 and 1000 y-dir .   "G"
-  //bottom left is between 50 and 150 y-dir   "F"
-  //top right is between 650 and 850 x-dir . "E"
-  //bottom right is between 750 and 950 y-dir . "H"
-  delay(10);
+  delay(250);
 }
