@@ -2,6 +2,7 @@
 
 #include "Drawable.h"
 #include "ofImage.h"
+#include <vector>
 
 class SpriteObject :
 	public Drawable
@@ -15,7 +16,20 @@ public:
 	virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
 
+protected:
+
+	void nextSprite();
+	int getTicksperSprite();
+	void setTicksPerSprite(int value);
+
+	std::vector<ofImage> sprites;
+	int spriteIndex = 0;
+	int tick=0;
+
 private:
-	ofImage sprite;
+
+	int ticksPerSprite;
+	int lastChangeTick;
+	
 };
 
