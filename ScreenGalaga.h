@@ -2,6 +2,11 @@
 #include "ScreenGame.h"
 #include "ofTrueTypeFont.h"
 #include "ofVec2f.h"
+#include "ofSerial.h"
+#include "SpriteObject.h"
+#include "GalagaShip.h"
+#include "EnemyShip.h"
+#include "Missile.h"
 #include <vector>
 class ScreenGalaga :
 	public ScreenGame
@@ -9,22 +14,19 @@ class ScreenGalaga :
 public:
 	ScreenGalaga();
 	ScreenGalaga(Game *game, ofVec2f size);
+	void createEnemyShips(int count);
 	~ScreenGalaga();
 
 	virtual void update();
 	void draw();
 
-	/*
-	void addPlayer();
-	void removePlayer();
-	*/
+	
 	void updatePlayers();
 	void drawPlayers();
 
-	/*
-	void addPlayerShot();
-	void removePlayerShot();
-	*/
+	
+	void addPlayerShot(ofVec2f &value);
+	void removePlayerShot(Missile &value);
 	void updatePlayerShots();
 	void drawPlayerShots();
 
@@ -38,8 +40,8 @@ public:
 
 	/*
 	void AddEnemy();
-	void removeEnemy();
 	*/
+	void removeEnemy(EnemyShip &value);
 	void updateEnemies();
 	void drawEnemies();
 
@@ -56,6 +58,12 @@ public:
 	virtual void mousePressed(int x, int y, int button);
 	virtual void mouseReleased(int x, int y, int button);
 
+protected:
+
+	void createEnemyShip(double x, double y);
+	bool createPlayerShip(std::string devicePath, double x, double y);
+	void createMissile(double x, double y);
+
 private:
 	std::vector<SpriteObject *> enemies;
 	std::vector<SpriteObject *> enemyShot;
@@ -64,5 +72,7 @@ private:
 	std::vector<SpriteObject *> playerShot;
 
 	std::vector<SpriteObject *> items;
+
+	std::vector<ofSerialDeviceInfo> devices;
 };
 
