@@ -61,4 +61,3 @@ Makefile
 .vscode/launch.json
 .vscode/tasks.json
 *.aps
-*.lastcodeanalysissucceeded
