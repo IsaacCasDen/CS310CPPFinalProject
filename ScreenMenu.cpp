@@ -75,11 +75,13 @@ void ScreenMenu::update()
 		screen->setGameRunning(true);
 		setPreLoadedScreen(screen);
 		newScreenType = -1;
+		break;
 	case 2:
 		screen = new ScreenSnake(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
 		screen->setGameRunning(true);
 		setPreLoadedScreen(screen);
 		newScreenType = -1;
+		break;
 	}
 	
 }
