@@ -19,7 +19,7 @@ ScreenMenu::ScreenMenu(Game *game, ofVec2f size) : Screen(game,size)
 	buttonPlaySnake.setWidth(200);
 	buttonPlaySnake.setHeight(50);
 	buttonPlaySnake.setPosition(ofVec2f(area.x - buttonPlaySnake.getBounds().width / 2, buttonPlayGalaga.getBounds().getBottom() + 10));
-	ofAddListener(buttonPlaySnake.clicked, this, &ScreenMenu::onButtonPlayGalagaClicked);
+	ofAddListener(buttonPlaySnake.clicked, this, &ScreenMenu::onButtonPlaySnakeClicked);
 	buttons.push_back(&buttonPlaySnake);
 
 	buttonQuit = Button("Quit", 20);

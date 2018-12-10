@@ -7,12 +7,24 @@ ScreenGalaga::ScreenGalaga()
 
 ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
 {
+
+	std::vector<string> devNames;
+	devNames.push_back("USB Serial Device");
+	devNames.push_back("/dev/tty.usbmodem");
+
 	ofSerial serial;
 	devices = serial.getDeviceList();
 	if (devices.size() > 0) {
 		for (int i = 0; i < devices.size(); i++) {
-			if (createPlayerShip(devices[i].getDevicePath(), i * 50 + 20, getGameBounds().getBottom())) {
+			// 
+			// 143101
+			for (int j = 0; j < devNames.size(); j++) {
+				if (devices[i].getDeviceName().find(devNames[j]) != std::string::npos) {
+					if (createPlayerShip(devices[i].getDevicePath(), i * 50 + 20, getGameBounds().getBottom())) {
 
+					}
+					break;
+				};
 			}
 		}
 	}
@@ -25,6 +37,13 @@ bool ScreenGalaga::createPlayerShip(std::string devicePath, double x, double y)
 	ofSerial *serial = new ofSerial();
 	if (serial->setup(devicePath, 10)) {
 		GalagaShip *player = new GalagaShip(serial, getGameBounds(), x, y);
+		player->setOverlayColor(
+			ofColor(
+				ofRandom(128,255),
+				ofRandom(128,255),
+				ofRandom(128,255)
+			)
+		);
 		ofAddListener(player->firedShot, this, &ScreenGalaga::addPlayerShot);
 		players.push_back(player);
 		return true;
@@ -81,7 +100,6 @@ void ScreenGalaga::updatePlayers()
 
 void ScreenGalaga::drawPlayers()
 {
-	ofSetColor(255);
 	for (int i = 0; i < players.size(); i++) {
 		players[i]->draw();
 	}

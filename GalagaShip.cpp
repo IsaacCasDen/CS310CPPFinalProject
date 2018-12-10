@@ -11,6 +11,16 @@
 #include "GalagaShip.h"
 #include "ofMain.h"
 
+ofColor GalagaShip::getOverlayColor()
+{
+	return overlayColor;
+}
+
+void GalagaShip::setOverlayColor(ofColor color)
+{
+	overlayColor = color;
+}
+
 GalagaShip::GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, double y) :SpriteObject(gameBounds)
 {
 	this->serial = serial;
@@ -20,7 +30,7 @@ GalagaShip::GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, doubl
 	ofRectangle bounds = getBounds();
 	double
 		gb = gameBounds.getBottom(),
-		sb = bounds.getBottom(),
+		sb = bounds.getBottom() + 10,
 		diff = sb - gb;
 
 	if (diff > 0) {
@@ -88,6 +98,7 @@ void GalagaShip::fireMissile() {
 
 void GalagaShip::draw()
 {
+	ofSetColor(overlayColor);
 	getSprite().draw(getBounds());
 }
 
