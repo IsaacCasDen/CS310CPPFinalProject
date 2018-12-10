@@ -21,8 +21,7 @@ public:
 
 	Screen();
 	Screen(Game *game, ofVec2f size);
-	~Screen();
-
+    
 	virtual void keyPressed(int key) = 0;
 	virtual void keyReleased(int key) = 0;
 	virtual void mouseMoved(int x, int y) = 0;
