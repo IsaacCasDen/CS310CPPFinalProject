@@ -82,6 +82,8 @@ void ScreenMenu::update()
 		setPreLoadedScreen(screen);
 		newScreenType = -1;
 		break;
+    default:
+        break;
 	}
 	
 }
