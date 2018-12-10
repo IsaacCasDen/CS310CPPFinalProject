@@ -9,27 +9,27 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
 {
 
 	std::vector<string> devNames;
-	devNames.push_back("USB Serial Device");
-	devNames.push_back("/dev/tty.usbmodem");
-
-	ofSerial serial;
-	devices = serial.getDeviceList();
-	if (devices.size() > 0) {
-		for (int i = 0; i < devices.size(); i++) {
-			// 
-			// 143101
-			for (int j = 0; j < devNames.size(); j++) {
-				if (devices[i].getDeviceName().find(devNames[j]) != std::string::npos) {
-					if (createPlayerShip(devices[i].getDevicePath(), i * 50 + 20, getGameBounds().getBottom())) {
-
-					}
-					break;
-				};
-			}
-		}
-	}
-
-	createEnemyShips(99);
+    devNames.push_back("USB Serial Device");
+    devNames.push_back("tty.usbmodem");
+    
+    ofSerial serial;
+    devices = serial.getDeviceList();
+    if (devices.size() > 0) {
+        for (int i = 0; i < devices.size(); i++) {
+            //
+            // 143101
+            for (int j = 0; j < devNames.size(); j++) {
+                if (devices[i].getDeviceName().find(devNames[j]) != std::string::npos) {
+                    if (createPlayerShip(devices[i].getDevicePath(), i * 50 + 20, getGameBounds().getBottom())) {
+                        
+                    }
+                    break;
+                };
+            }
+        }
+    }
+    
+    createEnemyShips(99);
 }
 
 bool ScreenGalaga::createPlayerShip(std::string devicePath, double x, double y)
