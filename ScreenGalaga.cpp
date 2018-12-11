@@ -3,12 +3,12 @@
 
 ScreenGalaga::ScreenGalaga()
 {
+    
 }
 
 ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
 {
-
-	std::vector<string> devNames;
+    std::vector<string> devNames;
     devNames.push_back("USB Serial Device");
     devNames.push_back("tty.usbmodem");
     
@@ -30,12 +30,20 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
     }
     
     createEnemyShips(99);
+    hits = *getScores();
+    shots = 0;
+    misses = 0;
+    score = *getScores();
+    lives = *getLives();
+    level = getGameLevel();
+    //galaga_miss = new GalagaShip(shots);
+    //all_shots = galaga_miss->shots;
 }
 
 bool ScreenGalaga::createPlayerShip(std::string devicePath, double x, double y)
 {
 	ofSerial *serial = new ofSerial();
-	if (serial->setup(devicePath, 10)) {
+	if (serial->setup(devicePath, 9600)) {
 		GalagaShip *player = new GalagaShip(serial, getGameBounds(), x, y);
 		player->setOverlayColor(
 			ofColor(
@@ -89,6 +97,13 @@ void ScreenGalaga::draw()
 	drawPlayerShots();
 	drawEnemies();
 	drawEnemyShots();
+    ofSetColor(0,0,0);
+    ofDrawBitmapString("Hits: " + std::to_string(hits), 220, 20);
+    ofDrawBitmapString("Misses: " + std::to_string(misses), 370, 20);
+    ofDrawBitmapString("Shots: " + std::to_string(shots), 520, 20);
+    ofDrawBitmapString("Lives: " + std::to_string(lives), 670, 20);
+    ofDrawBitmapString("Score: " + std::to_string(score), 820, 20);
+    ofDrawBitmapString("Level: " + level, 970, 20);
 }
 
 void ScreenGalaga::updatePlayers()
@@ -100,6 +115,7 @@ void ScreenGalaga::updatePlayers()
 
 void ScreenGalaga::drawPlayers()
 {
+	ofSetColor(255);
 	for (int i = 0; i < players.size(); i++) {
 		players[i]->draw();
 	}
@@ -109,6 +125,10 @@ void ScreenGalaga::addPlayerShot(ofVec2f &value) {
 	Missile *m = new Missile(getGameBounds(), -1, value.x, value.y);
 	ofAddListener(m->isOffScreen, this, &ScreenGalaga::removePlayerShot);
 	playerShot.push_back(m);
+    shots++;
+    //misses = shots - hits;
+    cout << value.y << endl;//value is 622
+    
 }
 
 void ScreenGalaga::removePlayerShot(Missile &value)
@@ -116,20 +136,24 @@ void ScreenGalaga::removePlayerShot(Missile &value)
 	for (int i = 0; i < playerShot.size(); i++) {
 		if (playerShot[i] == &value) {
 			playerShot.erase(playerShot.begin() + i);
+            
 			break;
 		}
+        
 	}
 }
 
 void ScreenGalaga::updatePlayerShots()
 {
+    misses = shots - hits;
 	bool repeatShot;
 	int i = 0;
 	do {
 		repeatShot = false;
 		for (i; i < playerShot.size(); i++) {
 			playerShot[i]->update();
-
+            
+            
 			bool repeatEnemy;
 			int j = 0;
 			do {
@@ -139,6 +163,11 @@ void ScreenGalaga::updatePlayerShots()
 						enemies.erase(enemies.begin() + j);
 						repeatEnemy = true;
 						repeatShot = true;
+                        hits++;
+                        //*getScores() = *getScores() + 1;
+                        score = score + 10;
+                        
+                        
 						break;
 					}
 				}
@@ -148,6 +177,7 @@ void ScreenGalaga::updatePlayerShots()
 				break;
 			}
 		}
+        
 	} while (repeatShot);
 }
 

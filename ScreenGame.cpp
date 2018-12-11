@@ -158,8 +158,12 @@ void ScreenGame::drawScore(ofRectangle area) {
 	Game::setOfColor(ofColor(0, 0, 0));
 	ofRectangle * s = getScoreDrawBounds(area);
 	double width = 0;
-	for (int i = scores.size() - 1; i >= 0; i--) 
-		width += s[i].getWidth() + 3;
+    s[0].x = area.getRight()-s[0].width;
+    s[0].y = area.getTop()-s[0].height;
+    //ofDrawBitmapString("Hits: ", 20, 20);
+    //ofDrawRectangle(10, 10, 10, 10);
+//    for (int i = scores.size() - 1; i >= 0; i--)
+//        width += s[i].getWidth() + 3;
 		
 	//getScoreFont().drawString(to_string(getScore()), area.getWidth() - offset + s[i].x, area.getTop() + s[i].height + s[i].y);
 }
@@ -190,6 +194,7 @@ int ScreenGame::getScore(int index)
 
 int * ScreenGame::getLives()
 {
+    //setLives(3);
 	int * values = new int[lives.size()];
 	for (int i = 0; i < scores.size(); i++)
 		values[i] = lives[i];

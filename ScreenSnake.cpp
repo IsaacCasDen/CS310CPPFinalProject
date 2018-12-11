@@ -20,6 +20,17 @@ ScreenSnake::ScreenSnake(Game * game, ofVec2f size) : ScreenGame(game, size)
 	
 	setGameLevel("Level 1");
 	hasGameLevel = true;
+    
+    port = serial.setup("tty.usbmodem143101", 9600);
+    if (port)
+    {
+        cout << "Port OK!" << endl;
+    }
+    else if(!port)
+    {
+        cout << "Port NOT OK!" << endl;
+    }
+    
 }
 
 ScreenSnake::~ScreenSnake()
@@ -34,7 +45,12 @@ void ScreenSnake::update()
 	updateSnakes();
 	tick++;
 	createApple();
-	
+    if (serial.available()) {
+        char command = serial.readByte();
+        
+        readCommand(command);
+        std::cout << command << std::endl;
+    }
 }
 
 void ScreenSnake::draw()
@@ -67,32 +83,62 @@ void ScreenSnake::drawSnake() {
 
 void ScreenSnake::keyPressed(int key)
 {
-	if (snakes.size() == 0) return;
-	int oldDir = snakes[0]->at(0).z;
-	int newDir = 0;
-	switch (key) {
-	case KEY_LEFT:
-		// Direction Left;
-		newDir = 0;
-		break;
-	case KEY_UP:
-		// Direction Up;
-		newDir = 1;
-		break;
-	case KEY_RIGHT:
-		// Direction Right;
-		newDir = 2;
-		break;
-	case KEY_DOWN:
-		// Direction Down;
-		newDir = 3;
-		break;
-	}
-
-	if (newDir!=((oldDir+2)%4))
-		snakes[0]->at(0).z = newDir;
+//    if (snakes.size() == 0) return;
+//    int oldDir = snakes[0]->at(0).z;
+//    int newDir = 0;
+//    switch (key) {
+//    case KEY_LEFT:
+//        // Direction Left;
+//        newDir = 0;
+//        break;
+//    case KEY_UP:
+//        // Direction Up;
+//        newDir = 1;
+//        break;
+//    case KEY_RIGHT:
+//        // Direction Right;
+//        newDir = 2;
+//        break;
+//    case KEY_DOWN:
+//        // Direction Down;
+//        newDir = 3;
+//        break;
+//    }
+//
+//    if (newDir!=((oldDir+2)%4))
+//        snakes[0]->at(0).z = newDir;
 }
-
+void ScreenSnake::readCommand(char command){
+    //ofSetFrameRate(200);
+    if (snakes.size() == 0) return;
+    int oldDir = snakes[0]->at(0).z;
+    int newDir = 0;
+    switch (command) {
+        case 'L':
+            // Direction Left;
+            cout << command << endl;
+            newDir = 0;
+            break;
+        case 'U':
+            cout << command << endl;
+            // Direction Up;
+            newDir = 1;
+            break;
+        case 'R':
+            cout << command << endl;
+            // Direction Right;
+            newDir = 2;
+            break;
+        case 'D':
+            cout << command << endl;
+            // Direction Down;
+            newDir = 3;
+            break;
+    }
+    
+    if (newDir!=((oldDir+2)%4))
+        snakes[0]->at(0).z = newDir;
+}
 void ScreenSnake::keyReleased(int key)
 {
 }

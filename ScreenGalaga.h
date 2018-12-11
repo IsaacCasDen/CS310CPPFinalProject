@@ -74,5 +74,14 @@ private:
 	std::vector<SpriteObject *> items;
 
 	std::vector<ofSerialDeviceInfo> devices;
+    int hits;
+    int misses;
+    int score;
+    int lives;
+    //Missile miss;
+    ofVec2f pos;
+    int shots;
+    string level;
+    //GalagaShip *galaga_miss;
 };
 
