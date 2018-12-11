@@ -14,15 +14,11 @@
 class GalagaShip : 
 	public SpriteObject {
 public:
-
+        
 	ofEvent<ofVec2f> firedShot;
-
-	ofColor getOverlayColor();
-	void setOverlayColor(ofColor color);
-
+        
     GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, double y);
 	~GalagaShip();
-
     void update();
 	void readCommand(char command);
 	void fireMissile();
@@ -38,16 +34,15 @@ protected:
 
 	double getMoveSpeed();
 	void setMoveSpeed(double value);
-
+        
 private:
 
 	const double DEFAULT_HEIGHT = 48;
 	const double DEFAULT_WIDTH = 48;
-
 	ofSerial *serial;
-	ofColor overlayColor;
-
+    ofSoundPlayer soundShot;
 	char currMoveDir = '\0';
 	double moveSpeed = 5;
+    
 	int ticksSinceInput;
 };
