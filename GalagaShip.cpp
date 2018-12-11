@@ -39,7 +39,6 @@ GalagaShip::GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, doubl
 	}
 
 	sprites.push_back(ofImage());
-	sprites.push_back(ofImage());
 
 	sprites[0].load("galaga_ship.png");
 }
