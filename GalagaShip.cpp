@@ -11,16 +11,6 @@
 #include "GalagaShip.h"
 #include "ofMain.h"
 
-ofColor GalagaShip::getOverlayColor()
-{
-	return overlayColor;
-}
-
-void GalagaShip::setOverlayColor(ofColor color)
-{
-	overlayColor = color;
-}
-
 GalagaShip::GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, double y) :SpriteObject(gameBounds)
 {
 	this->serial = serial;
@@ -30,7 +20,7 @@ GalagaShip::GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, doubl
 	ofRectangle bounds = getBounds();
 	double
 		gb = gameBounds.getBottom(),
-		sb = bounds.getBottom() + 10,
+		sb = bounds.getBottom(),
 		diff = sb - gb;
 
 	if (diff > 0) {
@@ -42,16 +32,19 @@ GalagaShip::GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, doubl
 	sprites.push_back(ofImage());
 
 	sprites[0].load("galaga_ship.png");
+    soundShot.load("ship_shot.mp3");
 }
 
 void GalagaShip::update()
 {
+    soundShot.setMultiPlay(true);
 	ticksSinceInput++;
 	//setPosition(ofVec2f(getBounds().x + 5, getBounds().y));
 	if (serial->available()) {
 		char command = serial->readByte();
+        
 		readCommand(command);
-		//std::cout << command << std::endl;
+		std::cout << command << std::endl;
 	}
 	
 	if (ticksSinceInput >= 8)
@@ -79,6 +72,7 @@ void GalagaShip::readCommand(char command) {
 	switch (command) {
 	case 'B':
 		fireMissile();
+        soundShot.play();
 		break;
 	case 'L':
 		ticksSinceInput = 0;
@@ -98,7 +92,6 @@ void GalagaShip::fireMissile() {
 
 void GalagaShip::draw()
 {
-	ofSetColor(overlayColor);
 	getSprite().draw(getBounds());
 }
 

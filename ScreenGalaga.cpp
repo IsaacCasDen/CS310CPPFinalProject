@@ -36,6 +36,7 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
     score = *getScores();
     lives = *getLives();
     level = getGameLevel();
+    sound_hit.load("ship_explosion.mp3");
     //galaga_miss = new GalagaShip(shots);
     //all_shots = galaga_miss->shots;
 }
@@ -45,13 +46,6 @@ bool ScreenGalaga::createPlayerShip(std::string devicePath, double x, double y)
 	ofSerial *serial = new ofSerial();
 	if (serial->setup(devicePath, 9600)) {
 		GalagaShip *player = new GalagaShip(serial, getGameBounds(), x, y);
-		player->setOverlayColor(
-			ofColor(
-				ofRandom(128,255),
-				ofRandom(128,255),
-				ofRandom(128,255)
-			)
-		);
 		ofAddListener(player->firedShot, this, &ScreenGalaga::addPlayerShot);
 		players.push_back(player);
 		return true;
@@ -81,6 +75,7 @@ ScreenGalaga::~ScreenGalaga()
 
 void ScreenGalaga::update()
 {
+    sound_hit.setMultiPlay(true);
 	ScreenGame::update();
 	updatePlayers();
 	updateItems();
@@ -164,6 +159,7 @@ void ScreenGalaga::updatePlayerShots()
 						repeatEnemy = true;
 						repeatShot = true;
                         hits++;
+                        sound_hit.play();
                         //*getScores() = *getScores() + 1;
                         score = score + 10;
                         
