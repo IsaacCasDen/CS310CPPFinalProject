@@ -69,6 +69,7 @@ void ScreenMenu::mouseReleased(int x, int y, int button)
 void ScreenMenu::update()
 {
 	Screen * screen;
+    try{
 	switch (newScreenType) {
 	case 1:
 		screen = new ScreenGalaga(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
@@ -82,7 +83,15 @@ void ScreenMenu::update()
 		setPreLoadedScreen(screen);
 		newScreenType = -1;
 		break;
+    default:
+        break;
+    
 	}
+    }catch (...){
+        cout << "Exception!"<<endl;
+        //cout << e.what() << endl;
+    }
+    
 	
 }
 
