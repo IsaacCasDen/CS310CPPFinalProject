@@ -34,7 +34,7 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
     shots = 0;
     misses = 0;
     score = *getScores();
-    lives = *getLives();
+    //lives = *getLives();
     level = getGameLevel();
     sound_hit.load("ship_explosion.mp3");
     //galaga_miss = new GalagaShip(shots);
