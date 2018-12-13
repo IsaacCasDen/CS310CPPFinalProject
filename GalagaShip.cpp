@@ -26,7 +26,7 @@ GalagaShip::GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, d
 	ofRectangle bounds = getBounds();
 	double
 		gb = gameBounds.getBottom(),
-		sb = bounds.getBottom() + 10,
+		sb = bounds.getBottom(),
 		diff = sb - gb;
 
 	if (diff > 0) {
@@ -37,10 +37,12 @@ GalagaShip::GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, d
 	sprites.push_back(ofImage());
 
 	sprites[0].load("galaga_ship.png");
+    soundShot.load("ship_shot.mp3");
 }
 
 void GalagaShip::update()
 {
+    soundShot.setMultiPlay(true);
 	ticksSinceInput++;
 	//setPosition(ofVec2f(getBounds().x + 5, getBounds().y));
 	try {
@@ -79,6 +81,7 @@ void GalagaShip::readCommand(char command) {
 	switch (command) {
 	case 'B':
 		fireMissile();
+        soundShot.play();
 		break;
 	case 'L':
 		ticksSinceInput = 0;

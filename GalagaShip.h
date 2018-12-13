@@ -21,7 +21,6 @@ public:
 
     GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, double x, double y);
 	~GalagaShip();
-
     void update();
 	void readCommand(char command);
 	void fireMissile();
@@ -37,7 +36,7 @@ protected:
 
 	double getMoveSpeed();
 	void setMoveSpeed(double value);
-
+        
 private:
 
 	const double DEFAULT_HEIGHT = 48;
@@ -45,8 +44,9 @@ private:
 
 	int playerId;
 	ofSerial *serial;
-
+    ofSoundPlayer soundShot;
 	char currMoveDir = '\0';
 	double moveSpeed = 5;
+    
 	int ticksSinceInput;
 };

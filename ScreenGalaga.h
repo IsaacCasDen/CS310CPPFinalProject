@@ -8,6 +8,7 @@
 #include "GalagaShip.h"
 #include "EnemyShip.h"
 #include "Missile.h"
+#include "ofMain.h"
 #include <vector>
 
 class ScreenGalaga :
@@ -86,6 +87,7 @@ private:
     int lives;
     //Missile miss;
     ofVec2f pos;
+    ofSoundPlayer sound_hit;
     int shots;
     string level;
     //GalagaShip *galaga_miss;

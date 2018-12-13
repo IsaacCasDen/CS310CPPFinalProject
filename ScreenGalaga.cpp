@@ -34,9 +34,10 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
     shots = 0;
     misses = 0;
     score = *getScores();
-	//lives = this->getLives();
+    //lives = *getLives();
     level = getGameLevel();
-    //galaga_miss = new Ship(shots);
+    sound_hit.load("ship_explosion.mp3");
+    //galaga_miss = new GalagaShip(shots);
     //all_shots = galaga_miss->shots;
 }
 
@@ -82,6 +83,7 @@ ScreenGalaga::~ScreenGalaga()
 
 void ScreenGalaga::update()
 {
+    sound_hit.setMultiPlay(true);
 	ScreenGame::update();
 	updatePlayers();
 	updateItems();
@@ -227,6 +229,7 @@ void ScreenGalaga::updatePlayerShots()
 						repeatEnemy = true;
 						repeatShot = true;
                         hits++;
+                        sound_hit.play();
                         //*getScores() = *getScores() + 1;
                         score = score + 10;
 						break;
