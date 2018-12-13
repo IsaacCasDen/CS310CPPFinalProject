@@ -4,10 +4,12 @@
 #include "ofVec2f.h"
 #include "ofSerial.h"
 #include "SpriteObject.h"
+#include "Ship.h"
 #include "GalagaShip.h"
 #include "EnemyShip.h"
 #include "Missile.h"
 #include <vector>
+
 class ScreenGalaga :
 	public ScreenGame
 {
@@ -20,13 +22,17 @@ public:
 	virtual void update();
 	void draw();
 
+	std::vector<SpriteObject *> cleanVectorItems(std::vector<SpriteObject*>& vec);
+	std::vector<Ship *> cleanVectorItems(std::vector<Ship*>& vec);
+
+	SpriteObject * removeVectorItem(std::vector<SpriteObject *> &vec, int index);
+	Ship * removeVectorItem(std::vector<Ship *> &vec, int index);
 	
 	void updatePlayers();
 	void drawPlayers();
 
 	
-	void addPlayerShot(ofVec2f &value);
-	void removePlayerShot(Missile &value);
+	void addPlayerShot(ofVec3f & value);
 	void updatePlayerShots();
 	void drawPlayerShots();
 
@@ -41,14 +47,11 @@ public:
 	/*
 	void AddEnemy();
 	*/
-	void removeEnemy(EnemyShip &value);
+	void removeEnemy(uint_fast64_t & objectId);
 	void updateEnemies();
 	void drawEnemies();
 
-	/*
-	void AddEnemyShot();
-	void removeEnemyShot();
-	*/
+	void addEnemyShot(ofVec2f & value);
 	void updateEnemyShots();
 	void drawEnemyShots();
 
@@ -61,19 +64,22 @@ public:
 protected:
 
 	void createEnemyShip(double x, double y);
-	bool createPlayerShip(std::string devicePath, double x, double y);
+	bool createPlayerShip(std::string devicePath, int playerId, double x, double y);
 	void createMissile(double x, double y);
 
 private:
-	std::vector<SpriteObject *> enemies;
+	//std::recursive_mutex lock;
+
+	std::vector<Ship *> enemies;
 	std::vector<SpriteObject *> enemyShot;
 
-	std::vector<SpriteObject *> players;
+	std::vector<Ship *> players;
 	std::vector<SpriteObject *> playerShot;
 
 	std::vector<SpriteObject *> items;
 
 	std::vector<ofSerialDeviceInfo> devices;
+
     int hits;
     int misses;
     int score;
@@ -84,4 +90,3 @@ private:
     string level;
     //GalagaShip *galaga_miss;
 };
-
