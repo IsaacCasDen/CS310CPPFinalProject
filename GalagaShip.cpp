@@ -11,21 +11,17 @@
 #include "GalagaShip.h"
 #include "ofMain.h"
 
-ofColor GalagaShip::getOverlayColor()
+int GalagaShip::getPlayerId()
 {
-	return overlayColor;
+	return playerId;
 }
 
-void GalagaShip::setOverlayColor(ofColor color)
-{
-	overlayColor = color;
-}
-
-GalagaShip::GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, double y) :SpriteObject(gameBounds)
+GalagaShip::GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, double x, double y) :Ship(gameBounds, x, y)
 {
 	this->serial = serial;
-	setPosition(ofVec2f(x, y));
+	this->playerId = playerId;
 	setSize(ofVec2f(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+	setMaxDamage(10);
 
 	ofRectangle bounds = getBounds();
 	double
@@ -47,10 +43,15 @@ void GalagaShip::update()
 {
 	ticksSinceInput++;
 	//setPosition(ofVec2f(getBounds().x + 5, getBounds().y));
-	if (serial->available()) {
-		char command = serial->readByte();
-		readCommand(command);
-		//std::cout << command << std::endl;
+	try {
+		if (serial->available()) {
+			char command = serial->readByte();
+			readCommand(command);
+			//std::cout << command << std::endl;
+		}
+	}
+	catch (...) {
+
 	}
 	
 	if (ticksSinceInput >= 8)
@@ -91,13 +92,13 @@ void GalagaShip::readCommand(char command) {
 }
 
 void GalagaShip::fireMissile() {
-	ofVec2f arg = ofVec2f(getBounds().getCenter().x, getBounds().getTop());
+	ofVec3f arg = ofVec3f(getBounds().getCenter().x, getBounds().getTop(), getPlayerId());
 	ofNotifyEvent(firedShot, arg, this);
 }
 
 void GalagaShip::draw()
 {
-	ofSetColor(overlayColor);
+	ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(),0.5f));
 	getSprite().draw(getBounds());
 }
 
