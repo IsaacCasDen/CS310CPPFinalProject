@@ -1,10 +1,5 @@
 #pragma once
-
-#include "SpriteObject.h"
-
-
 #include "Ship.h"
-
 class EnemyShip : 
 	public Ship
 {
@@ -16,7 +11,7 @@ public:
 	void update();
 	void draw();
 	~EnemyShip();
-    void interpolate(float percent);
+
 	virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
 	virtual void mouseMoved(int x, int y);
@@ -34,8 +29,8 @@ protected:
 private:
 	const double DEFAULT_HEIGHT = 48;
 	const double DEFAULT_WIDTH = 48;
+
 	int ticksToFire = 0;
 	int tick = 0;
-
 };
 
