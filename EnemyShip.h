@@ -1,8 +1,6 @@
 #pragma once
 
 #include "SpriteObject.h"
-
-
 #include "Ship.h"
 
 class EnemyShip : 

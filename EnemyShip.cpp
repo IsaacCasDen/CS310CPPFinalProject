@@ -34,7 +34,7 @@ void EnemyShip::update()
 //    if (pct > 1){
 //        pct = 0;
 //    }
-    float xpos = ofMap(sin(ofGetElapsedTimef()*2), 1, -14.1, 0.5, ofGetWidth());//-1 to 1.1
+    //float xpos = ofMap(sin(ofGetElapsedTimef()*2), 1, -14.1, 0.5, ofGetWidth());//-1 to 1.1
     //ofSetFrameRate(200);
     float xpos = getBounds().x;
     float ypos = getBounds().y;
@@ -59,16 +59,10 @@ void EnemyShip::draw()
 
     ofRectangle b = getBounds();
     //interpolate(percent);
+    ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(), 0.5f));
     getSprite().draw(getBounds());
 }
-void EnemyShip::interpolate(float p){
-    getBounds().x = (1-p) * posA.x + (p) * posB.x;
-    getBounds().y = (1-p) * posA.y + (p) * posB.y;
 
-	ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(), 0.5f));
-	getSprite().draw(getBounds());
-
-}
 EnemyShip::~EnemyShip()
 {
 }
