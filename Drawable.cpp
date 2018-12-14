@@ -9,6 +9,11 @@ Drawable::~Drawable()
 {
 }
 
+bool Drawable::isDisposed()
+{
+	return _isDisposed;
+}
+
 bool Drawable::isIntersecting(int x, int y)
 {
 	return isIntersecting(ofVec2f(x,y));
@@ -38,4 +43,9 @@ void Drawable::setSize(ofVec2f size)
 void Drawable::setBounds(ofRectangle bounds)
 {
 	this->bounds = bounds;
+}
+
+void Drawable::isDisposed(bool value)
+{
+	_isDisposed = value;
 }

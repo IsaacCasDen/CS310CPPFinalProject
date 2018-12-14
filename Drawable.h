@@ -18,6 +18,7 @@ public:
 	virtual void mousePressed(int x, int y, int button)=0;
 	virtual void mouseReleased(int x, int y, int button)=0;
 
+	bool isDisposed();
 	bool isIntersecting(int x, int y);
 	bool isIntersecting(ofVec2f point);
 
@@ -28,8 +29,11 @@ protected:
 	
 	void setSize(ofVec2f size);
 	virtual void setBounds(ofRectangle bounds);
+	void isDisposed(bool value);
 
 private:
 	ofRectangle bounds;
+	bool _isDisposed = false;
+
 };
 

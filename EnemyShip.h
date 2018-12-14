@@ -1,10 +1,16 @@
 #pragma once
+
 #include "SpriteObject.h"
-#include "ofPoint.h"
+
+
+#include "Ship.h"
+
 class EnemyShip : 
-	public SpriteObject
+	public Ship
 {
 public:
+
+	ofEvent<ofVec2f> firedShot;
 
 	EnemyShip(ofRectangle gameBounds, double x, double y);
 	void update();
@@ -20,17 +26,16 @@ public:
 protected:
 
 	bool cycleSprite();
+	int getTicksToFire();
+	void setTicksToFire(int value);
+	bool shouldFire();
+	void fire();
 	
 private:
 	const double DEFAULT_HEIGHT = 48;
 	const double DEFAULT_WIDTH = 48;
-    int t=0;
-    ofPoint posA;
-    ofPoint posB;
-    float pct;
-    float xpos;
-    float ypos;
-    float curve;
+	int ticksToFire = 0;
+	int tick = 0;
 
 };
 

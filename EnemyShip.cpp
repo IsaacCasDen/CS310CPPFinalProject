@@ -1,9 +1,8 @@
 #include "EnemyShip.h"
 #include "ofMain.h"
 
-EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):SpriteObject(gameBounds)
+EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):Ship(gameBounds,x,y)
 {
-	setPosition(ofVec2f(x, y));
 	setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
 	sprites.push_back(ofImage());
@@ -11,11 +10,11 @@ EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):SpriteObject(ga
 	
 	sprites[0].load("galaga_enemy1_1.png");
 	sprites[1].load("galaga_enemy1_2.png");
+	setSpriteSetEnd(1);
 
 	setTicksPerSprite(ofGetFrameRate()/8);
-    xpos = getBounds().x;
-    ypos = getBounds().y;
-    curve = 0;
+    
+    
 }
 
 void EnemyShip::update()
@@ -27,6 +26,7 @@ void EnemyShip::update()
 	}
 	else
 		tick++;
+
 //    pct = 10;
 //    pos.x = (1-pct) * pos.x + (pct) * pos.x;
 //    pos.y = (1-pct) * pos.y + (pct) * pos.y;
@@ -36,21 +36,27 @@ void EnemyShip::update()
 //    }
     float xpos = ofMap(sin(ofGetElapsedTimef()*2), 1, -14.1, 0.5, ofGetWidth());//-1 to 1.1
     //ofSetFrameRate(200);
-    curve += 10;
+    float xpos = getBounds().x;
+    float ypos = getBounds().y;
     if(tick == 10){
-        xpos = getBounds().x + sin(45)*20;
-        ypos = getBounds().y + sin(45)*20;
+        xpos += sin(45)*20;
+        ypos += sin(45)*20;
     }
     //xpos = getBounds().x + sin(-45)*20;
-    if(ypos > ofGetHeight()){
+    if(ypos > gameBounds.getBottom()){
         ypos = 0;
     }
     setPosition(ofVec2f(xpos, ypos));
     
+
+		
+	
+
 }
 
 void EnemyShip::draw()
 {
+
     ofRectangle b = getBounds();
     //interpolate(percent);
     getSprite().draw(getBounds());
@@ -58,6 +64,10 @@ void EnemyShip::draw()
 void EnemyShip::interpolate(float p){
     getBounds().x = (1-p) * posA.x + (p) * posB.x;
     getBounds().y = (1-p) * posA.y + (p) * posB.y;
+
+	ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(), 0.5f));
+	getSprite().draw(getBounds());
+
 }
 EnemyShip::~EnemyShip()
 {
@@ -86,4 +96,24 @@ void EnemyShip::mouseReleased(int x, int y, int button)
 bool EnemyShip::cycleSprite()
 {
 	return getTicksperSprite() < tick;
+}
+
+int EnemyShip::getTicksToFire()
+{
+	return ticksToFire;
+}
+
+void EnemyShip::setTicksToFire(int value)
+{
+	ticksToFire = value;
+}
+
+bool EnemyShip::shouldFire()
+{
+	return false;// (ticks > ticksToFire);
+}
+
+void EnemyShip::fire()
+{
+	//ofNotifyEvent(shotFired);
 }

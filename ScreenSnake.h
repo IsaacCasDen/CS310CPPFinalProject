@@ -25,7 +25,7 @@ public:
 	ofPolyline getSnakeBoundingBox(std::vector<ofVec2f> points);
 
 	void updateSnakes();
-	void updateSnakes(int beginAt);
+	void updateSnakes(size_t beginAt);
     void readCommand(char command);
 	virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
