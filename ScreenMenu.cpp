@@ -19,7 +19,7 @@ ScreenMenu::ScreenMenu(Game *game, ofVec2f size) : Screen(game,size)
 	buttonPlaySnake.setWidth(200);
 	buttonPlaySnake.setHeight(50);
 	buttonPlaySnake.setPosition(ofVec2f(area.x - buttonPlaySnake.getBounds().width / 2, buttonPlayGalaga.getBounds().getBottom() + 10));
-	ofAddListener(buttonPlaySnake.clicked, this, &ScreenMenu::onButtonPlayGalagaClicked);
+	ofAddListener(buttonPlaySnake.clicked, this, &ScreenMenu::onButtonPlaySnakeClicked);
 	buttons.push_back(&buttonPlaySnake);
 
 	buttonQuit = Button("Quit", 20);
@@ -47,21 +47,21 @@ void ScreenMenu::keyReleased(int key)
 
 void ScreenMenu::mouseMoved(int x, int y)
 {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (size_t i = 0; i < buttons.size(); i++) {
 		buttons[i]->mouseMoved(x, y);
 	}
 }
 
 void ScreenMenu::mousePressed(int x, int y, int button)
 {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (size_t i = 0; i < buttons.size(); i++) {
 		buttons[i]->mousePressed(x, y, button);
 	}
 }
 
 void ScreenMenu::mouseReleased(int x, int y, int button)
 {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (size_t i = 0; i < buttons.size(); i++) {
 		buttons[i]->mouseReleased(x, y, button);
 	}
 }
@@ -69,26 +69,36 @@ void ScreenMenu::mouseReleased(int x, int y, int button)
 void ScreenMenu::update()
 {
 	Screen * screen;
-	switch (newScreenType) {
-	case 1:
-		screen = new ScreenGalaga(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
-		screen->setGameRunning(true);
-		setPreLoadedScreen(screen);
-		newScreenType = -1;
-		break;
-	case 2:
-		screen = new ScreenSnake(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
-		screen->setGameRunning(true);
-		setPreLoadedScreen(screen);
-		newScreenType = -1;
-		break;
+
+	try {
+		switch (newScreenType) {
+		case 1:
+			screen = new ScreenGalaga(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
+			screen->setGameRunning(true);
+			setPreLoadedScreen(screen);
+			newScreenType = -1;
+			break;
+		case 2:
+			screen = new ScreenSnake(getGame(), ofVec2f(getBounds().getWidth(), getBounds().getHeight()));
+			screen->setGameRunning(true);
+			setPreLoadedScreen(screen);
+			newScreenType = -1;
+			break;
+		default:
+        	break;
+		}
 	}
+	catch (const std::exception& e) {
+		std::cerr << "Error switching screens:" << endl << e.what() << endl;
+	}
+
+	
 	
 }
 
 void ScreenMenu::draw()
 {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (size_t i = 0; i < buttons.size(); i++) {
 		buttons[i]->draw();
 	}
 }

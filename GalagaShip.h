@@ -9,15 +9,17 @@
 #pragma once
 
 #include "ofMain.h"
-#include "SpriteObject.h"
+#include "Ship.h"
 
 class GalagaShip : 
-	public SpriteObject {
+	public Ship {
 public:
 
-	ofEvent<ofVec2f> firedShot;
+	ofEvent<ofVec3f> firedShot;
 
-    GalagaShip(ofSerial *serial, ofRectangle gameBounds, double x, double y);
+	int getPlayerId();
+
+    GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, double x, double y);
 	~GalagaShip();
     void update();
 	void readCommand(char command);
@@ -34,12 +36,15 @@ protected:
 
 	double getMoveSpeed();
 	void setMoveSpeed(double value);
-
+        
 private:
 
 	const double DEFAULT_HEIGHT = 48;
 	const double DEFAULT_WIDTH = 48;
+
+	int playerId;
 	ofSerial *serial;
+    ofSoundPlayer soundShot;
 	char currMoveDir = '\0';
 	double moveSpeed = 5;
     

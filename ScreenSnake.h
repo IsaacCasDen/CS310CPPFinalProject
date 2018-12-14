@@ -1,5 +1,6 @@
 #pragma once
 #include "ScreenGame.h"
+#include "ofSerial.h"
 #include <vector>
 
 class ScreenSnake :
@@ -24,8 +25,8 @@ public:
 	ofPolyline getSnakeBoundingBox(std::vector<ofVec2f> points);
 
 	void updateSnakes();
-	void updateSnakes(int beginAt);
-
+	void updateSnakes(size_t beginAt);
+    void readCommand(char command);
 	virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
 	virtual void mouseMoved(int x, int y);
@@ -37,7 +38,7 @@ public:
 protected:
 	static const int APPLE_RADIUS = 8;
 	static const int CREATE_APPLE_SECONDS = 16;
-
+    bool createPlayerShip(std::string devicePath, double x, double y);
 	static const int SNAKE_WIDTH = 3;
 	static const int SNAKE_LENGTH = 3;
 	static const int SNAKE_SPEED = 3;
@@ -51,5 +52,8 @@ private:
 	bool shouldCreateApple();
 	int lastAppleCreated = 0;
 	float tick = 0;
+    bool port;
+    ofSerial serial;
+    std::vector<ofSerialDeviceInfo> devices;
 };
 

@@ -17,8 +17,7 @@ public:
 	ScreenMenu();
 	ScreenMenu(Game *game, ofVec2f size);
 	~ScreenMenu();
-
-	virtual void keyPressed(int key);
+    virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
 	virtual void mouseMoved(int x, int y);
 	virtual void mousePressed(int x, int y, int button);

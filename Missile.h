@@ -14,8 +14,12 @@ class Missile : public SpriteObject
 {
 public:
 
-	ofEvent<Missile> isOffScreen;
+	ofEvent<uint_fast64_t> isOffScreen;
 
+	bool isPlayer();
+	int getPlayerId();
+
+	Missile(ofRectangle gameBounds, int playerId, int directionY, double x, double y);
     Missile(ofRectangle gameBounds, int directionY, double x, double y);
     void update();
     void draw();
@@ -35,6 +39,8 @@ private:
 	double radius = DEFAULT_RADIUS;
 	ofVec2f vel = ofVec2f(DEFAULT_VELX, DEFAULT_VELY);
 	int directionY=1;
+	bool _isPlayer = false;
+	int playerId = -1;
     
 };
 

@@ -11,12 +11,6 @@ Screen::Screen(Game *game, ofVec2f size)
 	setGame(game);
 }
 
-
-Screen::~Screen()
-{
-}
-
-
 Screen * Screen::takePreLoadedScreen()
 {
 	Screen * value = preLoadedScreen;

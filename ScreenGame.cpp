@@ -39,8 +39,8 @@ void ScreenGame::update()
 
 void ScreenGame::draw()
 {
-	drawHeader();
 	drawGame();
+	drawHeader();
 	drawFooter();
 }
 
@@ -51,6 +51,10 @@ void ScreenGame::getHeaderHeight()
 
 void ScreenGame::drawHeader() {
 	
+	Game::setOfColor(ofColor(255, 255, 255));
+	ofFill();
+	ofDrawRectangle(areaHeader);
+
 	drawScore(areaHeader);
 	drawLives(areaHeader);
 	drawGameLevel(areaHeader);
@@ -68,7 +72,9 @@ void ScreenGame::getFooterHeight()
 }
 
 void ScreenGame::drawFooter() {
-
+	Game::setOfColor(ofColor(255, 255, 255));
+	ofFill();
+	ofDrawRectangle(areaFooter);
 }
 
 ofTrueTypeFont getGameNameFont() {
@@ -117,7 +123,7 @@ ofTrueTypeFont getLivesFont() {
 ofRectangle * ScreenGame::getLivesDrawBounds(ofRectangle area) {
 	ofRectangle * bounds = new ofRectangle[lives.size()];
 	int * vals = getLives();
-	for (int i = 0; i < lives.size(); i++) {
+	for (size_t i = 0; i < lives.size(); i++) {
 		double
 			width = getLivesFont().stringWidth(to_string(vals[i])),
 			height = getLivesFont().stringHeight(to_string(vals[i])),
@@ -140,7 +146,7 @@ ofTrueTypeFont getScoreFont() {
 ofRectangle * ScreenGame::getScoreDrawBounds(ofRectangle area) {
 	ofRectangle * bounds = new ofRectangle[scores.size()];
 	int * vals = getScores();
-	for (int i = 0; i < scores.size(); i++) {
+	for (size_t i = 0; i < scores.size(); i++) {
 		double
 			width = getScoreFont().stringWidth(to_string(vals[i])),
 			height = getScoreFont().stringHeight(to_string(vals[i])),
@@ -158,8 +164,12 @@ void ScreenGame::drawScore(ofRectangle area) {
 	Game::setOfColor(ofColor(0, 0, 0));
 	ofRectangle * s = getScoreDrawBounds(area);
 	double width = 0;
-	for (int i = scores.size() - 1; i >= 0; i--) 
-		width += s[i].getWidth() + 3;
+    s[0].x = area.getRight()-s[0].width;
+    s[0].y = area.getTop()-s[0].height;
+    //ofDrawBitmapString("Hits: ", 20, 20);
+    //ofDrawRectangle(10, 10, 10, 10);
+//    for (size_t i = scores.size() - 1; i >= 0; i--)
+//        width += s[i].getWidth() + 3;
 		
 	//getScoreFont().drawString(to_string(getScore()), area.getWidth() - offset + s[i].x, area.getTop() + s[i].height + s[i].y);
 }
@@ -172,7 +182,7 @@ std::string ScreenGame::getGameName()
 int * ScreenGame::getScores()
 {
 	int * values = new int[scores.size()];
-	for (int i = 0; i < scores.size(); i++)
+	for (size_t i = 0; i < scores.size(); i++)
 		values[i] = scores[i];
 
 	return values;
@@ -190,8 +200,9 @@ int ScreenGame::getScore(int index)
 
 int * ScreenGame::getLives()
 {
+    //setLives(3);
 	int * values = new int[lives.size()];
-	for (int i = 0; i < scores.size(); i++)
+	for (size_t i = 0; i < scores.size(); i++)
 		values[i] = lives[i];
 
 	return values;

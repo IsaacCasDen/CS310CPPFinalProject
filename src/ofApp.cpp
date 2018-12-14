@@ -35,7 +35,7 @@ void ofApp::update(){
 			ofExit();
 		}
 		catch (const std::exception& e) {
-
+			cerr << "Error Exiting Application:" << endl << e.what() << endl;
 		}
 	}
 }//update()

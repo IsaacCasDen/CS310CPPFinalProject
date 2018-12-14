@@ -20,6 +20,17 @@ ScreenSnake::ScreenSnake(Game * game, ofVec2f size) : ScreenGame(game, size)
 	
 	setGameLevel("Level 1");
 	hasGameLevel = true;
+    
+    port = serial.setup("tty.usbmodem143101", 9600);
+    if (port)
+    {
+        cout << "Port OK!" << endl;
+    }
+    else if(!port)
+    {
+        cout << "Port NOT OK!" << endl;
+    }
+    
 }
 
 ScreenSnake::~ScreenSnake()
@@ -34,7 +45,12 @@ void ScreenSnake::update()
 	updateSnakes();
 	tick++;
 	createApple();
-	
+    if (serial.available()) {
+        char command = serial.readByte();
+        
+        readCommand(command);
+        std::cout << command << std::endl;
+    }
 }
 
 void ScreenSnake::draw()
@@ -48,16 +64,16 @@ void ScreenSnake::draw()
 void ScreenSnake::drawApples() {
 	Game::setOfColor(ofColor(255, 0, 0));
 	ofFill();
-	for (int i = 0; i < apples.size(); i++) {
+	for (size_t i = 0; i < apples.size(); i++) {
 		ofDrawCircle(apples[i].x, apples[i].y, 0, apples[i].z);
 	}
 }
 void ScreenSnake::drawSnake() {
 	Game::setOfColor(ofColor(0, 0, 0));
 	ofFill();
-	for (int i = 0; i < snakes.size(); i++) {
+	for (size_t i = 0; i < snakes.size(); i++) {
 		//getSnakeBoundingBox(*snakes[i]).draw();
-		for (int j = 0; j < snakes[i]->size(); j++) {
+		for (size_t j = 0; j < snakes[i]->size(); j++) {
 			ofVec4f point = (*snakes[i])[j];
 			ofDrawRectangle(point.x, point.y, SNAKE_WIDTH, SNAKE_WIDTH);
 		}
@@ -67,32 +83,62 @@ void ScreenSnake::drawSnake() {
 
 void ScreenSnake::keyPressed(int key)
 {
-	if (snakes.size() == 0) return;
-	int oldDir = snakes[0]->at(0).z;
-	int newDir = 0;
-	switch (key) {
-	case KEY_LEFT:
-		// Direction Left;
-		newDir = 0;
-		break;
-	case KEY_UP:
-		// Direction Up;
-		newDir = 1;
-		break;
-	case KEY_RIGHT:
-		// Direction Right;
-		newDir = 2;
-		break;
-	case KEY_DOWN:
-		// Direction Down;
-		newDir = 3;
-		break;
-	}
-
-	if (newDir!=((oldDir+2)%4))
-		snakes[0]->at(0).z = newDir;
+//    if (snakes.size() == 0) return;
+//    int oldDir = snakes[0]->at(0).z;
+//    int newDir = 0;
+//    switch (key) {
+//    case KEY_LEFT:
+//        // Direction Left;
+//        newDir = 0;
+//        break;
+//    case KEY_UP:
+//        // Direction Up;
+//        newDir = 1;
+//        break;
+//    case KEY_RIGHT:
+//        // Direction Right;
+//        newDir = 2;
+//        break;
+//    case KEY_DOWN:
+//        // Direction Down;
+//        newDir = 3;
+//        break;
+//    }
+//
+//    if (newDir!=((oldDir+2)%4))
+//        snakes[0]->at(0).z = newDir;
 }
-
+void ScreenSnake::readCommand(char command){
+    //ofSetFrameRate(200);
+    if (snakes.size() == 0) return;
+    int oldDir = snakes[0]->at(0).z;
+    int newDir = 0;
+    switch (command) {
+        case 'L':
+            // Direction Left;
+            cout << command << endl;
+            newDir = 0;
+            break;
+        case 'U':
+            cout << command << endl;
+            // Direction Up;
+            newDir = 1;
+            break;
+        case 'R':
+            cout << command << endl;
+            // Direction Right;
+            newDir = 2;
+            break;
+        case 'D':
+            cout << command << endl;
+            // Direction Down;
+            newDir = 3;
+            break;
+    }
+    
+    if (newDir!=((oldDir+2)%4))
+        snakes[0]->at(0).z = newDir;
+}
 void ScreenSnake::keyReleased(int key)
 {
 }
@@ -118,7 +164,7 @@ void ScreenSnake::createSnake() {
 	pos.z = 0;
 	pos.w = SNAKE_LENGTH;
 	pos.x = bounds.getWidth() - SNAKE_WIDTH; vec->push_back(pos);
-	for (int i = 0; i < (pos.w/SNAKE_WIDTH); i++) {
+	for (size_t i = 0; i < (pos.w/SNAKE_WIDTH); i++) {
 		pos.x = pos.x + SNAKE_WIDTH; vec->push_back(pos);
 		pos.x = pos.x + SNAKE_WIDTH; vec->push_back(pos);
 	}
@@ -145,7 +191,7 @@ void ScreenSnake::createApple(bool override)
 ofPolyline ScreenSnake::getSnakeBoundingBox(std::vector<ofVec4f> points) {
 	ofPolyline line;
 	
-	for (int i = 0; i < points.size(); i++) {
+	for (size_t i = 0; i < points.size(); i++) {
 		line.addVertex(ofVec3f(points[i].x, points[i].y,0));
 		
 	}
@@ -155,15 +201,15 @@ ofPolyline ScreenSnake::getSnakeBoundingBox(std::vector<ofVec4f> points) {
 void ScreenSnake::updateSnakes() {
 	updateSnakes(0);
 }
-void ScreenSnake::updateSnakes(int beginAt) {
+void ScreenSnake::updateSnakes(size_t beginAt) {
 	bool rerun=false;
-	int i=beginAt;
+	size_t i=beginAt;
 	for (i = beginAt; i < snakes.size(); i++) {
 		std::vector<ofVec4f> *snake = snakes[i];
 		ofVec4f head = snake->at(0);
 		bool recheckApples = false;
 		do {
-			for (int j = 0; j < apples.size(); j++) {
+			for (size_t j = 0; j < apples.size(); j++) {
 				ofRectangle apple = ofRectangle(apples[j].x, apples[j].y, APPLE_RADIUS, APPLE_RADIUS);
 				ofRectangle sn = ofRectangle(head.x,head.y,SNAKE_WIDTH,SNAKE_WIDTH);
 				if (apple.intersects(sn)) {
