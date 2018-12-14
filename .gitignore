@@ -62,3 +62,4 @@ Makefile
 .vscode/tasks.json
 *.aps
 *.lastcodeanalysissucceeded
+*.xcsettings
