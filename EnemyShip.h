@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteObject.h"
+#include "ofPoint.h"
 class EnemyShip : 
 	public SpriteObject
 {
@@ -9,7 +10,7 @@ public:
 	void update();
 	void draw();
 	~EnemyShip();
-
+    void interpolate(float percent);
 	virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
 	virtual void mouseMoved(int x, int y);
@@ -23,7 +24,13 @@ protected:
 private:
 	const double DEFAULT_HEIGHT = 48;
 	const double DEFAULT_WIDTH = 48;
-
+    int t=0;
+    ofPoint posA;
+    ofPoint posB;
+    float pct;
+    float xpos;
+    float ypos;
+    float curve;
 
 };
 

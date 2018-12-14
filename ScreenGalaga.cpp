@@ -29,7 +29,7 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
         }
     }
     
-    createEnemyShips(99);
+    createEnemyShips(1);
     hits = *getScores();
     shots = 0;
     misses = 0;
