@@ -1,21 +1,32 @@
 #include "EnemyShip.h"
 #include "ofMain.h"
 
-EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):SpriteObject(gameBounds)
-{
-	setPosition(ofVec2f(x, y));
-	setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
+//EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):SpriteObject(gameBounds)
+//{
+//    setPosition(ofVec2f(x, y));
+//    setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
+//
+//    sprites.push_back(ofImage());
+//    sprites.push_back(ofImage());
+//    
+//    sprites[0].load("galaga_enemy1_1.png");
+//    sprites[1].load("galaga_enemy1_2.png");
+//
+//    setTicksPerSprite(ofGetFrameRate()/8);
+//
+//}
+EnemyShip::EnemyShip(){
+    setPosition(ofVec2f(x, y));
+    setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-	sprites.push_back(ofImage());
-	sprites.push_back(ofImage());
-	
-	sprites[0].load("galaga_enemy1_1.png");
-	sprites[1].load("galaga_enemy1_2.png");
+    sprites.push_back(ofImage());
+    sprites.push_back(ofImage());
 
-	setTicksPerSprite(ofGetFrameRate()/8);
+    sprites[0].load("galaga_enemy1_1.png");
+    sprites[1].load("galaga_enemy1_2.png");
 
+    setTicksPerSprite(ofGetFrameRate()/8);
 }
-
 void EnemyShip::update()
 {
 	if (cycleSprite()) {
