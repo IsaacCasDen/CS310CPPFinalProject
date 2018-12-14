@@ -8,6 +8,7 @@ public:
 	ofEvent<ofVec2f> firedShot;
 
 	EnemyShip(ofRectangle gameBounds, double x, double y);
+    EnemyShip();
 	void update();
 	void draw();
 	~EnemyShip();

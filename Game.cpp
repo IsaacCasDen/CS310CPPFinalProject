@@ -131,7 +131,6 @@ void Game::setActiveScreen(Screen * screen)
 {
 	if (activeScreen != nullptr) {
 		ofRemoveListener(activeScreen->closed, this, &Game::onGameClosed);
-        std::cout << activeScreen << endl;
 		//delete activeScreen;  //causes compilation issues xcode
 	}
 	ofAddListener(screen->closed, this, &Game::onGameClosed);

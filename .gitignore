@@ -62,6 +62,10 @@ Makefile
 .vscode/tasks.json
 *.aps
 *.lastcodeanalysissucceeded
+
+*.xcsettings
+
 emptyExample.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
 emptyExample.xcodeproj/project.xcworkspace/xcuserdata/travisolmstead.xcuserdatad/WorkspaceSettings.xcsettings
 emptyExample.xcodeproj/xcuserdata/travisolmstead.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+
