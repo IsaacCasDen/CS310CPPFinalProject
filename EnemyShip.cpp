@@ -38,7 +38,26 @@ void EnemyShip::update()
 	else
 		tick++;
 		
-	setPosition(ofVec2f(getBounds().x, getBounds().y+5));
+	ofVec2f pos = getBounds().getPosition();
+	switch (movePattern) {
+		case 0:
+			if (pos.y < 50)
+				setPosition(getMovePattern1_NextPos(false, pos));
+			else
+				movePattern = 2;
+				setPosition(getMovePattern2_NextPos(false, pos));
+			break;
+		case 1:
+
+			break;
+		case 2:
+			if (pos.y < gameBounds.getBottom())
+				setPosition(getMovePattern3_NextPos(false, pos));
+			else
+				movePattern = 1;
+				setPosition(getMovePattern2_NextPos(false, pos));
+			break;
+	}
 }
 
 void EnemyShip::draw()
@@ -94,4 +113,34 @@ bool EnemyShip::shouldFire()
 void EnemyShip::fire()
 {
 	//ofNotifyEvent(shotFired);
+}
+
+ofVec2f EnemyShip::getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos)
+{
+	ofVec2f value = currentPos;
+
+	if (isReflected)
+		value.y -= 5;
+	else 
+		value.y += 5;
+
+	return value;
+}
+
+ofVec2f EnemyShip::getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos)
+{
+	ofVec2f value = currentPos;
+
+	// Move right to left in holding pattern;
+
+	return value;
+}
+
+ofVec2f EnemyShip::getMovePattern3_NextPos(bool isReflected, ofVec2f currentPos)
+{
+	ofVec2f value = currentPos;
+
+
+
+	return value;
 }

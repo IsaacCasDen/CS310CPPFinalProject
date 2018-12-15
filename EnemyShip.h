@@ -8,7 +8,6 @@ public:
 	ofEvent<ofVec2f> firedShot;
 
 	EnemyShip(ofRectangle gameBounds, double x, double y);
-    EnemyShip();
 	void update();
 	void draw();
 	~EnemyShip();
@@ -26,6 +25,10 @@ protected:
 	void setTicksToFire(int value);
 	bool shouldFire();
 	void fire();
+
+	ofVec2f getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos);
+	ofVec2f getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos);
+	ofVec2f getMovePattern3_NextPos(bool isReflected, ofVec2f currentPos);
 	
 private:
 	const double DEFAULT_HEIGHT = 48;
@@ -33,5 +36,7 @@ private:
 
 	int ticksToFire = 0;
 	int tick = 0;
+	int movePattern = 0;
+
 };
 
