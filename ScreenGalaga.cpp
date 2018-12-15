@@ -37,6 +37,7 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
     //lives = *getLives();
     level = getGameLevel();
     sound_hit.load("ship_explosion.mp3");
+	sound_hit.setMultiPlay(true);
     //galaga_miss = new GalagaShip(shots);
     //all_shots = galaga_miss->shots;
 }
@@ -83,7 +84,6 @@ ScreenGalaga::~ScreenGalaga()
 
 void ScreenGalaga::update()
 {
-    sound_hit.setMultiPlay(true);
 	ScreenGame::update();
 	updatePlayers();
 	updateItems();
@@ -224,7 +224,7 @@ void ScreenGalaga::updatePlayerShots()
 			do {
 				repeatEnemy = false;
 				for (j; j < enemies.size(); j++) {
-					if (enemies[j]->getBounds().intersects(playerShot[i]->getBounds())) {
+					if (!enemies[j]->isDestroyed() && enemies[j]->getBounds().intersects(playerShot[i]->getBounds())) {
 						enemies[j]->hit();
 						repeatEnemy = true;
 						repeatShot = true;
