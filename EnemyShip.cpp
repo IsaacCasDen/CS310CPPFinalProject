@@ -1,64 +1,67 @@
 #include "EnemyShip.h"
 #include "ofMain.h"
 
+
+//EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):SpriteObject(gameBounds)
+//{
+//    setPosition(ofVec2f(x, y));
+//    setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
+//
+//    sprites.push_back(ofImage());
+//    sprites.push_back(ofImage());
+//
+//    sprites[0].load("galaga_enemy1_1.png");
+//    sprites[1].load("galaga_enemy1_2.png");
+//
+//    setTicksPerSprite(ofGetFrameRate()/8);
+//
+//}
 EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):Ship(gameBounds,x,y)
 {
-	setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
-
-	sprites.push_back(ofImage());
-	sprites.push_back(ofImage());
-	
-	sprites[0].load("galaga_enemy1_1.png");
-	sprites[1].load("galaga_enemy1_2.png");
-	setSpriteSetEnd(1);
-
-	setTicksPerSprite(ofGetFrameRate()/8);
+    setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
     
+    sprites.push_back(ofImage());
+    sprites.push_back(ofImage());
     
+    sprites[0].load("galaga_enemy1_1.png");
+    sprites[1].load("galaga_enemy1_2.png");
+    setSpriteSetEnd(1);
+    
+    setTicksPerSprite(ofGetFrameRate()/8);
 }
-
 void EnemyShip::update()
 {
-    ofVec2f pos = ofVec2f(getBounds().x, getBounds().y);
-	if (cycleSprite()) {
-		tick = 0;
-		nextSprite();
-	}
-	else
-		tick++;
-
-//    pct = 10;
-//    pos.x = (1-pct) * pos.x + (pct) * pos.x;
-//    pos.y = (1-pct) * pos.y + (pct) * pos.y;
-//    pct += 0.1f;
-//    if (pct > 1){
-//        pct = 0;
-//    }
-    //float xpos = ofMap(sin(ofGetElapsedTimef()*2), 1, -14.1, 0.5, ofGetWidth());//-1 to 1.1
-    //ofSetFrameRate(200);
-    float xpos = getBounds().x;
-    float ypos = getBounds().y;
-    if(tick == 10){
-        xpos += sin(45)*20;
-        ypos += sin(45)*20;
+    if (cycleSprite()) {
+        tick = 0;
+        nextSprite();
     }
-    //xpos = getBounds().x + sin(-45)*20;
-    if(ypos > gameBounds.getBottom()){
-        ypos = 0;
-    }
-    setPosition(ofVec2f(xpos, ypos));
+    else
+        tick++;
     
-
-		
-	
-
+    ofVec2f pos = getBounds().getPosition();
+    switch (movePattern) {
+        case 0:
+            if (pos.y < 50)
+                setPosition(getMovePattern1_NextPos(false, pos));
+            else
+                movePattern = 2;
+            setPosition(getMovePattern2_NextPos(false, pos));
+            break;
+        case 1:
+            
+            break;
+        case 2:
+            if (pos.y < gameBounds.getBottom())
+                setPosition(getMovePattern3_NextPos(false, pos));
+            else
+                movePattern = 1;
+            setPosition(getMovePattern2_NextPos(false, pos));
+            break;
+    }
 }
 
 void EnemyShip::draw()
 {
-
-    ofRectangle b = getBounds();
-    //interpolate(percent);
     ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(), 0.5f));
     getSprite().draw(getBounds());
 }
@@ -89,25 +92,55 @@ void EnemyShip::mouseReleased(int x, int y, int button)
 
 bool EnemyShip::cycleSprite()
 {
-	return getTicksperSprite() < tick;
+    return getTicksperSprite() < tick;
 }
 
 int EnemyShip::getTicksToFire()
 {
-	return ticksToFire;
+    return ticksToFire;
 }
 
 void EnemyShip::setTicksToFire(int value)
 {
-	ticksToFire = value;
+    ticksToFire = value;
 }
 
 bool EnemyShip::shouldFire()
 {
-	return false;// (ticks > ticksToFire);
+    return false;// (ticks > ticksToFire);
 }
 
 void EnemyShip::fire()
 {
-	//ofNotifyEvent(shotFired);
+    //ofNotifyEvent(shotFired);
+}
+
+ofVec2f EnemyShip::getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos)
+{
+    ofVec2f value = currentPos;
+    
+    if (isReflected)
+        value.y -= 5;
+    else
+        value.y += 5;
+    
+    return value;
+}
+
+ofVec2f EnemyShip::getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos)
+{
+    ofVec2f value = currentPos;
+    
+    // Move right to left in holding pattern;
+    
+    return value;
+}
+
+ofVec2f EnemyShip::getMovePattern3_NextPos(bool isReflected, ofVec2f currentPos)
+{
+    ofVec2f value = currentPos;
+    
+    
+    
+    return value;
 }
