@@ -28,6 +28,7 @@ EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):Ship(gameBounds
 	setSpriteSetEnd(1);
 
     setTicksPerSprite(ofGetFrameRate()/8);
+    count = 0;
 }
 void EnemyShip::update()
 {
@@ -37,35 +38,69 @@ void EnemyShip::update()
 	}
 	else
 		tick++;
-		
-	ofVec2f pos = getBounds().getPosition();
-	switch (movePattern) {
-		case 0:
-			if (pos.y < 50)
-				setPosition(getMovePattern1_NextPos(false, pos));
-			else
-				movePattern = 2;
-				setPosition(getMovePattern2_NextPos(false, pos));
-			break;
-		case 1:
+	
+    float radius = 10;
+    ofVec2f finalPos;
+    float theta = 0.0f;
+    float dx;
+    float radians = (PI*theta)/180;
+    ofVec2f pos = getBounds().getPosition();
 
-			break;
-		case 2:
-			if (pos.y < gameBounds.getBottom())
-				setPosition(getMovePattern3_NextPos(false, pos));
-			else
-				movePattern = 1;
-				setPosition(getMovePattern2_NextPos(false, pos));
-			break;
-	}
-}
+    count++;
+    cout << count << endl;
+    float dy;
+    int j;
+    //theta = 45;
+    for (int i=0; i<10; i++) {
+        dx = 0.01+0.1*(cos((i*PI)/4));
+        //float dx = 0.01 + 3*radians;
+        dy = 0.01+0.1*(cos((i*PI)/4));
+        
+        //float dy = 0.01 + 3*radians;
+        j = i;
+    }
+    if(count > 3000){
+        dx = 0.01+0.1*(-cos((j*PI)/4));
+    }
+    else if (dx >= 3000 && dx <= 3500){
+        dx = 0;
+    }
+    else if(count > 6000){
+        count = 0;
+    }
+    pos.x += dx;
+    pos.y += dy;
+    setPosition(pos);
+//    switch (movePattern) {
+//        case 0:
+//            if (pos.y < 50)
+//                setPosition(getMovePattern1_NextPos(false, pos));
+//            else
+//                movePattern = 2;
+//                setPosition(getMovePattern2_NextPos(false, pos));
+//            break;
+//        case 1:
+//
+//            break;
+//        case 2:
+//            if (pos.y < gameBounds.getBottom())
+//                setPosition(getMovePattern3_NextPos(false, pos));
+//            else
+//                movePattern = 1;
+//                setPosition(getMovePattern2_NextPos(false, pos));
+//            break;
+//    }
+}//update()
 
 void EnemyShip::draw()
 {
 	ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(), 0.5f));
 	getSprite().draw(getBounds());
 }
-
+void EnemyShip::polar_to_cartesian(float radius, float theta){
+    getBounds().x = radius*cos(theta);
+    getBounds().y = radius*sin(theta);
+}
 EnemyShip::~EnemyShip()
 {
 }
@@ -117,8 +152,7 @@ void EnemyShip::fire()
 
 ofVec2f EnemyShip::getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos)
 {
-	ofVec2f value = currentPos;
-
+    ofVec2f value = currentPos;
 	if (isReflected)
 		value.y -= 5;
 	else 
@@ -139,8 +173,5 @@ ofVec2f EnemyShip::getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos)
 ofVec2f EnemyShip::getMovePattern3_NextPos(bool isReflected, ofVec2f currentPos)
 {
 	ofVec2f value = currentPos;
-
-
-
 	return value;
 }

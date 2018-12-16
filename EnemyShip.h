@@ -11,7 +11,7 @@ public:
 	void update();
 	void draw();
 	~EnemyShip();
-
+    void polar_to_cartesian(float radius, float theta);
 	virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
 	virtual void mouseMoved(int x, int y);
@@ -37,6 +37,7 @@ private:
 	int ticksToFire = 0;
 	int tick = 0;
 	int movePattern = 0;
+    int count;
 
 };
 
