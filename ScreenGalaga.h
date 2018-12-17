@@ -90,5 +90,7 @@ private:
     ofSoundPlayer sound_hit;
     int shots;
     string level;
+    bool isMoving;
+    int index;
     //GalagaShip *galaga_miss;
 };
