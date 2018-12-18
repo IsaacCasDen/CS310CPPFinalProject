@@ -37,6 +37,8 @@ protected:
 	void setCurrDamage(int value);
 	void addCurrDamage(int value);
 
+	virtual void _destroyed() = 0;
+
 private :
 
 	ofColor maxDamageOverlay = ofColor(128, 0, 0);

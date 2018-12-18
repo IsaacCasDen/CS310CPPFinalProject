@@ -38,8 +38,9 @@ void Ship::hit(int value)
 
 void Ship::onShipDestroyed()
 {
-	isDisposed(true);
-	uint_fast64_t arg = getObjectId();
+	_destroyed();
+	//isDisposed(true);
+	//uint_fast64_t arg = getObjectId();
 	//ofNotifyEvent(destroyed, arg, this);
 }
 
