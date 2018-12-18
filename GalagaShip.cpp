@@ -39,6 +39,10 @@ GalagaShip::GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, d
 	sprites[0].load("galaga_ship.png");
     soundShot.load("ship_shot.mp3");
 }
+GalagaShip::~GalagaShip()
+{
+	serial->close();
+}
 
 void GalagaShip::update()
 {
@@ -56,9 +60,6 @@ void GalagaShip::update()
 
 	}
 	
-	if (ticksSinceInput >= 8)
-		currMoveDir = '\0';
-
 	ofRectangle b = getBounds();
 
 	switch (currMoveDir) {
@@ -68,7 +69,7 @@ void GalagaShip::update()
 	case 'R':
 		b.x += moveSpeed;
 		break;
-	}
+	} 
 
 	if (b.x < gameBounds.getLeft())
 		b.x = gameBounds.getLeft();
@@ -91,6 +92,10 @@ void GalagaShip::readCommand(char command) {
 		ticksSinceInput = 0;
 		currMoveDir = 'R';
 		break;
+	case 'N':
+		ticksSinceInput = 0;
+		currMoveDir = '\0';
+		break;
 	}
 }
 
@@ -103,10 +108,6 @@ void GalagaShip::draw()
 {
 	ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(),0.5f));
 	getSprite().draw(getBounds());
-}
-
-GalagaShip::~GalagaShip()
-{
 }
 
 void GalagaShip::keyPressed(int key)
