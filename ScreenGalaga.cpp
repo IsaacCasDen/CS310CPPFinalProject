@@ -359,8 +359,9 @@ void ScreenGalaga::updateEnemies()
 		ofRemoveListener(((EnemyShip*)items[i])->firedShot, this, &ScreenGalaga::addEnemyShot);
 	}
 
-
-	while (active < 2 && active < enemies.size() && enemies.size()>0) {
+	int count = 0;
+	while (count<enemies.size() && active < 2 && active < enemies.size() && enemies.size()>0) {
+		count++;
 		int i = ofRandom(0, enemies.size() - 1);
 		if (!((EnemyShip *)enemies[i])->isActive) {
 			((EnemyShip *)enemies[i])->isActive = true;
