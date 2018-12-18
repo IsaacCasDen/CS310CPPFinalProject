@@ -5,6 +5,8 @@ class EnemyShip :
 {
 public:
 
+	bool isActive = false;
+
 	ofEvent<ofVec2f> firedShot;
 
 	EnemyShip(ofRectangle gameBounds, double x, double y);
@@ -25,6 +27,7 @@ protected:
 	void setTicksToFire(int value);
 	bool shouldFire();
 	void fire();
+	void _destroyed();
 
 	ofVec2f getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos);
 	ofVec2f getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos);
@@ -34,9 +37,11 @@ private:
 	const double DEFAULT_HEIGHT = 48;
 	const double DEFAULT_WIDTH = 48;
 
+	
 	int ticksToFire = 0;
 	int tick = 0;
 	int movePattern = 0;
+	int moveTick = 0;
 
 };
 
