@@ -24,8 +24,6 @@ public:
 	void getHeaderHeight();
 	void drawHeader();
 
-	void drawGame();
-
 	void getFooterHeight();
 	void drawFooter();
 

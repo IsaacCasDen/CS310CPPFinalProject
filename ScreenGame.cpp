@@ -39,7 +39,6 @@ void ScreenGame::update()
 
 void ScreenGame::draw()
 {
-	drawGame();
 	drawHeader();
 	drawFooter();
 }
@@ -51,7 +50,7 @@ void ScreenGame::getHeaderHeight()
 
 void ScreenGame::drawHeader() {
 	
-	Game::setOfColor(ofColor(255, 255, 255));
+	ofSetColor(ofColor(255, 255, 255));
 	ofFill();
 	ofDrawRectangle(areaHeader);
 
@@ -60,21 +59,19 @@ void ScreenGame::drawHeader() {
 	drawGameLevel(areaHeader);
 }
 
-void ScreenGame::drawGame() {
-	Game::setOfColor(ofColor(0, 0, 0));
-	ofNoFill();
-	ofDrawRectangle(getGameBounds());
-}
-
 void ScreenGame::getFooterHeight()
 {
 
 }
 
 void ScreenGame::drawFooter() {
-	Game::setOfColor(ofColor(255, 255, 255));
-	ofFill();
+	ofSetColor(ofColor(0, 0, 0));
+	ofNoFill();
 	ofDrawRectangle(areaFooter);
+
+	ofSetColor(ofColor(255, 255, 255));
+	ofFill();
+	ofDrawRectangle(areaFooter.getLeft() + 1, areaFooter.getTop() + 1, areaFooter.getWidth() - 2, areaFooter.getHeight() - 2);
 }
 
 ofTrueTypeFont getGameNameFont() {
@@ -161,7 +158,7 @@ ofRectangle * ScreenGame::getScoreDrawBounds(ofRectangle area) {
 void ScreenGame::drawScore(ofRectangle area) {
 	if (!hasScores) return;
 	ofFill();
-	Game::setOfColor(ofColor(0, 0, 0));
+	ofSetColor(ofColor(0, 0, 0));
 	ofRectangle * s = getScoreDrawBounds(area);
 	double width = 0;
     s[0].x = area.getRight()-s[0].width;
