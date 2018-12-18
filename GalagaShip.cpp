@@ -38,6 +38,7 @@ GalagaShip::GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, d
 
 	sprites[0].load("galaga_ship.png");
     soundShot.load("ship_shot.mp3");
+	soundShot.setMultiPlay(true);
 }
 GalagaShip::~GalagaShip()
 {
@@ -46,7 +47,6 @@ GalagaShip::~GalagaShip()
 
 void GalagaShip::update()
 {
-    soundShot.setMultiPlay(true);
 	ticksSinceInput++;
 	//setPosition(ofVec2f(getBounds().x + 5, getBounds().y));
 	try {
@@ -138,4 +138,8 @@ double GalagaShip::getMoveSpeed()
 void GalagaShip::setMoveSpeed(double value)
 {
 	moveSpeed = value;
+}
+
+void GalagaShip::_destroyed()
+{
 }

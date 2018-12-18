@@ -36,6 +36,8 @@ protected:
 
 	double getMoveSpeed();
 	void setMoveSpeed(double value);
+
+	void _destroyed();
         
 private:
 
