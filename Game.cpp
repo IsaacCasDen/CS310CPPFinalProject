@@ -110,7 +110,9 @@ void Game::mouseReleased(int x, int y, int button)
 	}
 }
 
-void Game::dispose() {}
+void Game::dispose() {
+	delete activeScreen;
+}
 bool Game::isGameRunning()
 {
 	if (this->activeScreen != nullptr)
