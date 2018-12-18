@@ -29,6 +29,10 @@ void loop() {
   {
     Serial.println("L");
   }
+  else
+  {
+    Serial.println("N");
+  }
   
   if(analogRead(y_dir) >= 1000)
   {
@@ -37,6 +41,9 @@ void loop() {
   if(analogRead(y_dir) <= 10)
   {
     Serial.println("D");
+  }
+  else {
+    Serial.println("M");
   }
   
   if(digitalRead(D3_RIGHT) == LOW)
