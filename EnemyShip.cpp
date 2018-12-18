@@ -9,7 +9,7 @@
 //
 //    sprites.push_back(ofImage());
 //    sprites.push_back(ofImage());
-//    
+//
 //    sprites[0].load("galaga_enemy1_1.png");
 //    sprites[1].load("galaga_enemy1_2.png");
 //
@@ -132,27 +132,27 @@ void EnemyShip::mouseReleased(int x, int y, int button)
 
 bool EnemyShip::cycleSprite()
 {
-	return getTicksperSprite() < tick;
+    return getTicksperSprite() < tick;
 }
 
 int EnemyShip::getTicksToFire()
 {
-	return ticksToFire;
+    return ticksToFire;
 }
 
 void EnemyShip::setTicksToFire(int value)
 {
-	ticksToFire = value;
+    ticksToFire = value;
 }
 
 bool EnemyShip::shouldFire()
 {
-	return false;// (ticks > ticksToFire);
+    return false;// (ticks > ticksToFire);
 }
 
 void EnemyShip::fire()
 {
-	//ofNotifyEvent(shotFired);
+    //ofNotifyEvent(shotFired);
 }
 
 void EnemyShip::_destroyed()

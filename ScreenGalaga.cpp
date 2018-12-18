@@ -290,7 +290,7 @@ void ScreenGalaga::updatePlayerShots()
 			do {
 				repeatEnemy = false;
 				for (j; j < enemies.size(); j++) {
-					if (!enemies[j]->isDestroyed() && enemies[j]->getBounds().intersects(playerShot[i]->getBounds())) {
+					if (enemies[j]->getBounds().intersects(playerShot[i]->getBounds())) {
 						enemies[j]->hit();
 						repeatEnemy = true;
 						repeatShot = true;

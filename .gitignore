@@ -69,3 +69,5 @@ emptyExample.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsett
 emptyExample.xcodeproj/project.xcworkspace/xcuserdata/travisolmstead.xcuserdatad/WorkspaceSettings.xcsettings
 emptyExample.xcodeproj/xcuserdata/travisolmstead.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 
+*.xcbkptlist
+emptyExample.xcodeproj/xcuserdata/travisolmstead.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist

@@ -1,7 +1,7 @@
 #pragma once
 #include "Ship.h"
-class EnemyShip : 
-	public Ship
+class EnemyShip :
+public Ship
 {
 public:
 
@@ -44,4 +44,3 @@ private:
 	int moveTick = 0;
 
 };
-
