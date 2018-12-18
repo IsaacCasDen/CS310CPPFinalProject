@@ -17,11 +17,18 @@ class ScreenGalaga :
 public:
 	ScreenGalaga();
 	ScreenGalaga(Game *game, ofVec2f size);
+	void createStarField();
+	void createStarField(int starCount);
+	void createStarField(int starCount, int smallBodySize, int largeBodySize);
 	void createEnemyShips(int count);
 	~ScreenGalaga();
 
 	virtual void update();
 	void draw();
+
+	void updateBackground();
+
+	void drawBackground();
 
 	std::vector<SpriteObject *> cleanVectorItems(std::vector<SpriteObject*>& vec);
 	std::vector<Ship *> cleanVectorItems(std::vector<Ship*>& vec);
@@ -81,6 +88,8 @@ private:
 
 	std::vector<ofSerialDeviceInfo> devices;
 
+	int active = 0;
+
     int hits;
     int misses;
     int score;
@@ -90,5 +99,6 @@ private:
     ofSoundPlayer sound_hit;
     int shots;
     string level;
-    //GalagaShip *galaga_miss;
+    
+	std::vector<ofVec3f> starField;
 };

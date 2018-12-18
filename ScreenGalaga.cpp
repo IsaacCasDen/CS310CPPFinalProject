@@ -29,7 +29,7 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
         }
     }
     
-    createEnemyShips(1);
+    createEnemyShips(10);
     hits = *getScores();
     shots = 0;
     misses = 0;
@@ -38,8 +38,30 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
     level = getGameLevel();
     sound_hit.load("ship_explosion.mp3");
 	sound_hit.setMultiPlay(true);
-    //galaga_miss = new GalagaShip(shots);
-    //all_shots = galaga_miss->shots;
+
+	createStarField();
+}
+
+void ScreenGalaga::createStarField() {
+	createStarField(100);
+}
+void ScreenGalaga::createStarField(int starCount) {
+	createStarField(starCount, 3, 6);
+}
+void ScreenGalaga::createStarField(int starCount, int smallBodySize, int largeBodySize) {
+	int largeBodyInterval = starCount / 5;
+	if (largeBodyInterval < 5) largeBodyInterval = 5;
+	ofRectangle b = getGameBounds();
+	for (int i = 0; i < starCount; i++) {
+		ofVec3f pos = ofVec3f(ofRandom(b.getLeft(), b.getRight()), ofRandom(b.getTop(), b.getBottom()), 0);
+		if (i%largeBodyInterval == 0) {
+			pos.z = largeBodySize;
+		}
+		else {
+			pos.z = smallBodySize;
+		}
+		starField.push_back(pos);
+	}
 }
 
 bool ScreenGalaga::createPlayerShip(std::string devicePath, int playerId, double x, double y)
@@ -67,7 +89,7 @@ void ScreenGalaga::createEnemyShips(int count) {
 	int row = 0, col = 0;
 
 	while (count > 0) {
-		createEnemyShip(col * 52 + 20, row * 50 + 10);
+		createEnemyShip(col * 52 + 100, row * 50 + 100);
 		count--;
 		col++;
 		if (col > 10) {
@@ -80,20 +102,41 @@ void ScreenGalaga::createEnemyShips(int count) {
 
 ScreenGalaga::~ScreenGalaga()
 {
+	for (int i = 0; i < players.size(); i++)
+		delete players[i];
+
+	for (int i = 0; i < playerShot.size(); i++)
+		delete playerShot[i];
+
+	for (int i = 0; i < enemies.size(); i++)
+		delete enemies[i];
+
+	for (int i = 0; i < enemyShot.size(); i++)
+		delete enemyShot[i];
+
+	for (int i = 0; i < items.size(); i++)
+		delete items[i];
 }
 
 void ScreenGalaga::update()
 {
-	ScreenGame::update();
-	updatePlayers();
-	updateItems();
-	updatePlayerShots();
-	updateEnemies();
-	updateEnemyShots();
+	try {
+		ScreenGame::update();
+		updateBackground();
+		updatePlayers();
+		updateItems();
+		updatePlayerShots();
+		updateEnemies();
+		updateEnemyShots();
+	}
+	catch (std::exception& e) {
+		std::cout << e.what() << endl;
+	}
 }
 
 void ScreenGalaga::draw()
 {
+	drawBackground();
 	drawPlayers();
 	drawItems();
 	drawPlayerShots();
@@ -109,6 +152,29 @@ void ScreenGalaga::draw()
     ofDrawBitmapString("Lives: " + std::to_string(lives), 670, 20);
     ofDrawBitmapString("Score: " + std::to_string(score), 820, 20);
     ofDrawBitmapString("Level: " + level, 970, 20);
+}
+
+void ScreenGalaga::updateBackground() {
+	ofRectangle b = getGameBounds();
+	for (int i = 0; i < starField.size(); i++) {
+		starField[i].y += 3;
+		if (starField[i].y > b.getBottom()) {
+			starField[i].y = 0;
+			starField[i].x = b.getRight() - starField[i].x;
+		}
+	}
+}
+
+void ScreenGalaga::drawBackground() {
+	ofSetColor(ofColor(0, 0, 0));
+	ofFill();
+	ofDrawRectangle(getGameBounds());
+
+	ofSetColor(ofColor(255, 255, 255));
+
+	for (int i = 0; i < starField.size(); i++) {
+		ofDrawLine(starField[i].x, starField[i].y, starField[i].x, starField[i].y + starField[i].z);
+	}
 }
 
 std::vector<SpriteObject *> ScreenGalaga::cleanVectorItems(std::vector<SpriteObject *> &vec)
@@ -286,14 +352,26 @@ void ScreenGalaga::updateEnemies()
 {
 	std::vector<Ship * > items = cleanVectorItems(enemies);
 	for (size_t i = 0; i < items.size(); i++) {
+		if (((EnemyShip *)items[i])->isActive) {
+			active--;
+		}
 		//ofRemoveListener(items[i]->destroyed, this, &ScreenGalaga::addEnemyShot);
 		ofRemoveListener(((EnemyShip*)items[i])->firedShot, this, &ScreenGalaga::addEnemyShot);
+	}
+
+
+	while (active < 2 && active < enemies.size() && enemies.size()>0) {
+		int i = ofRandom(0, enemies.size() - 1);
+		if (!((EnemyShip *)enemies[i])->isActive) {
+			((EnemyShip *)enemies[i])->isActive = true;
+			active++;
+		}
 	}
 
 	for (size_t i = 0; i < enemies.size(); i++) {
 		enemies[i]->update();
 		for (size_t j = 0; j < players.size(); j++) {
-			if (enemies[i]->getBounds().intersects(players[j]->getBounds())) {
+			if (!enemies[i]->isDestroyed()&&enemies[i]->getBounds().intersects(players[j]->getBounds())) {
 				enemies[i]->hit();
 				players[j]->hit();
 			}
@@ -358,7 +436,7 @@ void ScreenGalaga::mouseReleased(int x, int y, int button)
 void ScreenGalaga::createEnemyShip(double x, double y)
 {
 	ofRectangle b = getGameBounds();
-	EnemyShip *ship = new EnemyShip(getGameBounds(), b.getLeft() + x, b.getTop() + y);
+	EnemyShip *ship = new EnemyShip(getGameBounds(), b.getLeft() + x, b.getTop() - 50);
 	enemies.push_back(ship);
 	ofAddListener(ship->destroyed, this, &ScreenGalaga::removeEnemy);
 	ofAddListener(ship->firedShot, this, &ScreenGalaga::addEnemyShot);
