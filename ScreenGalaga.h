@@ -51,7 +51,7 @@ public:
 	void removeEnemy(uint_fast64_t & objectId);
 	void updateEnemies();
 	void drawEnemies();
-
+    int randomEnemy();
 	void addEnemyShot(ofVec2f & value);
 	void updateEnemyShots();
 	void drawEnemyShots();
@@ -90,5 +90,7 @@ private:
     ofSoundPlayer sound_hit;
     int shots;
     string level;
+    bool isMoving;
+    int index;
     //GalagaShip *galaga_miss;
 };

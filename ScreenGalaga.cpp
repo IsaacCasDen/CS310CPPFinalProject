@@ -29,11 +29,15 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
         }
     }
     
-    createEnemyShips(1);
+    createEnemyShips(20);
+    index = rand()%20;
+    
     hits = *getScores();
     shots = 0;
     misses = 0;
     score = *getScores();
+    isMoving = false;
+    
     //lives = *getLives();
     level = getGameLevel();
     sound_hit.load("ship_explosion.mp3");
@@ -299,8 +303,24 @@ void ScreenGalaga::updateEnemies()
 			}
 		}
 	}
+    cout << index << endl;
+    if (!isMoving) {
+        enemies[index]->update();
+        EnemyShip *e = (EnemyShip *)enemies[index];
+        e->parametricEQ = true;
+        
+            
+        
+        
+            
+        
+    }
+    
 }
-
+int ScreenGalaga::randomEnemy(){
+    int index = rand() % enemies.size();
+    return index;
+}
 void ScreenGalaga::drawEnemies()
 {
 	ofSetColor(255);
