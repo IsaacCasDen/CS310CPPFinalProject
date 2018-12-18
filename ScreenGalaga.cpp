@@ -29,8 +29,8 @@ ScreenGalaga::ScreenGalaga(Game * game, ofVec2f size) : ScreenGame(game, size)
         }
     }
     
-    createEnemyShips(10);
-    index = rand()%10;
+    createEnemyShips(20);
+    index = rand()%20;
     
     hits = *getScores();
     shots = 0;
@@ -308,10 +308,19 @@ void ScreenGalaga::updateEnemies()
         enemies[index]->update();
         EnemyShip *e = (EnemyShip *)enemies[index];
         e->parametricEQ = true;
+        
+            
+        
+        
+            
+        
     }
     
 }
-
+int ScreenGalaga::randomEnemy(){
+    int index = rand() % enemies.size();
+    return index;
+}
 void ScreenGalaga::drawEnemies()
 {
 	ofSetColor(255);

@@ -51,7 +51,7 @@ public:
 	void removeEnemy(uint_fast64_t & objectId);
 	void updateEnemies();
 	void drawEnemies();
-
+    int randomEnemy();
 	void addEnemyShot(ofVec2f & value);
 	void updateEnemyShots();
 	void drawEnemyShots();

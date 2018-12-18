@@ -43,6 +43,7 @@ void EnemyShip::update()
 	else
 		tick++;
     
+    
     if(parametricEQ){
         ofVec2f pos = getBounds().getPosition();
         switch (movePattern) {
@@ -64,7 +65,10 @@ void EnemyShip::update()
                 setPosition(getMovePattern2_NextPos(false, pos));
                 break;
         }
+
     }
+    
+    
     
     
 }//update()
@@ -130,8 +134,10 @@ void EnemyShip::fire()
 ofVec2f EnemyShip::getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos)
 {
     ofVec2f value = currentPos;
+    
+        
     float radius = 10;
-
+    
     float theta = 0.0f;
     float dx;
     float radians = (PI*theta)/180;
@@ -160,6 +166,11 @@ ofVec2f EnemyShip::getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos)
     value.x += dx;
     value.y += dy;
     
+    
+    
+
+    
+    
     ////////////////
 	if (isReflected)
 		value.y -= 5;
@@ -172,6 +183,7 @@ ofVec2f EnemyShip::getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos)
 ofVec2f EnemyShip::getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos)
 {
 	ofVec2f value = currentPos;
+  
     float radius = 10;
     
     float theta = 0.0f;
@@ -201,6 +213,9 @@ ofVec2f EnemyShip::getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos)
     }
     value.x += dx;
     value.y += dy;
+    
+   
+    
 
 	// Move right to left in holding pattern;
 
@@ -209,7 +224,9 @@ ofVec2f EnemyShip::getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos)
 
 ofVec2f EnemyShip::getMovePattern3_NextPos(bool isReflected, ofVec2f currentPos)
 {
-	ofVec2f value = currentPos;
+    ofVec2f value = currentPos;
+    
+        
     float radius = 10;
     
     float theta = 0.0f;
@@ -239,5 +256,7 @@ ofVec2f EnemyShip::getMovePattern3_NextPos(bool isReflected, ofVec2f currentPos)
     }
     value.x += dx;
     value.y += dy;
+    
+    
 	return value;
 }
