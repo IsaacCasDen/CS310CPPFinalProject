@@ -18,6 +18,8 @@ public:
 
 	bool isPlayer();
 	int getPlayerId();
+	bool isDestroyed();
+	void setDestroyed(bool value);
 
 	Missile(ofRectangle gameBounds, int playerId, int directionY, double x, double y);
     Missile(ofRectangle gameBounds, int directionY, double x, double y);
@@ -41,6 +43,7 @@ private:
 	int directionY=1;
 	bool _isPlayer = false;
 	int playerId = -1;
+	bool _isDestroyed = false;
     
 };
 

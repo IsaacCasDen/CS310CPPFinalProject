@@ -19,6 +19,20 @@ int Missile::getPlayerId()
 	return playerId;
 }
 
+bool Missile::isDestroyed()
+{
+	return _isDestroyed;
+}
+
+void Missile::setDestroyed(bool value)
+{
+	_isDestroyed = value;
+	if (value)
+		isDisposed(true);
+}
+
+
+
 Missile::Missile(ofRectangle gameBounds, int playerId, int directionY, double x, double y) :SpriteObject(gameBounds)
 {
 	this->directionY *= directionY;
