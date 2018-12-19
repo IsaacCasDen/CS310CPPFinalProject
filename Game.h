@@ -22,7 +22,7 @@ class Game {
 
 		static ofTrueTypeFont getFontLarge() {
 			if (!hasFontLarge) {
-				fontLarge.load("arial.ttf", 60, true, true);
+				fontLarge.load("fonts/arial.ttf", 60, true, true);
 				fontLarge.setLineHeight(34.0);
 				fontLarge.setLetterSpacing(1.037);
 				hasFontLarge = true;
@@ -31,7 +31,7 @@ class Game {
 		}
 		static ofTrueTypeFont getFontMedium() {
 			if (!hasFontMedium) {
-				fontMedium.load("arial.ttf", 30, true, true);
+				fontMedium.load("fonts/arial.ttf", 30, true, true);
 				fontMedium.setLineHeight(18.0f);
 				fontMedium.setLetterSpacing(1.037);
 				hasFontMedium = true;
@@ -40,7 +40,7 @@ class Game {
 		}
 		static ofTrueTypeFont getFontSmall() {
 			if (!hasFontSmall) {
-				fontSmall.load("arial.ttf", 20, true, true);
+				fontSmall.load("fonts/arial.ttf", 20, true, true);
 				fontSmall.setLineHeight(12.0f);
 				fontSmall.setLetterSpacing(1.037);
 				hasFontSmall = true;
