@@ -31,16 +31,16 @@ EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):Ship(gameBounds
 	sprites.push_back(ofImage());
 	sprites.push_back(ofImage());
 	
-	sprites[0].load("galaga_enemy1_1.png");
-	sprites[1].load("galaga_enemy1_2.png");
-	sprites[2].load("explode_1.gif");
-	sprites[3].load("explode_2.gif");
-	sprites[4].load("explode_3.gif");
-	sprites[5].load("explode_4.gif");
-	sprites[6].load("explode_5.gif");
-	sprites[7].load("explode_6.gif");
-	sprites[8].load("explode_7.gif");
-	sprites[9].load("explode_8.gif");
+	sprites[0].load("sprites/galaga_enemy1_1.png");
+	sprites[1].load("sprites/galaga_enemy1_2.png");
+	sprites[2].load("sprites/explode_1.gif");
+	sprites[3].load("sprites/explode_2.gif");
+	sprites[4].load("sprites/explode_3.gif");
+	sprites[5].load("sprites/explode_4.gif");
+	sprites[6].load("sprites/explode_5.gif");
+	sprites[7].load("sprites/explode_6.gif");
+	sprites[8].load("sprites/explode_7.gif");
+	sprites[9].load("sprites/explode_8.gif");
 
 
 	setSpriteSetEnd(1);
@@ -187,7 +187,8 @@ ofVec2f EnemyShip::getMovePattern3_NextPos(bool isReflected, ofVec2f currentPos)
 {
 	ofVec2f value = currentPos;
 
-	value.y = gameBounds.getTop() - getBounds().height;
+	if (!isDestroyed())
+		value.y = gameBounds.getTop() - getBounds().height;
 
 	return value;
 }
