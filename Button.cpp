@@ -40,10 +40,10 @@ void Button::draw()
 		ofSetColor(clickColor):
 		(isHover()) ? ofSetColor(hoverColor) : ofSetColor(backgroundColor);
 	ofFill();
-	ofDrawRectangle(b.getLeft() + borderWidth, b.getTop() + borderWidth, b.getWidth() + borderWidth - padding, b.getHeight() + borderWidth - padding);
+	ofDrawRectangle(b.getLeft() + borderWidth, b.getTop() + borderWidth, b.getWidth() + borderWidth, b.getHeight() + borderWidth);
 
 	ofSetColor(foregroundColor);
-	font.drawString(getText(),fontPos.x,fontPos.y);
+	font.drawString(getText(),fontPos.x+padding,fontPos.y-padding);
 
 	Game::setOfColor(currentColor);
 }
@@ -168,7 +168,7 @@ bool Button::isClicking()
 
 void Button::initFont()
 {
-	font.load("arial.ttf", fontSize, true, true);
+	font.load("fonts/arial.ttf", fontSize, true, true);
 	font.setLineHeight(fontSize*.6);
 	font.setLetterSpacing(1.037);
 

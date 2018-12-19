@@ -26,6 +26,7 @@ public:
 	void update();
 	void draw();
 
+	
 	std::string getText();
 	void setText(std::string text);
 
