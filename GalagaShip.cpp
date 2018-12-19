@@ -16,12 +16,13 @@ int GalagaShip::getPlayerId()
 	return playerId;
 }
 
-GalagaShip::GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, double x, double y) :Ship(gameBounds, x, y)
+GalagaShip::GalagaShip(Controller * controller, int playerId, ofRectangle gameBounds, double x, double y) :Ship(gameBounds, x, y)
 {
-	this->serial = serial;
+	this->controller = controller;
 	this->playerId = playerId;
 	setSize(ofVec2f(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-	setMaxDamage(10);
+	setCurrDamage(0);
+	setMaxDamage(3);
 
 	ofRectangle bounds = getBounds();
 	double
@@ -35,23 +36,49 @@ GalagaShip::GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, d
 	}
 
 	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
+	sprites.push_back(ofImage());
 
-	sprites[0].load("galaga_ship.png");
-    soundShot.load("ship_shot.mp3");
-	soundShot.setMultiPlay(true);
+	sprites[0].load("sprites/galaga_ship.png");
+	sprites[1].load("sprites/explode_1.gif");
+	sprites[2].load("sprites/explode_2.gif");
+	sprites[3].load("sprites/explode_3.gif");
+	sprites[4].load("sprites/explode_4.gif");
+	sprites[5].load("sprites/explode_5.gif");
+	sprites[6].load("sprites/explode_6.gif");
+	sprites[7].load("sprites/explode_7.gif");
+	sprites[8].load("sprites/explode_8.gif");
 }
 GalagaShip::~GalagaShip()
 {
-	serial->close();
+	controller->getSerial()->close();
+}
+
+bool GalagaShip::cycleSprite()
+{
+	return getTicksperSprite() < tick;
 }
 
 void GalagaShip::update()
 {
+	if (cycleSprite()) {
+		tick = 0;
+		nextSprite();
+	}
+	else
+		tick++;
+
 	ticksSinceInput++;
 	//setPosition(ofVec2f(getBounds().x + 5, getBounds().y));
 	try {
-		if (serial->available()) {
-			char command = serial->readByte();
+		if (controller->getSerial()->available()) {
+			char command = controller->getSerial()->readByte();
 			readCommand(command);
 			//std::cout << command << std::endl;
 		}
@@ -82,7 +109,6 @@ void GalagaShip::readCommand(char command) {
 	switch (command) {
 	case 'B':
 		fireMissile();
-        soundShot.play();
 		break;
 	case 'L':
 		ticksSinceInput = 0;
@@ -108,6 +134,10 @@ void GalagaShip::draw()
 {
 	ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(),0.5f));
 	getSprite().draw(getBounds());
+	if (spriteIndex == 8)
+	{
+		isDisposed(true);
+	}
 }
 
 void GalagaShip::keyPressed(int key)
@@ -142,4 +172,7 @@ void GalagaShip::setMoveSpeed(double value)
 
 void GalagaShip::_destroyed()
 {
+	setTicksPerSprite(ofGetFrameRate() / 6);
+	setSpriteSetStart(1);
+	setSpriteSetEnd(8);
 }

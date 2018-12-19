@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "Ship.h"
+#include "Controller.h"
 
 class GalagaShip : 
 	public Ship {
@@ -19,8 +20,9 @@ public:
 
 	int getPlayerId();
 
-    GalagaShip(ofSerial *serial, int playerId, ofRectangle gameBounds, double x, double y);
+    GalagaShip(Controller * controller, int playerId, ofRectangle gameBounds, double x, double y);
 	~GalagaShip();
+	bool cycleSprite();
     void update();
 	void readCommand(char command);
 	void fireMissile();
@@ -45,8 +47,7 @@ private:
 	const double DEFAULT_WIDTH = 48;
 
 	int playerId;
-	ofSerial *serial;
-    ofSoundPlayer soundShot;
+	Controller * controller;
 	char currMoveDir = '\0';
 	double moveSpeed = 5;
     
