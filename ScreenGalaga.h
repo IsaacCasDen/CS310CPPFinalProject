@@ -1,5 +1,8 @@
 #pragma once
 #include "ScreenGame.h"
+#include "Drawable.h"
+#include "Button.h"
+#include "Controller.h"
 #include "ofTrueTypeFont.h"
 #include "ofVec2f.h"
 #include "ofSerial.h"
@@ -17,14 +20,14 @@ class ScreenGalaga :
 public:
 	ScreenGalaga();
 	ScreenGalaga(Game *game, ofVec2f size);
-	void createStarField();
-	void createStarField(int starCount);
-	void createStarField(int starCount, int smallBodySize, int largeBodySize);
-	void createEnemyShips(int count);
+	void updateControllers();
 	~ScreenGalaga();
 
 	virtual void update();
+	
 	void draw();
+
+	
 
 	void updateBackground();
 
@@ -72,11 +75,23 @@ public:
 protected:
 
 	void createEnemyShip(double x, double y);
-	bool createPlayerShip(std::string devicePath, int playerId, double x, double y);
-	void createMissile(double x, double y);
+	bool createPlayerShip(Controller * controller, int playerId, ofColor playerColor, double x, double y);
 
 private:
-	//std::recursive_mutex lock;
+	void loadSounds();
+	void loadMenu();
+	void startGame();
+	void loadGame();
+	void createStarField();
+	void createStarField(int starCount);
+	void createStarField(int starCount, int smallBodySize, int largeBodySize);
+	void createEnemyShips(int count);
+
+	void updateMenu();
+	void updateGame();
+
+	void drawMenu();
+	void drawGame();
 
 	std::vector<Ship *> enemies;
 	std::vector<SpriteObject *> enemyShot;
@@ -86,8 +101,6 @@ private:
 
 	std::vector<SpriteObject *> items;
 
-	std::vector<ofSerialDeviceInfo> devices;
-
 	int active = 0;
 
     int hits;
@@ -96,9 +109,25 @@ private:
     int lives;
     //Missile miss;
     ofVec2f pos;
-    ofSoundPlayer sound_hit;
+
+	ofSoundPlayer soundShoot;
+    ofSoundPlayer soundExplosion;
+
     int shots;
     string level;
     
 	std::vector<ofVec3f> starField;
+
+	bool gameRunning = false;
+	double menuTick = 0;
+
+	Button buttonStartGame;
+	ofImage logo;
+	ofRectangle logoBounds;
+	std::vector<Controller *> controllers;
+	std::vector<bool> activePlayers;
+	std::vector<ofColor> playerColor;
+
+	ofTrueTypeFont font;
 };
+
