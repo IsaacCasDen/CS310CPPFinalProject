@@ -43,9 +43,9 @@ void ScreenGame::draw()
 	drawFooter();
 }
 
-void ScreenGame::getHeaderHeight()
+double ScreenGame::getHeaderHeight()
 {
-	
+	return 0;
 }
 
 void ScreenGame::drawHeader() {
@@ -59,9 +59,9 @@ void ScreenGame::drawHeader() {
 	drawGameLevel(areaHeader);
 }
 
-void ScreenGame::getFooterHeight()
+double ScreenGame::getFooterHeight()
 {
-
+	return 0;
 }
 
 void ScreenGame::drawFooter() {

@@ -21,10 +21,10 @@ public:
 	void update();
 	void draw();
 
-	void getHeaderHeight();
+	double getHeaderHeight();
 	void drawHeader();
 
-	void getFooterHeight();
+	double getFooterHeight();
 	void drawFooter();
 
 	ofRectangle getGameNameDrawBounds(ofRectangle area);
