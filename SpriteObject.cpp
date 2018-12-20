@@ -15,9 +15,6 @@ SpriteObject::SpriteObject(ofRectangle gameBounds)
 	this->gameBounds = gameBounds;
 }
 
-SpriteObject::~SpriteObject()
-{
-}
 
 uint_fast64_t SpriteObject::getObjectId()
 {

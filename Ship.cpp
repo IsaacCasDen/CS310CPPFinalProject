@@ -9,9 +9,6 @@ Ship::Ship(ofRectangle gameBounds, double x, double y) :SpriteObject(gameBounds)
 }
 
 
-Ship::~Ship()
-{
-}
 
 //void Ship::update()
 //{

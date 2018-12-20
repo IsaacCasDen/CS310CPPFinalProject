@@ -8,7 +8,6 @@ public:
 	ofEvent<uint_fast64_t> destroyed;
 
 	Ship(ofRectangle gameBounds, double x, double y);
-	~Ship();
 
 	bool isDestroyed();
 
