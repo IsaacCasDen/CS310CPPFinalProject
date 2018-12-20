@@ -71,6 +71,8 @@ public:
 	virtual void mouseMoved(int x, int y);
 	virtual void mousePressed(int x, int y, int button);
 	virtual void mouseReleased(int x, int y, int button);
+    
+    
 
 protected:
 
@@ -129,5 +131,6 @@ private:
 	std::vector<ofColor> playerColor;
 
 	ofTrueTypeFont font;
+    
 };
 
