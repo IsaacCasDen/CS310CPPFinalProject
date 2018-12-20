@@ -2,6 +2,11 @@
 #include "ofMain.h"
 
 
+int EnemyShip::getPointValue()
+{
+	return 100 * getMaxDamage()*getSpeed();
+}
+
 //EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):SpriteObject(gameBounds)
 //{
 //    setPosition(ofVec2f(x, y));
@@ -16,7 +21,7 @@
 //    setTicksPerSprite(ofGetFrameRate()/8);
 //
 //}
-EnemyShip::EnemyShip(ofRectangle gameBounds, double x, double y):Ship(gameBounds,x,y)
+EnemyShip::EnemyShip(ofRectangle gameBounds, ofVec2f position, ofVec2f targetPosition):Ship(gameBounds,position,targetPosition)
 {
 	setSize(ofVec2f( DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
@@ -60,7 +65,7 @@ void EnemyShip::update()
 	ofVec2f pos = getBounds().getPosition();
 		switch (movePattern) {
 		case 0:
-			if (pos.y < 100)
+			if (getBasePosition().x!=pos.x || getBasePosition().y != pos.y)
 				setPosition(getMovePattern1_NextPos(false, pos));
 			else {
 				movePattern = 1;
@@ -165,11 +170,26 @@ void EnemyShip::_destroyed()
 ofVec2f EnemyShip::getMovePattern1_NextPos(bool isReflected, ofVec2f currentPos)
 {
 	ofVec2f value = currentPos;
+	ofVec2f base = getBasePosition();
+	double val;
 
-	if (isReflected)
-		value.y -= 3;
-	else 
-		value.y += 3;
+	if (value.x != base.x) {
+		val = base.x - value.x;
+		if (val < 0)
+			value.x += max(-getSpeed(), val);
+		else if (val>0) {
+			value.x += min(getSpeed(), val);
+		}
+		
+	}
+	if (value.y != base.y) {
+		val = base.y - value.y;
+		if (val < 0)
+			value.y += max(-getSpeed(), val);
+		else if (val > 0) {
+			value.y += min(getSpeed(), val);
+		}
+	}
 
 	return value;
 }
@@ -178,8 +198,8 @@ ofVec2f EnemyShip::getMovePattern2_NextPos(bool isReflected, ofVec2f currentPos)
 {
 	ofVec2f value = currentPos;
 
-	value.x += cos(PI*.03*moveTick);
-	value.y += 3; //sin(PI*.001*moveTick);
+	value.x += cos(PI*(.01*getSpeed())*moveTick);
+	value.y += getSpeed(); //sin(PI*.001*moveTick);
 	return value;
 }
 

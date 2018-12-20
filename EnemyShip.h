@@ -5,11 +5,13 @@ public Ship
 {
 public:
 
+	int getPointValue();
+
 	bool isActive = false;
 
 	ofEvent<ofVec2f> firedShot;
 
-	EnemyShip(ofRectangle gameBounds, double x, double y);
+	EnemyShip(ofRectangle gameBounds, ofVec2f position, ofVec2f targetPosition);
 	void update();
 	void draw();
 	~EnemyShip();
