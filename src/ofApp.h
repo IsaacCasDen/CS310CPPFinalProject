@@ -40,5 +40,6 @@ private:
 	Game game;
 	bool isClosing = false;
     ofstream output;
+    
 
 };

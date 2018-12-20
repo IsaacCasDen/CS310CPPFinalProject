@@ -23,14 +23,25 @@ void ofApp::setup(){
 
     game.startGame();
     output.open(ofToDataPath("../output.txt").c_str());
+    //input.open(ofToDataPath("../output.txt").c_str());
+//    if (!input.is_open()) {
+//        cout << "ERROR! Cannot read from file!" << endl;
+//    }
     if(!output.is_open())
     {
         cout << "ERROR! Cannot open file!" << endl;
     }
-    
+//    string line;
+//    while (getline(input, line)) {
+//        lines.push_back(line);
+//    }
+//    for(auto l : lines){
+//        cout << l << endl;
+//    }
     output << "You created this game on: " << ofGetMonth() << "-" << ofGetDay() << "-" <<
     ofGetYear() << " at " << ofGetHours() << ":" << ofGetMinutes() << "." << ofGetSeconds() ;
     output.close();
+    //input.close();
 }
 
 //--------------------------------------------------------------
@@ -46,6 +57,7 @@ void ofApp::update(){
 			cerr << "Error Exiting Application:" << endl << e.what() << endl;
 		}
 	}
+    
 }//update()
 
 //--------------------------------------------------------------
