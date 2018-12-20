@@ -12,7 +12,6 @@ class SpriteObject :
 {
 public:
 	SpriteObject(ofRectangle gameBounds);
-	~SpriteObject();
 
 	uint_fast64_t getObjectId();
 

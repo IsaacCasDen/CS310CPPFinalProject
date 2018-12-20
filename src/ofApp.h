@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofColor.h"
 #include "../Game.h"
+#include <fstream>
 //#include "../GalagaShip.h"
 //#include "../Missile.h"
 #include <vector>
@@ -38,6 +39,6 @@ protected:
 private:
 	Game game;
 	bool isClosing = false;
-		
+    ofstream output;
 
 };

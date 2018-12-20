@@ -18,9 +18,6 @@ Ship::Ship(ofRectangle gameBounds, ofVec2f position, ofVec2f targetPosition) :Sp
 }
 
 
-Ship::~Ship()
-{
-}
 
 //void Ship::update()
 //{
