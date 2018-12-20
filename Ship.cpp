@@ -3,9 +3,18 @@
 #include "ofEvent.h"
 
 
-Ship::Ship(ofRectangle gameBounds, double x, double y) :SpriteObject(gameBounds)
+ofVec2f Ship::getBasePosition()
 {
-	setPosition(ofVec2f(x, y));
+	return basePosition;
+}
+void Ship::setBasePosition(ofVec2f value) {
+	basePosition = value;
+}
+
+Ship::Ship(ofRectangle gameBounds, ofVec2f position, ofVec2f targetPosition) :SpriteObject(gameBounds)
+{
+	setPosition(position);
+	setBasePosition(targetPosition);
 }
 
 
@@ -24,6 +33,26 @@ Ship::~Ship()
 bool Ship::isDestroyed()
 {
 	return currDamage >= maxDamage;
+}
+
+bool Ship::isGone()
+{
+	return _isGone;
+}
+
+void Ship::isGone(bool value)
+{
+	_isGone = value;
+}
+
+void Ship::addMaxDamage(int healthBonus)
+{
+	maxDamage += healthBonus;
+}
+
+void Ship::addMaxSpeed(double speedBonus)
+{
+	speed += speedBonus;
 }
 
 void Ship::hit()
@@ -57,6 +86,16 @@ ofColor Ship::getMaxDamageOverlay()
 void Ship::setMaxDamageOverlay(ofColor value)
 {
 	maxDamageOverlay = value;
+}
+
+double Ship::getSpeed()
+{
+	return speed;
+}
+
+void Ship::setSpeed(double value)
+{
+	speed = value;
 }
 
 int Ship::getMaxDamage()
