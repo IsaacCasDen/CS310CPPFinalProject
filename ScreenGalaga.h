@@ -18,6 +18,9 @@ class ScreenGalaga :
 	public ScreenGame
 {
 public:
+
+	bool isTransition();
+
 	ScreenGalaga();
 	ScreenGalaga(Game *game, ofVec2f size);
 	void updateControllers();
@@ -27,10 +30,7 @@ public:
 	
 	void draw();
 
-	
-
 	void updateBackground();
-
 	void drawBackground();
 
 	std::vector<SpriteObject *> cleanVectorItems(std::vector<SpriteObject*>& vec);
@@ -74,24 +74,31 @@ public:
 
 protected:
 
-	void createEnemyShip(double x, double y);
+	void createEnemyShip(double x, double y, int healthBonus, double speedBonus);
 	bool createPlayerShip(Controller * controller, int playerId, ofColor playerColor, double x, double y);
 
 private:
 	void loadSounds();
 	void loadMenu();
 	void startGame();
-	void loadGame();
+	bool loadGame();
 	void createStarField();
 	void createStarField(int starCount);
 	void createStarField(int starCount, int smallBodySize, int largeBodySize);
 	void createEnemyShips(int count);
+	void createEnemyShips(int count, int healthBonus, double speedBonus);
 
 	void updateMenu();
 	void updateGame();
+	void nextLevel();
+
+	void gameOver();
 
 	void drawMenu();
 	void drawGame();
+
+	void drawHeader();
+	void drawFooter();
 
 	std::vector<Ship *> enemies;
 	std::vector<SpriteObject *> enemyShot;
@@ -101,6 +108,7 @@ private:
 
 	std::vector<SpriteObject *> items;
 
+	int maxActive = 0;
 	int active = 0;
 
     int hits;
@@ -113,12 +121,18 @@ private:
 	ofSoundPlayer soundShoot;
     ofSoundPlayer soundExplosion;
 
+	ofSoundPlayer soundGameStart;
+	ofSoundPlayer soundNextLevel;
+	ofSoundPlayer soundWonLevel;
+	ofSoundPlayer soundPerfectLevel;
+
     int shots;
-    string level;
+	int level = 0;
     
 	std::vector<ofVec3f> starField;
 
 	bool gameRunning = false;
+	bool newLevel = false;
 	double menuTick = 0;
 
 	Button buttonStartGame;
@@ -129,5 +143,7 @@ private:
 	std::vector<ofColor> playerColor;
 
 	ofTrueTypeFont font;
+	ofTrueTypeFont fontTitle;
+	ofTrueTypeFont fontValue;
 };
 
