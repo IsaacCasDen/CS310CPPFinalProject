@@ -22,7 +22,15 @@ void ofApp::setup(){
 	ofAddListener(game.closed, this, &ofApp::onGameExit);
 
     game.startGame();
-	
+    output.open(ofToDataPath("../output.txt").c_str());
+    if(!output.is_open())
+    {
+        cout << "ERROR! Cannot open file!" << endl;
+    }
+    
+    output << "You created this game on: " << ofGetMonth() << "-" << ofGetDay() << "-" <<
+    ofGetYear() << " at " << ofGetHours() << ":" << ofGetMinutes() << "." << ofGetSeconds() ;
+    output.close();
 }
 
 //--------------------------------------------------------------
