@@ -16,13 +16,19 @@ int GalagaShip::getPlayerId()
 	return playerId;
 }
 
-GalagaShip::GalagaShip(Controller * controller, int playerId, ofRectangle gameBounds, double x, double y) :Ship(gameBounds, x, y)
+bool GalagaShip::isController(Controller * controller)
+{
+	return controller == this->controller;
+}
+
+GalagaShip::GalagaShip(Controller * controller, int playerId, ofRectangle gameBounds, ofVec2f position, ofVec2f targetPosition) :Ship(gameBounds, position, targetPosition)
 {
 	this->controller = controller;
 	this->playerId = playerId;
 	setSize(ofVec2f(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 	setCurrDamage(0);
 	setMaxDamage(3);
+	_lives = 2;
 
 	ofRectangle bounds = getBounds();
 	double
@@ -67,43 +73,61 @@ bool GalagaShip::cycleSprite()
 
 void GalagaShip::update()
 {
-	if (cycleSprite()) {
-		tick = 0;
-		nextSprite();
-	}
-	else
-		tick++;
-
-	ticksSinceInput++;
-	//setPosition(ofVec2f(getBounds().x + 5, getBounds().y));
-	try {
-		if (controller->getSerial()->available()) {
-			char command = controller->getSerial()->readByte();
-			readCommand(command);
-			//std::cout << command << std::endl;
+	if (isGone()) {
+		if (getLifeCount() >= 0) {
+			if (_respawnTick < _respawnTicks)
+				_respawnTick++;
+			else {
+				setCurrDamage(0);
+				spriteIndex = 0;
+				setSpriteSetStart(0);
+				setSpriteSetEnd(0);
+				//setPosition(getBasePosition());
+				isGone(false);
+				update();
+			}
 		}
 	}
-	catch (...) {
+	else {
+		if (cycleSprite()) {
+			tick = 0;
+			nextSprite();
+		}
+		else
+			tick++;
 
+		ticksSinceInput++;
+		//setPosition(ofVec2f(getBounds().x + 5, getBounds().y));
+		try {
+			if (controller->getSerial()->available()) {
+				char command = controller->getSerial()->readByte();
+				readCommand(command);
+				//std::cout << command << std::endl;
+			}
+		}
+		catch (...) {
+
+		}
+
+		ofRectangle b = getBounds();
+
+		switch (currMoveDir) {
+		case 'L':
+			b.x += -moveSpeed;
+			break;
+		case 'R':
+			b.x += moveSpeed;
+			break;
+		}
+
+		if (b.x < gameBounds.getLeft())
+			b.x = gameBounds.getLeft();
+		else if (b.x + b.getWidth() > gameBounds.getRight())
+			b.x = gameBounds.getRight() - b.getWidth();
+
+		setBounds(b);
 	}
 	
-	ofRectangle b = getBounds();
-
-	switch (currMoveDir) {
-	case 'L':
-		b.x += -moveSpeed;
-		break;
-	case 'R':
-		b.x += moveSpeed;
-		break;
-	} 
-
-	if (b.x < gameBounds.getLeft())
-		b.x = gameBounds.getLeft();
-	else if (b.x + b.getWidth() > gameBounds.getRight())
-		b.x = gameBounds.getRight() - b.getWidth();
-
-	setBounds(b);
 }
 void GalagaShip::readCommand(char command) {
 	switch (command) {
@@ -132,12 +156,59 @@ void GalagaShip::fireMissile() {
 
 void GalagaShip::draw()
 {
+	if (isGone()) return;
 	ofSetColor(getOverlayColor().lerp(getCurrDamageOverlay(),0.5f));
 	getSprite().draw(getBounds());
 	if (spriteIndex == 8)
 	{
-		isDisposed(true);
+		_respawnTick = 0;
+		isGone(true);
 	}
+}
+
+void GalagaShip::reset()
+{
+	_lives = 2;
+	_score = 0;
+	setCurrDamage(0);
+	setSpriteSetStart(0);
+	setSpriteSetEnd(0);
+	spriteIndex = 0;
+}
+
+int GalagaShip::getLifeCount()
+{
+	return _lives;
+}
+
+void GalagaShip::addLife()
+{
+	addLife(1);
+}
+
+void GalagaShip::addLife(int count)
+{
+	_lives += count;
+}
+
+void GalagaShip::removeLife()
+{
+	_lives -= 1;
+}
+
+int GalagaShip::getScore()
+{
+	return _score;
+}
+
+void GalagaShip::setScore(int value)
+{
+	_score = value;
+}
+
+void GalagaShip::addScore(int value)
+{
+	_score += value;
 }
 
 void GalagaShip::keyPressed(int key)
@@ -175,4 +246,5 @@ void GalagaShip::_destroyed()
 	setTicksPerSprite(ofGetFrameRate() / 6);
 	setSpriteSetStart(1);
 	setSpriteSetEnd(8);
+	removeLife();
 }

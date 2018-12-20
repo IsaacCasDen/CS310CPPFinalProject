@@ -8,6 +8,11 @@ ScreenSnake::ScreenSnake()
 
 ScreenSnake::ScreenSnake(Game * game, ofVec2f size) : ScreenGame(game, size)
 {
+
+	areaHeader = ofRectangle(0, 0, size.x, HEIGHT_HEADER);
+	areaFooter = ofRectangle(0, size.y - HEIGHT_FOOTER, size.x, HEIGHT_FOOTER);
+	areaGame = ofRectangle(0, areaHeader.getBottom(), size.x, size.y - (areaHeader.getHeight() + areaFooter.getHeight()));
+
 	setGameName("Snake");
 	addPlayer();
 
@@ -157,7 +162,7 @@ void ScreenSnake::mouseReleased(int x, int y, int button)
 
 void ScreenSnake::createSnake() {
 
-	ofRectangle bounds = getGameBounds();
+	ofRectangle bounds = areaGame;
 	std::vector<ofVec4f> *vec = new std::vector<ofVec4f>;
 	ofVec4f pos;
 	pos.y = SNAKE_WIDTH + bounds.y;
@@ -182,8 +187,8 @@ void ScreenSnake::createApple(bool override)
 		if (!override) return;
 	tick = 0;
 	double
-		x = ofRandom(getGameBounds().getLeft() + APPLE_RADIUS, getGameBounds().getRight() - APPLE_RADIUS),
-		y = ofRandom(getGameBounds().getTop() + APPLE_RADIUS, getGameBounds().getBottom() - APPLE_RADIUS);
+		x = ofRandom(areaGame.getLeft() + APPLE_RADIUS, areaGame.getRight() - APPLE_RADIUS),
+		y = ofRandom(areaGame.getTop() + APPLE_RADIUS, areaGame.getBottom() - APPLE_RADIUS);
 
 	apples.push_back(ofVec3f(x, y, APPLE_RADIUS));
 }
@@ -237,7 +242,7 @@ void ScreenSnake::updateSnakes(size_t beginAt) {
 				snake->insert(snake->begin(), ofVec4f(head.x, head.y + SNAKE_SPEED, head.z, head.w));
 				break;
 		}
-		if (head.x<getGameBounds().getLeft()|| head.y<getGameBounds().getTop() || head.x + SNAKE_WIDTH>getGameBounds().getRight() || head.y + SNAKE_WIDTH>getGameBounds().getBottom()) {
+		if (head.x<areaGame.getLeft()|| head.y<areaGame.getTop() || head.x + SNAKE_WIDTH>areaGame.getRight() || head.y + SNAKE_WIDTH>areaGame.getBottom()) {
 			rerun = true;
 			snakes.erase(snakes.begin() + i);
 			break;
@@ -254,14 +259,14 @@ void ScreenSnake::updateSnakes(size_t beginAt) {
 			float v1 = head.y;
 			std::cout << v1;
 		}
-		else if (head.x + SNAKE_WIDTH > getGameBounds().getHeight()) {
+		else if (head.x + SNAKE_WIDTH > areaGame.getHeight()) {
 			float v1 = head.x+SNAKE_WIDTH;
-			float v2 = getGameBounds().getHeight();
+			float v2 = areaGame.getHeight();
 			std::cout << v1 << endl << v2;
 		}
-		else if (head.y + SNAKE_WIDTH > getGameBounds().getWidth()) {
+		else if (head.y + SNAKE_WIDTH > areaGame.getWidth()) {
 			float v1 = head.y + SNAKE_WIDTH;
-			float v2 = getGameBounds().getWidth();
+			float v2 = areaGame.getWidth();
 			std::cout << v1 << endl << v2;
 		}
 		else {

@@ -1,31 +1,12 @@
 #include "ScreenGame.h"
 #include "Game.h"
 
-ofRectangle ScreenGame::getGameBounds()
-{
-	return areaGame;
-}
-
-ofRectangle ScreenGame::getHeaderBounds()
-{
-	return areaHeader;
-}
-
-ofRectangle ScreenGame::getFooterBounds()
-{
-	return areaFooter;
-}
-
 ScreenGame::ScreenGame()
 {
 	
 }
 ScreenGame::ScreenGame(Game * game, ofVec2f size) : Screen(game, size)
 {
-	areaHeader = ofRectangle(0, 0, size.x, HEIGHT_HEADER);
-	areaFooter = ofRectangle(0, size.y - HEIGHT_FOOTER, size.x, HEIGHT_FOOTER);
-	areaGame = ofRectangle(0, areaHeader.getBottom(), size.x, size.y - (areaHeader.getHeight() + areaFooter.getHeight()));
-
 }
 
 ScreenGame::~ScreenGame()
@@ -39,39 +20,6 @@ void ScreenGame::update()
 
 void ScreenGame::draw()
 {
-	drawHeader();
-	drawFooter();
-}
-
-double ScreenGame::getHeaderHeight()
-{
-	return 0;
-}
-
-void ScreenGame::drawHeader() {
-	
-	ofSetColor(ofColor(255, 255, 255));
-	ofFill();
-	ofDrawRectangle(areaHeader);
-
-	drawScore(areaHeader);
-	drawLives(areaHeader);
-	drawGameLevel(areaHeader);
-}
-
-double ScreenGame::getFooterHeight()
-{
-	return 0;
-}
-
-void ScreenGame::drawFooter() {
-	ofSetColor(ofColor(0, 0, 0));
-	ofNoFill();
-	ofDrawRectangle(areaFooter);
-
-	ofSetColor(ofColor(255, 255, 255));
-	ofFill();
-	ofDrawRectangle(areaFooter.getLeft() + 1, areaFooter.getTop() + 1, areaFooter.getWidth() - 2, areaFooter.getHeight() - 2);
 }
 
 ofTrueTypeFont getGameNameFont() {

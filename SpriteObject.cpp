@@ -63,11 +63,12 @@ void SpriteObject::setSpriteSetEnd(int value)
 
 void SpriteObject::nextSprite()
 {
-	if (sprites.size() > 0 && (spriteSetEnd - spriteSetStart) > 1) {
+	if (sprites.size() > 0 && ((spriteSetEnd - spriteSetStart) + 1) > 1) {
+		
 		spriteIndex++;
 		//spriteIndex = spriteIndex % (spriteSetEnd + 1 < sprites.size()) ? spriteSetEnd + 1 : sprites.size();
 		if ((spriteSetEnd + 1 < sprites.size()))
-			spriteIndex = spriteIndex %  spriteSetEnd + 1;
+			spriteIndex = spriteIndex %  (spriteSetEnd + 1);
 		else
 			spriteIndex = spriteIndex % sprites.size();
 		
