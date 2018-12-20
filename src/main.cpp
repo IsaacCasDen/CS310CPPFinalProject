@@ -4,8 +4,8 @@
 
 //========================================================================
 int main( ){
-	ofVec2f size = ofVec2f(1280,720);
-	ofSetupOpenGL(size.x,size.y,OF_WINDOW);			// <-------- setup the GL context
+	ofVec2f size = ofVec2f(1920,1080);
+	ofSetupOpenGL(size.x,size.y,OF_FULLSCREEN);			// <-------- setup the GL context
 
 	// this kicks off the running of my app
 	// can be OF_WINDOW or OF_FULLSCREEN
