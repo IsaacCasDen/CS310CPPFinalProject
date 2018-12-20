@@ -19,14 +19,26 @@ public:
 	ofEvent<ofVec3f> firedShot;
 
 	int getPlayerId();
+	bool isController(Controller * controller);
 
-    GalagaShip(Controller * controller, int playerId, ofRectangle gameBounds, double x, double y);
+    GalagaShip(Controller * controller, int playerId, ofRectangle gameBounds, ofVec2f position, ofVec2f targetPosition);
 	~GalagaShip();
 	bool cycleSprite();
     void update();
 	void readCommand(char command);
 	void fireMissile();
     void draw();
+
+	void reset();
+
+	int getLifeCount();
+	void addLife();
+	void addLife(int count);
+	void removeLife();
+
+	int getScore();
+	void setScore(int value);
+	void addScore(int value);
 
 	virtual void keyPressed(int key);
 	virtual void keyReleased(int key);
@@ -52,4 +64,9 @@ private:
 	double moveSpeed = 5;
     
 	int ticksSinceInput;
+
+	int _score = 0;
+	int _lives = 2;
+	int _respawnTicks = 120;
+	int _respawnTick = 0;
 };
