@@ -10,22 +10,12 @@ class ScreenGame :
 {
 public:
 
-	virtual ofRectangle getGameBounds();
-	virtual ofRectangle getHeaderBounds();
-	virtual ofRectangle getFooterBounds();
-
 	ScreenGame();
 	ScreenGame(Game *game, ofVec2f size);
 	~ScreenGame();
 
 	void update();
 	void draw();
-
-	double getHeaderHeight();
-	void drawHeader();
-
-	double getFooterHeight();
-	void drawFooter();
 
 	ofRectangle getGameNameDrawBounds(ofRectangle area);
 
@@ -60,8 +50,8 @@ public:
 
 protected:
 
-	const double HEIGHT_HEADER = 50;
-	const double HEIGHT_FOOTER = 50;
+	const double HEIGHT_HEADER = 75;
+	const double HEIGHT_FOOTER = 75;
 
 	void setGameName(std::string value);
 
@@ -84,12 +74,12 @@ protected:
 	bool hasGameLevel = false;
 	void setGameLevel(std::string value);
 
-private:
-	
 	ofRectangle areaHeader;
 	ofRectangle areaGame;
 	ofRectangle areaFooter;
 
+private:
+	
 	std::string gameName;
 	std::vector<double> scores;
 	std::vector<double> lives;
